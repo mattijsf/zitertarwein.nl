@@ -3,19 +3,21 @@ import { SOURCES } from "../../data/sources"
 import type { CheckResult } from "../../stores/useCheckStore"
 import { useCheckStore } from "../../stores/useCheckStore"
 import type { Verdict } from "../../types/product"
+import { Confetti } from "./Confetti"
 import "./ResultCard.css"
 
 const STYLE: Record<Verdict, { emoji: string; verdict: string }> = {
-  yes: { emoji: "🌾", verdict: "Ja, hier zit tarwe in!" },
-  no: { emoji: "✅", verdict: "Nee, geen tarwe!" },
-  check: { emoji: "🤔", verdict: "Dat hangt ervan af…" },
+  yes: { emoji: "🌾", verdict: "Ja, tarwe!" },
+  no: { emoji: "🎉", verdict: "Nee, geen tarwe!" },
+  check: { emoji: "🧐", verdict: "Check het etiket…" },
 }
 
 export function ResultCard(): ReactElement {
   const result = useCheckStore(state => state.result)
+  const resultId = useCheckStore(state => state.resultId)
   return (
     <div className={resultClass(result)} role="status" aria-live="polite">
-      {result && <ResultBody result={result} />}
+      {result && <ResultBody key={resultId} result={result} />}
     </div>
   )
 }
@@ -24,7 +26,7 @@ function resultClass(result: CheckResult | null): string {
   if (!result) {
     return "result"
   }
-  return `result visible ${result.kind === "product" ? result.product.s : "check"}`
+  return result.kind === "product" ? `result visible ${result.product.s}` : "result visible"
 }
 
 function ResultBody({ result }: { result: CheckResult }): ReactElement {
@@ -32,7 +34,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
     return (
       <>
         <div className="result-emoji">🕵️</div>
-        <div className="result-verdict">Die kennen we (nog) niet…</div>
+        <div className="result-verdict">Die kennen we niet…</div>
         <div className="result-product">{result.term}</div>
         <p className="result-info">
           Dit product staat niet in onze lijst. Tip: check de ingrediëntenlijst op het etiket —
@@ -64,6 +66,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
           {source.name}
         </a>
       </p>
+      {product.s === "no" && <Confetti />}
     </>
   )
 }

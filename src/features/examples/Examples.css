@@ -1,23 +1,56 @@
 .examples {
-  margin-top: 20px;
+  margin-top: 26px;
   text-align: center;
-  font-size: 14.5px;
-  color: var(--ink-soft);
+  font-size: 15px;
+  font-weight: 700;
 }
 .examples button {
-  border: 1.5px solid var(--line);
-  background: var(--card);
-  color: var(--ink);
+  border: var(--border);
   border-radius: 999px;
-  padding: 6px 14px;
-  margin: 4px 3px;
+  padding: 7px 15px;
+  margin: 5px 3px;
   font-size: 14px;
+  font-weight: 800;
+  font-family: inherit;
   cursor: pointer;
+  color: var(--black);
+  box-shadow: 3px 3px 0 var(--black);
   transition:
-    border-color 0.15s,
-    background 0.15s;
+    transform 0.12s,
+    box-shadow 0.12s;
 }
 .examples button:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--black);
+}
+.examples button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--black);
+}
+.examples button:nth-of-type(6n + 1) {
+  background: var(--white);
+  transform: rotate(-2deg);
+}
+.examples button:nth-of-type(6n + 2) {
+  background: var(--pink);
+  transform: rotate(1.5deg);
+}
+.examples button:nth-of-type(6n + 3) {
+  background: var(--blue);
+  transform: rotate(-1deg);
+}
+.examples button:nth-of-type(6n + 4) {
+  background: var(--green);
+  transform: rotate(2deg);
+}
+.examples button:nth-of-type(6n + 5) {
+  background: var(--purple);
+  transform: rotate(-1.5deg);
+}
+.examples button:nth-of-type(6n + 6) {
+  background: var(--white);
+  transform: rotate(1deg);
+}
+.examples button:nth-of-type(n):hover {
+  transform: translate(-2px, -2px) rotate(0deg);
 }

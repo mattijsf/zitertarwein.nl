@@ -1,32 +1,38 @@
 footer {
   width: 100%;
-  max-width: 560px;
-  padding: 48px 20px 36px;
+  max-width: 580px;
+  padding: 52px 20px 38px;
   text-align: center;
   font-size: 13.5px;
-  color: var(--ink-soft);
+}
+.sources-card {
+  background: var(--white);
+  border: var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 20px 22px;
+  margin-bottom: 22px;
 }
 footer h2 {
-  font-size: 14px;
+  font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   margin-bottom: 10px;
-  color: var(--ink);
+  font-weight: 900;
 }
 footer ul {
   list-style: none;
-  margin-bottom: 18px;
 }
 footer li {
-  margin: 4px 0;
-}
-footer a {
-  color: var(--accent);
+  margin: 5px 0;
   font-weight: 600;
 }
+footer a {
+  color: var(--black);
+  font-weight: 800;
+}
 .disclaimer {
-  border-top: 1px solid var(--line);
-  padding-top: 16px;
-  max-width: 460px;
+  max-width: 470px;
   margin: 0 auto;
+  font-weight: 500;
 }

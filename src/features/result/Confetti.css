@@ -1,0 +1,20 @@
+.confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.confetti span {
+  position: absolute;
+  top: -16px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--black);
+  animation: flutter linear forwards;
+}
+@keyframes flutter {
+  to {
+    transform: translateY(340px) rotate(380deg);
+    opacity: 0;
+  }
+}

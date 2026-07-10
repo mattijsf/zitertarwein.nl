@@ -1,76 +1,88 @@
 .result {
-  margin-top: 24px;
-  border-radius: var(--radius);
-  padding: 28px 26px;
-  border: 2px solid var(--line);
-  background: var(--card);
+  margin-top: 28px;
+  border: var(--border);
+  border-radius: 18px;
+  padding: 30px 28px;
+  background: var(--white);
   box-shadow: var(--shadow);
   display: none;
-  animation: pop 0.3s cubic-bezier(0.2, 1.4, 0.4, 1);
+  position: relative;
+  overflow: hidden;
+  animation: stamp 0.35s cubic-bezier(0.2, 1.5, 0.4, 1);
+  transform: rotate(-1deg);
 }
 .result.visible {
   display: block;
 }
-@keyframes pop {
+@keyframes stamp {
   from {
     opacity: 0;
-    transform: translateY(10px) scale(0.97);
+    transform: rotate(3deg) scale(1.15);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: rotate(-1deg) scale(1);
   }
 }
 .result.yes {
-  background: var(--yes-bg);
-  border-color: var(--yes-line);
+  background: var(--red);
 }
 .result.no {
-  background: var(--no-bg);
-  border-color: var(--no-line);
+  background: var(--green);
 }
 .result.check {
-  background: var(--check-bg);
-  border-color: var(--check-line);
+  background: var(--blue);
 }
 
 .result-emoji {
-  font-size: 44px;
+  font-size: 52px;
   line-height: 1;
+  display: inline-block;
+  animation: boing 0.5s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+@keyframes boing {
+  0% {
+    transform: scale(0);
+  }
+  65% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 .result-verdict {
-  font-size: 26px;
-  font-weight: 800;
+  font-size: 30px;
+  font-weight: 900;
   margin-top: 10px;
   letter-spacing: -0.01em;
-}
-.yes .result-verdict {
-  color: var(--yes-ink);
-}
-.no .result-verdict {
-  color: var(--no-ink);
-}
-.check .result-verdict {
-  color: var(--check-ink);
+  text-transform: uppercase;
 }
 .result-product {
-  font-size: 15px;
-  color: var(--ink-soft);
-  margin-top: 2px;
-  text-transform: capitalize;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 800;
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--white);
+  border: 2px solid var(--black);
+  border-radius: 8px;
+  padding: 2px 10px;
 }
 .result-info {
   margin-top: 14px;
-  font-size: 16.5px;
+  font-size: 17px;
+  font-weight: 500;
 }
 .result-source {
-  margin-top: 16px;
+  margin-top: 18px;
   padding-top: 14px;
-  border-top: 1px dashed rgba(0, 0, 0, 0.12);
+  border-top: 2px solid var(--black);
   font-size: 14px;
-  color: var(--ink-soft);
+  font-weight: 600;
 }
 .result-source a {
   color: inherit;
-  font-weight: 600;
+  font-weight: 800;
 }

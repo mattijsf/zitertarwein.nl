@@ -5,9 +5,9 @@ import { HighlightedName } from "./HighlightedName"
 import "./Suggestions.css"
 
 const HINT: Record<Verdict, string> = {
-  yes: "🌾 tarwe",
-  no: "✅ tarwevrij",
-  check: "🤔 check etiket",
+  yes: "tarwe",
+  no: "vrij",
+  check: "etiket",
 }
 
 interface SuggestionsProps {
@@ -45,7 +45,9 @@ export function Suggestions({
           }}
         >
           <HighlightedName name={suggestion.name} query={query} />
-          <span className="suggestion-hint">{HINT[suggestion.product.s]}</span>
+          <span className={`suggestion-hint ${suggestion.product.s}`}>
+            {HINT[suggestion.product.s]}
+          </span>
         </li>
       ))}
     </ul>

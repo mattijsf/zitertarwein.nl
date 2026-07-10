@@ -1,5 +1,6 @@
 import type { ReactElement } from "react"
 import { useEffect, useState } from "react"
+import "./Confetti.css"
 
 const COLORS = ["#ffd43b", "#51db83", "#74c0fc", "#ff6b6b", "#ffa8c5", "#d0bfff"]
 const PIECES = 28

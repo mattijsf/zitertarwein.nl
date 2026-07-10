@@ -4,8 +4,10 @@ import "./Header.css"
 export function Header(): ReactElement {
   return (
     <header>
-      <span className="logo" aria-hidden="true">
-        🌾
+      <span className="logo-sticker">
+        <span className="logo" aria-hidden="true">
+          🌾
+        </span>
       </span>
       <h1>
         Zit er <span className="accent">tarwe</span> in?

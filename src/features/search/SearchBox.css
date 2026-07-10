@@ -4,51 +4,56 @@
 .search-box {
   display: flex;
   gap: 10px;
-  background: var(--card);
-  border: 2px solid var(--line);
-  border-radius: var(--radius);
-  padding: 8px;
+  background: var(--white);
+  border: var(--border);
+  border-radius: 18px;
+  padding: 9px;
   box-shadow: var(--shadow);
-  transition: border-color 0.2s;
-}
-.search-box:focus-within {
-  border-color: var(--accent);
 }
 .product-input {
   flex: 1;
   border: none;
   outline: none;
   font-size: 19px;
+  font-weight: 600;
   padding: 10px 14px;
   background: transparent;
-  color: var(--ink);
+  color: var(--black);
   min-width: 0;
+  font-family: inherit;
 }
 .product-input::placeholder {
-  color: #c4b89f;
+  color: #b3a98f;
+  font-weight: 500;
 }
 .check-button {
-  border: none;
-  background: var(--accent);
-  color: #fff;
+  border: var(--border);
+  background: var(--black);
+  color: var(--yellow);
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 900;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
   padding: 12px 22px;
-  border-radius: 14px;
+  border-radius: 12px;
   cursor: pointer;
   transition:
     transform 0.12s,
-    background 0.2s;
+    box-shadow 0.12s;
   white-space: nowrap;
+  box-shadow: 4px 4px 0 rgba(28, 25, 23, 0.35);
 }
 .check-button:hover {
-  background: #d3961a;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(28, 25, 23, 0.35);
 }
 .check-button:active {
-  transform: scale(0.96);
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 rgba(28, 25, 23, 0.35);
 }
 
-@media (max-width: 440px) {
+@media (max-width: 460px) {
   .search-box {
     flex-direction: column;
   }

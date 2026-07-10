@@ -1,9 +1,21 @@
 header {
   text-align: center;
-  padding: 56px 0 28px;
+  padding: 52px 0 30px;
+}
+.logo-sticker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 108px;
+  height: 108px;
+  background: var(--white);
+  border: var(--border);
+  border-radius: 50%;
+  box-shadow: var(--shadow);
+  transform: rotate(-4deg);
 }
 .logo {
-  font-size: 56px;
+  font-size: 58px;
   display: inline-block;
   animation: sway 3.5s ease-in-out infinite;
   transform-origin: bottom center;
@@ -11,23 +23,29 @@ header {
 @keyframes sway {
   0%,
   100% {
-    transform: rotate(-6deg);
+    transform: rotate(-7deg);
   }
   50% {
-    transform: rotate(6deg);
+    transform: rotate(7deg);
   }
 }
 h1 {
-  font-size: clamp(28px, 6vw, 40px);
-  font-weight: 800;
+  font-size: clamp(34px, 7.5vw, 52px);
+  font-weight: 900;
   letter-spacing: -0.02em;
-  margin-top: 8px;
+  margin-top: 26px;
+  text-transform: uppercase;
 }
 h1 .accent {
-  color: var(--accent);
+  display: inline-block;
+  background: var(--white);
+  border: var(--border);
+  box-shadow: 4px 4px 0 var(--black);
+  padding: 0 14px;
+  transform: rotate(-2deg);
 }
 .tagline {
-  color: var(--ink-soft);
-  margin-top: 8px;
+  margin-top: 16px;
   font-size: 17px;
+  font-weight: 600;
 }

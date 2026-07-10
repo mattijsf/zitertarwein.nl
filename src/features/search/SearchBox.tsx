@@ -2,11 +2,23 @@ import type { ReactElement } from "react"
 import "./SearchBox.css"
 import { searchInputRef } from "./searchInputRef"
 import { Suggestions } from "./Suggestions"
+import { useRotatingPlaceholder } from "./useRotatingPlaceholder"
 import { useSearchCombobox } from "./useSearchCombobox"
+
+const PLACEHOLDER_TERMS = [
+  "stroopwafel",
+  "drop",
+  "sojasaus",
+  "witbier",
+  "boekweit",
+  "bitterbal",
+  "havermout",
+]
 
 export function SearchBox(): ReactElement {
   const { query, suggestions, activeIndex, choose, check, inputProps } =
     useSearchCombobox("suggestions")
+  const placeholder = useRotatingPlaceholder(PLACEHOLDER_TERMS, searchInputRef)
 
   return (
     <div className="search-wrap">
@@ -15,7 +27,7 @@ export function SearchBox(): ReactElement {
           ref={searchInputRef}
           className="product-input"
           type="text"
-          placeholder="Bijv. stroopwafel, drop, sojasaus…"
+          placeholder={`Bijv. ${placeholder}…`}
           autoComplete="off"
           autoCapitalize="off"
           spellCheck={false}
@@ -23,7 +35,7 @@ export function SearchBox(): ReactElement {
           {...inputProps}
         />
         <button className="check-button" type="button" onClick={check}>
-          Check! 🔍
+          Check!
         </button>
       </div>
       <Suggestions

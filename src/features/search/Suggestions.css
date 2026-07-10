@@ -1,10 +1,10 @@
 .suggestions {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 12px);
   left: 0;
   right: 0;
-  background: var(--card);
-  border: 2px solid var(--line);
+  background: var(--white);
+  border: var(--border);
   border-radius: 16px;
   box-shadow: var(--shadow);
   list-style: none;
@@ -23,21 +23,45 @@
   align-items: center;
   gap: 12px;
   font-size: 17px;
+  font-weight: 600;
 }
 .suggestions li:not(:last-child) {
-  border-bottom: 1px solid var(--line);
+  border-bottom: 2px solid var(--black);
 }
 .suggestions li.active,
 .suggestions li:hover {
-  background: var(--accent-soft);
+  background: var(--black);
+  color: var(--yellow);
+}
+.suggestions li.active .suggestion-hint,
+.suggestions li:hover .suggestion-hint {
+  filter: none;
 }
 .suggestions mark {
   background: none;
-  color: var(--accent);
-  font-weight: 700;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-decoration-color: var(--red);
+  font-weight: 900;
 }
 .suggestion-hint {
-  font-size: 13px;
-  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 800;
   flex-shrink: 0;
+  padding: 3px 9px;
+  border-radius: 8px;
+  border: 2px solid var(--black);
+  color: var(--black);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.suggestion-hint.yes {
+  background: var(--red);
+}
+.suggestion-hint.no {
+  background: var(--green);
+}
+.suggestion-hint.check {
+  background: var(--blue);
 }
