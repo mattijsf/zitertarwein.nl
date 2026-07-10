@@ -1,0 +1,50 @@
+:root {
+  --bg: #fffdf5;
+  --ink: #3d3428;
+  --ink-soft: #8a7d6a;
+  --accent: #e8a820;
+  --accent-soft: #fdf3d7;
+  --card: #ffffff;
+  --line: #f0e8d8;
+  --yes-bg: #fdeeee;
+  --yes-ink: #b03a3a;
+  --yes-line: #f3cfcf;
+  --no-bg: #ecf7ec;
+  --no-ink: #2e7d3a;
+  --no-line: #cfe8d2;
+  --check-bg: #fdf6e0;
+  --check-ink: #9a7410;
+  --check-line: #f0e0ae;
+  --radius: 20px;
+  --shadow: 0 6px 24px rgba(120, 90, 20, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.55;
+}
+
+/* The React root takes no box of its own: main and footer lay out as children of body. */
+#root {
+  display: contents;
+}
+
+main {
+  width: 100%;
+  max-width: 560px;
+  padding: 0 20px;
+  flex: 1;
+}

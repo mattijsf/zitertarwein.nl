@@ -1,0 +1,23 @@
+.examples {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+}
+.examples button {
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 14px;
+  margin: 4px 3px;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+.examples button:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}

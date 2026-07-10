@@ -1,0 +1,9 @@
+/** @type {import("prettier").Config} */
+export default {
+  trailingComma: "es5",
+  singleQuote: false,
+  printWidth: 100,
+  semi: false,
+  arrowParens: "avoid",
+  plugins: ["prettier-plugin-organize-imports"],
+}
