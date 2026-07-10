@@ -1,7 +1,7 @@
 import type { ReactElement } from "react"
-import { normalize } from "../../lib/normalize"
 import type { Suggestion } from "../../lib/suggest"
 import type { Verdict } from "../../types/product"
+import { HighlightedName } from "./HighlightedName"
 import "./Suggestions.css"
 
 const HINT: Record<Verdict, string> = {
@@ -49,20 +49,5 @@ export function Suggestions({
         </li>
       ))}
     </ul>
-  )
-}
-
-function HighlightedName({ name, query }: { name: string; query: string }): ReactElement {
-  const t = normalize(query)
-  const pos = normalize(name).indexOf(t)
-  if (pos < 0) {
-    return <span>{name}</span>
-  }
-  return (
-    <span>
-      {name.slice(0, pos)}
-      <mark>{name.slice(pos, pos + t.length)}</mark>
-      {name.slice(pos + t.length)}
-    </span>
   )
 }

@@ -1,28 +1,13 @@
 import type { ReactElement } from "react"
-import { SOURCES } from "../data/sources"
 import "./Footer.css"
-
-const FOOTER_SOURCES = [
-  {
-    name: "Voedingscentrum — Gluten en het glutenvrij dieet",
-    url: SOURCES["vc-gluten"].url,
-  },
-  {
-    name: "Voedingscentrum — Tarwe: volkorenmeel en bloem",
-    url: SOURCES["vc-tarwe"].url,
-  },
-  {
-    name: "Nederlandse Coeliakie Vereniging — glutenvrij.nl",
-    url: SOURCES.ncv.url,
-  },
-]
+import { footerSources } from "./footerSources"
 
 export function Footer(): ReactElement {
   return (
     <footer>
       <h2>Bronnen</h2>
       <ul>
-        {FOOTER_SOURCES.map(source => (
+        {footerSources.map(source => (
           <li key={source.url}>
             <a href={source.url} target="_blank" rel="noopener noreferrer">
               {source.name}

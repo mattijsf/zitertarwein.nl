@@ -14,6 +14,8 @@ interface CheckState {
   /** Keyboard-highlighted suggestion, -1 for none. */
   activeIndex: number
   result: CheckResult | null
+  /** Goes up with every shown result, so the card can replay its entry animation. */
+  resultId: number
 
   /** Typing in the field: updates the query and opens the suggestions. */
   type: (query: string) => void
@@ -30,6 +32,7 @@ export const useCheckStore = create<CheckState>()((set, get) => ({
   suggestionsOpen: false,
   activeIndex: -1,
   result: null,
+  resultId: 0,
 
   type: query => {
     set({ query, suggestionsOpen: true, activeIndex: -1 })
@@ -63,6 +66,7 @@ export const useCheckStore = create<CheckState>()((set, get) => ({
       suggestionsOpen: false,
       activeIndex: -1,
       result: product ? { kind: "product", product } : { kind: "unknown", term },
+      resultId: get().resultId + 1,
     })
   },
 
@@ -72,6 +76,7 @@ export const useCheckStore = create<CheckState>()((set, get) => ({
       suggestionsOpen: false,
       activeIndex: -1,
       result: { kind: "product", product: suggestion.product },
+      resultId: get().resultId + 1,
     })
   },
 }))
