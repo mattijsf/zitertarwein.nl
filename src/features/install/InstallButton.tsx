@@ -22,7 +22,7 @@ export function InstallButton(): ReactElement {
       hidden={!visible}
       onClick={() => void onClick()}
     >
-      📲 Installeer als app
+      📲 Zet &apos;m als app op je scherm
     </button>
   )
 }

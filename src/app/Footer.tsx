@@ -1,4 +1,5 @@
 import type { ReactElement } from "react"
+import { InstallButton } from "../features/install/InstallButton"
 import "./Footer.css"
 import { footerSources } from "./footerSources"
 
@@ -17,6 +18,7 @@ export function Footer(): ReactElement {
           ))}
         </ul>
       </div>
+      <InstallButton />
       <p className="disclaimer">
         Deze site geeft algemene informatie en is geen medisch advies. Heb je coeliakie, een
         tarweallergie of glutensensitiviteit? Controleer dan altijd het etiket — recepten van
