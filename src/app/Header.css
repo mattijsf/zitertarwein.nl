@@ -49,3 +49,25 @@ h1 .accent {
   font-size: 17px;
   font-weight: 600;
 }
+
+/* Short windows: compact header, so the examples stay in view */
+@media (max-height: 700px) {
+  header {
+    padding: 18px 0 16px;
+  }
+  .logo-sticker {
+    width: 70px;
+    height: 70px;
+  }
+  .logo {
+    font-size: 36px;
+  }
+  h1 {
+    font-size: clamp(24px, 5vw, 34px);
+    margin-top: 14px;
+  }
+  .tagline {
+    margin-top: 6px;
+    font-size: 15px;
+  }
+}
