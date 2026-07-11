@@ -12,16 +12,28 @@ zoekopdracht als laatste redmiddel.
 
 React 19 + zustand, gebouwd met Vite, strikte TypeScript.
 
-| Pad                    | Doel                                                            |
-| ---------------------- | --------------------------------------------------------------- |
-| `index.html`           | Vite-entry: meta-tags en `#root`                                |
-| `src/app/`             | Opbouw van de pagina: kop, voet (pop-look)                      |
-| `src/features/`        | Zoekvak met autocomplete, resultaatkaart, voorbeelden           |
-| `src/stores/`          | Gedeelde staat (zustand)                                        |
-| `src/lib/`             | Pure logica met tests: zoeken, suggesties, Open Food Facts      |
-| `src/data/products.ts` | Productdatabase (~160 Nederlandse producten) met status en bron |
-| `src/data/sources.ts`  | De bronnen waarnaar de antwoorden verwijzen                     |
-| `deploy.sh`            | Bouwen en deployen naar Cloudflare                              |
+| Pad                          | Doel                                                                 |
+| ---------------------------- | -------------------------------------------------------------------- |
+| `index.html`                 | Vite-entry: meta-tags en `#root`                                     |
+| `src/app/`                   | Opbouw van de pagina: kop, voet (pop-look)                           |
+| `src/features/`              | Zoekvak met autocomplete, resultaatkaart, voorbeelden                |
+| `src/stores/`                | Gedeelde staat (zustand)                                             |
+| `src/lib/`                   | Pure logica met tests: zoeken, suggesties, Open Food Facts           |
+| `src/data/products.ts`       | Handgemaakte productdatabase (~265 producten) met status en bron     |
+| `src/data/off-products.json` | Supermarktproducten uit Open Food Facts (gegenereerd, niet bewerken) |
+| `src/data/sources.ts`        | De bronnen waarnaar de antwoorden verwijzen                          |
+| `deploy.sh`                  | Bouwen en deployen naar Cloudflare                                   |
+| `importeer_off.py`           | Genereert `src/data/off-products.json`                               |
+
+`src/data/off-products.json` opnieuw genereren (populairste NL-producten met etiketdata):
+
+```bash
+python3 importeer_off.py
+```
+
+Het script respecteert de rate-limits van Open Food Facts (lange pauzes,
+automatische herkansingen) en overschrijft `src/data/off-products.json` alleen bij een
+geslaagde import. De site laadt die lijst los (eigen chunk) na de eerste weergave.
 
 `src/data/products.ts` bewerken = product toevoegen:
 

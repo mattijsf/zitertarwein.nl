@@ -1,5 +1,5 @@
 // Service worker: netwerk eerst, cache als vangnet (offline blijft de site werken).
-const CACHE = "zitertarwein-v2";
+const CACHE = "zitertarwein-v3";
 const BESTANDEN = ["/", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png", "/icon-maskable-512.png", "/apple-touch-icon.png"];
 
 self.addEventListener("install", e => {

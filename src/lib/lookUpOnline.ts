@@ -1,4 +1,5 @@
 /** Live lookup in the Open Food Facts label data, for products not in our own list. */
+import { offProductUrl } from "./offProductUrl"
 
 /** The fields we ask Open Food Facts for. */
 export interface OffProduct {
@@ -103,7 +104,7 @@ export function toMatch(p: OffProduct, term: string): OnlineMatch {
   const brand = p.brands ? ` (${p.brands.split(",")[0]?.trim() ?? ""})` : ""
   return {
     name: name + brand,
-    url: `https://nl.openfoodfacts.org/product/${encodeURIComponent(p.code)}`,
+    url: offProductUrl(p.code),
     hasWheat: hasWheat(p),
   }
 }

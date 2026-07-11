@@ -1,5 +1,4 @@
 import { create } from "zustand"
-import { PRODUCTS } from "../data/products"
 import { findProduct } from "../lib/findProduct"
 import type { InstallPlatform } from "../lib/installPlatform"
 import type { OnlineMatch } from "../lib/lookUpOnline"
@@ -8,6 +7,7 @@ import { normalize } from "../lib/normalize"
 import type { Suggestion } from "../lib/suggest"
 import { suggest } from "../lib/suggest"
 import type { Product } from "../types/product"
+import { useCatalogStore } from "./useCatalogStore"
 
 export type CheckResult =
   | { kind: "product"; product: Product }
@@ -68,11 +68,12 @@ export const useCheckStore = create<CheckState>()((set, get) => ({
     if (!normalize(term)) {
       return
     }
+    const { products } = useCatalogStore.getState()
     let query = term
-    let product = findProduct(term, PRODUCTS)
+    let product = findProduct(term, products)
     if (!product) {
       // No exact match: take the first suggestion that starts with the input.
-      const first = suggest(term, PRODUCTS)[0]
+      const first = suggest(term, products)[0]
       if (first?.score === 0) {
         product = first.product
         query = first.name
