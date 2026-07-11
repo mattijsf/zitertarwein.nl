@@ -3,3 +3,4 @@ dist/
 coverage/
 # hand-curated data: one product per line reads better than prettier's layout
 src/data/products.ts
+public/
