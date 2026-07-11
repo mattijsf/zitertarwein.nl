@@ -1,5 +1,5 @@
 #!/bin/sh
-# Deploy naar Cloudflare Pages (project: zitertarwein).
+# Deploy naar de Cloudflare Worker "zitertarwein" (daar hangt zitertarwein.nl aan).
 # Wordt automatisch aangeroepen door de post-commit hook, of handmatig: ./deploy.sh
 set -e
 cd "$(dirname "$0")"
@@ -8,4 +8,4 @@ cd "$(dirname "$0")"
 pnpm install --frozen-lockfile
 pnpm build
 
-npx wrangler pages deploy dist --project-name zitertarwein --branch main --commit-dirty=true
+npx wrangler deploy

@@ -1,0 +1,8 @@
+{
+  // Deploy-doel: de bestaande Worker "zitertarwein" waaraan zitertarwein.nl gekoppeld is.
+  "name": "zitertarwein",
+  "compatibility_date": "2026-07-11",
+  "assets": {
+    "directory": "./dist",
+  },
+}
