@@ -21,7 +21,7 @@ React 19 + zustand, gebouwd met Vite, strikte TypeScript.
 | `src/lib/`             | Pure logica met tests: zoeken, suggesties, Open Food Facts      |
 | `src/data/products.ts` | Productdatabase (~160 Nederlandse producten) met status en bron |
 | `src/data/sources.ts`  | De bronnen waarnaar de antwoorden verwijzen                     |
-| `deploy.sh`            | Bouwen en deployen naar Cloudflare Pages                        |
+| `deploy.sh`            | Bouwen en deployen naar Cloudflare                              |
 
 `src/data/products.ts` bewerken = product toevoegen:
 
@@ -39,13 +39,14 @@ pnpm check   # lint, opmaak, typecheck, tests, escape hatches en ongebruikte cod
 
 ## Deployen
 
-Hosting: **Cloudflare Pages**, project `zitertarwein` (gekoppeld aan zitertarwein.nl).
+Hosting: **Cloudflare Worker** `zitertarwein` (static assets) — daar hangt
+zitertarwein.nl aan als custom domain. Configuratie in `wrangler.jsonc`.
 
 - **Automatisch**: elke commit op `main` deployt via de lokale post-commit hook.
 - **Handmatig**: `./deploy.sh`
 
 Het script bouwt `dist/` met `pnpm build` (Vite) en draait
-`npx wrangler pages deploy`.
+`npx wrangler deploy`.
 
 ### Autodeploy op een nieuwe machine
 
@@ -58,7 +59,7 @@ cat > .git/hooks/post-commit <<'EOF'
 #!/bin/sh
 # Autodeploy: elke commit op main gaat naar Cloudflare Pages.
 [ "$(git rev-parse --abbrev-ref HEAD)" = "main" ] || exit 0
-echo "→ Autodeploy naar Cloudflare Pages…"
+echo "→ Autodeploy naar Cloudflare…"
 sh "$(git rev-parse --show-toplevel)/deploy.sh" 2>&1 | tail -2
 EOF
 chmod +x .git/hooks/post-commit
