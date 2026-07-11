@@ -9,6 +9,12 @@ export function useRotatingPlaceholder(
   inputRef: RefObject<HTMLInputElement | null>
 ): string {
   const [index, setIndex] = useState(0)
+  // new terms (rerolled examples) start again at the first one
+  const [shownTerms, setShownTerms] = useState(terms)
+  if (shownTerms !== terms) {
+    setShownTerms(terms)
+    setIndex(0)
+  }
   useEffect(() => {
     const id = setInterval(() => {
       const input = inputRef.current

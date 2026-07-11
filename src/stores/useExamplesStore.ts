@@ -6,8 +6,15 @@ import type { Product } from "../types/product"
 interface ExamplesState {
   /** "Probeer eens" products, also used by the rotating placeholder. New on every page load. */
   examples: Product[]
+  /** Goes up per reroll, so the chips remount and pop in again. */
+  rollId: number
+  reroll: () => void
 }
 
-export const useExamplesStore = create<ExamplesState>()(() => ({
+export const useExamplesStore = create<ExamplesState>()((set, get) => ({
   examples: pickExamples(PRODUCTS),
+  rollId: 0,
+  reroll: () => {
+    set({ examples: pickExamples(PRODUCTS), rollId: get().rollId + 1 })
+  },
 }))

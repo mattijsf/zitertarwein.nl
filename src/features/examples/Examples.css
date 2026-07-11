@@ -4,7 +4,7 @@
   font-size: 15px;
   font-weight: 700;
 }
-.examples button {
+.example-chips button {
   border: var(--border);
   border-radius: 999px;
   padding: 7px 15px;
@@ -19,38 +19,47 @@
     transform 0.12s,
     box-shadow 0.12s;
 }
-.examples button:hover {
+.example-chips button:hover {
   transform: translate(-2px, -2px);
   box-shadow: 5px 5px 0 var(--black);
 }
-.examples button:active {
+.example-chips button:active {
   transform: translate(2px, 2px);
   box-shadow: 0 0 0 var(--black);
 }
-.examples button:nth-of-type(6n + 1) {
+.example-chips button:nth-of-type(6n + 1) {
   background: var(--white);
   transform: rotate(-2deg);
 }
-.examples button:nth-of-type(6n + 2) {
+.example-chips button:nth-of-type(6n + 2) {
   background: var(--pink);
   transform: rotate(1.5deg);
 }
-.examples button:nth-of-type(6n + 3) {
+.example-chips button:nth-of-type(6n + 3) {
   background: var(--blue);
   transform: rotate(-1deg);
 }
-.examples button:nth-of-type(6n + 4) {
+.example-chips button:nth-of-type(6n + 4) {
   background: var(--green);
   transform: rotate(2deg);
 }
-.examples button:nth-of-type(6n + 5) {
+.example-chips button:nth-of-type(6n + 5) {
   background: var(--purple);
   transform: rotate(-1.5deg);
 }
-.examples button:nth-of-type(6n + 6) {
+.example-chips button:nth-of-type(6n + 6) {
   background: var(--white);
   transform: rotate(1deg);
 }
-.examples button:nth-of-type(n):hover {
+.example-chips button:nth-of-type(n):hover {
   transform: translate(-2px, -2px) rotate(0deg);
+}
+.example-chips button {
+  animation: chip-pop 0.25s cubic-bezier(0.2, 1.4, 0.4, 1) backwards;
+}
+@keyframes chip-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
 }
