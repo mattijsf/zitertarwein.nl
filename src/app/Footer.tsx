@@ -6,8 +6,8 @@ import { footerSources } from "./footerSources"
 export function Footer(): ReactElement {
   return (
     <footer>
-      <div className="sources-card">
-        <h2>Bronnen</h2>
+      <details className="sources-card">
+        <summary>Bronnen &amp; verantwoording</summary>
         <ul>
           {footerSources.map(source => (
             <li key={source.url}>
@@ -17,7 +17,13 @@ export function Footer(): ReactElement {
             </li>
           ))}
         </ul>
-      </div>
+        <p className="sources-note">
+          Basisproducten zijn beoordeeld met informatie van het Voedingscentrum en de Nederlandse
+          Coeliakie Vereniging. Supermarktproducten komen uit de open etiketdatabase van Open Food
+          Facts — elk antwoord linkt naar de bijbehorende productpagina met de volledige
+          ingrediëntenlijst.
+        </p>
+      </details>
       <InstallButton />
       <p className="disclaimer">
         Deze site geeft algemene informatie en is geen medisch advies. Heb je coeliakie, een

@@ -109,7 +109,8 @@ export function toMatch(p: OffProduct, term: string): OnlineMatch {
 
 /**
  * Searches Open Food Facts. Resolves to undefined when nothing with an ingredient list turns up;
- * rejects on network errors and after the timeout.
+ * rejects when the source is unavailable: network errors, the timeout, error statuses (502/503 under
+ * load) and broken responses.
  */
 export async function lookUpOnline(term: string): Promise<OnlineMatch | undefined> {
   const ctrl = new AbortController()
@@ -121,6 +122,9 @@ export async function lookUpOnline(term: string): Promise<OnlineMatch | undefine
     res = await fetch(offSearchUrl(term), { signal: ctrl.signal })
   } finally {
     clearTimeout(timer)
+  }
+  if (!res.ok) {
+    throw new Error(`Open Food Facts answered ${res.status}`)
   }
   const json: unknown = await res.json()
   const candidate = pickCandidate(parseSearchResponse(json))

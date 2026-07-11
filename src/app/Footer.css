@@ -11,15 +11,35 @@ footer {
   border: var(--border);
   border-radius: 16px;
   box-shadow: var(--shadow);
-  padding: 20px 22px;
+  padding: 14px 22px;
   margin-bottom: 22px;
+  text-align: center;
 }
-footer h2 {
+.sources-card summary {
+  cursor: pointer;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  margin-bottom: 10px;
   font-weight: 900;
+  list-style: none;
+}
+.sources-card summary::-webkit-details-marker {
+  display: none;
+}
+.sources-card summary::after {
+  content: " ▾";
+}
+.sources-card[open] summary::after {
+  content: " ▴";
+}
+.sources-card[open] summary {
+  margin-bottom: 10px;
+}
+.sources-note {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1.5px dashed rgba(28, 25, 23, 0.25);
+  font-weight: 500;
 }
 footer ul {
   list-style: none;

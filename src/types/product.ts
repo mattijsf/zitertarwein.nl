@@ -20,4 +20,6 @@ export interface Product {
   i: string
   /** source */
   b: SourceId
+  /** Page for this exact product (Open Food Facts), shown instead of the general source. */
+  url?: string
 }

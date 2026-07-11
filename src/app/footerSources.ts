@@ -15,7 +15,7 @@ export const footerSources = [
     url: SOURCES.ncv.url,
   },
   {
-    name: "Open Food Facts — open etiketdatabase",
+    name: "Open Food Facts — open etiketdatabase (ODbL)",
     url: SOURCES.off.url,
   },
 ] as const

@@ -41,6 +41,8 @@ function resultClass(result: CheckResult | null): string {
       return `result visible ${result.product.s}`
     case "online":
       return `result visible ${result.match.hasWheat ? "yes" : "check"}`
+    case "unavailable":
+      return "result visible check"
     case "searching":
     case "notFound":
     case "installHelp":
@@ -101,21 +103,35 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
             Ook niet gevonden op Open Food Facts. Tip: check de ingrediëntenlijst op het etiket —
             tarwe moet daar verplicht (vetgedrukt) vermeld staan.
           </p>
+          <GoogleButton term={result.term} />
+        </>
+      )
+    case "unavailable":
+      return (
+        <>
+          <div className="result-emoji">📡</div>
+          <div className="result-verdict">Bron even niet bereikbaar…</div>
+          <div className="result-product">{result.term}</div>
           <p className="result-info">
-            <a
-              className="google-button"
-              href={googleUrl(result.term)}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Zoek op Google&nbsp;→
-            </a>
+            Dit product staat niet in onze eigen lijst en Open Food Facts reageert op dit moment
+            niet (druk of storing). Probeer het over een paar minuten nog eens, of zoek zelf:
           </p>
+          <GoogleButton term={result.term} />
         </>
       )
     case "installHelp":
       return <InstallHelpBody platform={result.platform} />
   }
+}
+
+function GoogleButton({ term }: { term: string }): ReactElement {
+  return (
+    <p className="result-info">
+      <a className="google-button" href={googleUrl(term)} target="_blank" rel="noopener noreferrer">
+        Zoek op Google&nbsp;→
+      </a>
+    </p>
+  )
 }
 
 function InstallHelpBody({ platform }: { platform: InstallPlatform }): ReactElement {
@@ -159,6 +175,8 @@ function InstallSteps({ platform }: { platform: InstallPlatform }): ReactElement
 function ProductBody({ product }: { product: Product }): ReactElement {
   const style = STYLE[product.s]
   const source = SOURCES[product.b]
+  const sourceUrl = product.url ?? source.url
+  const sourceName = product.url ? "Open Food Facts — etiket van dit product" : source.name
   return (
     <>
       <div className="result-emoji">{style.emoji}</div>
@@ -167,8 +185,8 @@ function ProductBody({ product }: { product: Product }): ReactElement {
       <p className="result-info">{product.i}</p>
       <p className="result-source">
         Bron:{" "}
-        <a href={source.url} target="_blank" rel="noopener noreferrer">
-          {source.name}
+        <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
+          {sourceName}
         </a>
       </p>
       {product.s === "no" && <Confetti />}

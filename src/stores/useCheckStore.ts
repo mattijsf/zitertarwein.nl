@@ -14,8 +14,10 @@ export type CheckResult =
   /** Not in our list: looking it up on Open Food Facts. */
   | { kind: "searching"; term: string }
   | { kind: "online"; term: string; match: OnlineMatch }
-  /** Not on Open Food Facts either (or the lookup failed). */
+  /** Not on Open Food Facts either. */
   | { kind: "notFound"; term: string }
+  /** Open Food Facts did not answer: an outage, not "not found". */
+  | { kind: "unavailable"; term: string }
   /** How to install the app, for browsers without an install prompt. */
   | { kind: "installHelp"; platform: InstallPlatform }
 
@@ -94,7 +96,7 @@ export const useCheckStore = create<CheckState>()((set, get) => ({
       },
       () => {
         if (search === searchCounter) {
-          show({ kind: "notFound", term })
+          show({ kind: "unavailable", term })
         }
       }
     )
