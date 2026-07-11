@@ -20,5 +20,5 @@ export function useRotatingPlaceholder(
       clearInterval(id)
     }
   }, [terms, inputRef])
-  return terms[index] ?? ""
+  return terms[index % terms.length] ?? ""
 }

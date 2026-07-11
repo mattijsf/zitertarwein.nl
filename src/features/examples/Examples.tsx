@@ -1,24 +1,27 @@
 import type { ReactElement } from "react"
 import { useCheckStore } from "../../stores/useCheckStore"
+import { useExamplesStore } from "../../stores/useExamplesStore"
 import "./Examples.css"
-import { exampleTerms } from "./exampleTerms"
 
 export function Examples(): ReactElement {
   const check = useCheckStore(state => state.check)
+  const examples = useExamplesStore(state => state.examples)
   return (
     <p className="examples">
       Probeer eens:
-      {exampleTerms.map(example => (
-        <button
-          key={example}
-          type="button"
-          onClick={() => {
-            check(example)
-          }}
-        >
-          {example}
-        </button>
-      ))}
+      <span>
+        {examples.map(example => (
+          <button
+            key={example.n}
+            type="button"
+            onClick={() => {
+              check(example.n)
+            }}
+          >
+            {example.n}
+          </button>
+        ))}
+      </span>
     </p>
   )
 }

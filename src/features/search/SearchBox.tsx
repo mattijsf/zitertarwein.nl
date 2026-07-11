@@ -1,23 +1,17 @@
 import type { ReactElement } from "react"
+import { useMemo } from "react"
+import { useExamplesStore } from "../../stores/useExamplesStore"
 import "./SearchBox.css"
 import { Suggestions } from "./Suggestions"
 import { useRotatingPlaceholder } from "./useRotatingPlaceholder"
 import { useSearchCombobox } from "./useSearchCombobox"
 
-const PLACEHOLDER_TERMS = [
-  "stroopwafel",
-  "drop",
-  "sojasaus",
-  "witbier",
-  "boekweit",
-  "bitterbal",
-  "havermout",
-]
-
 export function SearchBox(): ReactElement {
   const { inputRef, query, suggestions, activeIndex, choose, check, inputProps } =
     useSearchCombobox("suggestions")
-  const placeholder = useRotatingPlaceholder(PLACEHOLDER_TERMS, inputRef)
+  const examples = useExamplesStore(state => state.examples)
+  const placeholderTerms = useMemo(() => examples.map(p => p.n), [examples])
+  const placeholder = useRotatingPlaceholder(placeholderTerms, inputRef)
 
   return (
     <div className="search-wrap">
