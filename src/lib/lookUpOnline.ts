@@ -24,6 +24,7 @@ const SEARCH_URL = "https://nl.openfoodfacts.org/cgi/search.pl"
 const FIELDS =
   "code,product_name,product_name_nl,brands,ingredients_text,ingredients_text_nl,allergens_tags,ingredients_tags"
 const TIMEOUT_MS = 8000
+const RETRY_DELAY_MS = 4000
 
 const WHEAT_IN_TEXT =
   /tarwe|wheat|weizen|blé|froment|durum|semol|spelt|khorasan|kamut|seitan|bulgur|couscous/i
@@ -107,26 +108,60 @@ export function toMatch(p: OffProduct, term: string): OnlineMatch {
   }
 }
 
-/**
- * Searches Open Food Facts. Resolves to undefined when nothing with an ingredient list turns up;
- * rejects when the source is unavailable: network errors, the timeout, error statuses (502/503 under
- * load) and broken responses.
- */
-export async function lookUpOnline(term: string): Promise<OnlineMatch | undefined> {
+export type OnlineLookup =
+  | { kind: "found"; match: OnlineMatch }
+  /** Nothing with an ingredient list turned up. */
+  | { kind: "notFound" }
+  /** No usable answer, also after the retry: an outage, not "not found". */
+  | { kind: "unavailable" }
+
+/** One search request. Null when the source is unavailable: network error, timeout, error status
+ * (502/503 under load) or a broken response. */
+async function fetchOffData(term: string): Promise<unknown> {
   const ctrl = new AbortController()
   const timer = setTimeout(() => {
     ctrl.abort()
   }, TIMEOUT_MS)
-  let res: Response
   try {
-    res = await fetch(offSearchUrl(term), { signal: ctrl.signal })
+    const res = await fetch(offSearchUrl(term), { signal: ctrl.signal })
+    if (!res.ok) {
+      return null
+    }
+    const json: unknown = await res.json()
+    return json
+  } catch {
+    return null
   } finally {
     clearTimeout(timer)
   }
-  if (!res.ok) {
-    throw new Error(`Open Food Facts answered ${res.status}`)
+}
+
+function delay(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+/**
+ * Searches Open Food Facts, with one automatic retry: rate limits and hiccups often pass quickly.
+ * Resolves to undefined once isCurrent() turns false (the user searched for something else).
+ */
+export async function lookUpOnline(
+  term: string,
+  isCurrent: () => boolean = () => true
+): Promise<OnlineLookup | undefined> {
+  let data = await fetchOffData(term)
+  if (data === null && isCurrent()) {
+    await delay(RETRY_DELAY_MS)
+    if (!isCurrent()) {
+      return undefined
+    }
+    data = await fetchOffData(term)
   }
-  const json: unknown = await res.json()
-  const candidate = pickCandidate(parseSearchResponse(json))
-  return candidate && toMatch(candidate, term)
+  if (!isCurrent()) {
+    return undefined
+  }
+  if (data === null) {
+    return { kind: "unavailable" }
+  }
+  const candidate = pickCandidate(parseSearchResponse(data))
+  return candidate ? { kind: "found", match: toMatch(candidate, term) } : { kind: "notFound" }
 }

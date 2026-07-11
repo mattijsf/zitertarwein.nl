@@ -1,7 +1,7 @@
-import { describe, expect, it } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { googleUrl } from "./googleUrl"
 import type { OffProduct } from "./lookUpOnline"
-import { hasWheat, parseSearchResponse, pickCandidate, toMatch } from "./lookUpOnline"
+import { hasWheat, lookUpOnline, parseSearchResponse, pickCandidate, toMatch } from "./lookUpOnline"
 
 const off = (fields: Partial<OffProduct>): OffProduct => ({
   code: "123",
@@ -79,4 +79,61 @@ it("googleUrl asks the question", () => {
   expect(googleUrl("pinda")).toBe(
     "https://www.google.com/search?q=Zit%20er%20tarwe%20in%20pinda%3F"
   )
+})
+
+describe("lookUpOnline", () => {
+  const ok = (json: unknown): Response => Response.json(json)
+  const found = { products: [{ code: "1", product_name: "Koek", ingredients_text: "tarwebloem" }] }
+
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+  afterEach(() => {
+    vi.useRealTimers()
+    vi.unstubAllGlobals()
+  })
+
+  it("returns the first product with ingredients", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(ok(found)))
+    expect(await lookUpOnline("koek")).toEqual({
+      kind: "found",
+      match: { name: "Koek", url: "https://nl.openfoodfacts.org/product/1", hasWheat: true },
+    })
+  })
+
+  it("reports not found when nothing has ingredients", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(ok({ products: [{ code: "1" }] })))
+    expect(await lookUpOnline("koek")).toEqual({ kind: "notFound" })
+  })
+
+  it("retries once after a failure", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(new Response("", { status: 503 }))
+      .mockResolvedValueOnce(ok(found))
+    vi.stubGlobal("fetch", fetchMock)
+    const lookup = lookUpOnline("koek")
+    await vi.advanceTimersByTimeAsync(4000)
+    expect((await lookup)?.kind).toBe("found")
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+  })
+
+  it("reports an outage when the retry fails too", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("Failed to fetch")))
+    const lookup = lookUpOnline("koek")
+    await vi.advanceTimersByTimeAsync(4000)
+    expect(await lookup).toEqual({ kind: "unavailable" })
+  })
+
+  it("gives up silently once the search is stale", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response("", { status: 502 }))
+    vi.stubGlobal("fetch", fetchMock)
+    let current = true
+    const lookup = lookUpOnline("koek", () => current)
+    await vi.advanceTimersByTimeAsync(0)
+    current = false
+    await vi.advanceTimersByTimeAsync(4000)
+    expect(await lookup).toBeUndefined()
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+  })
 })

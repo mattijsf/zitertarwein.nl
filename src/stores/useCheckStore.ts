@@ -88,18 +88,20 @@ export const useCheckStore = create<CheckState>()((set, get) => ({
       return
     }
     show({ kind: "searching", term })
-    lookUpOnline(term).then(
-      match => {
-        if (search === searchCounter) {
-          show(match ? { kind: "online", term, match } : { kind: "notFound", term })
-        }
-      },
-      () => {
-        if (search === searchCounter) {
-          show({ kind: "unavailable", term })
-        }
+    void lookUpOnline(term, () => search === searchCounter).then(lookup => {
+      switch (lookup?.kind) {
+        case "found":
+          show({ kind: "online", term, match: lookup.match })
+          break
+        case "notFound":
+        case "unavailable":
+          show({ kind: lookup.kind, term })
+          break
+        case undefined:
+          // stale: the user searched for something else meanwhile
+          break
       }
-    )
+    })
   },
 
   choose: suggestion => {
