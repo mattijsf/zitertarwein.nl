@@ -3,6 +3,11 @@
 Minimalistische website: typ een product en zie meteen of er tarwe in zit,
 met bronvermelding. Live op **https://zitertarwein.nl**.
 
+Staat een product niet in de eigen database, dan zoekt de site live in de
+etiketdata van [Open Food Facts](https://nl.openfoodfacts.org/) (met bronlink).
+Levert ook dat niets op, dan toont de site een Google-link met ingevulde
+zoekopdracht als laatste redmiddel.
+
 ## Bestanden
 
 React 19 + zustand, gebouwd met Vite, strikte TypeScript.
@@ -13,7 +18,7 @@ React 19 + zustand, gebouwd met Vite, strikte TypeScript.
 | `src/app/`             | Opbouw van de pagina: kop, voet (pop-look)                      |
 | `src/features/`        | Zoekvak met autocomplete, resultaatkaart, voorbeelden           |
 | `src/stores/`          | Gedeelde staat (zustand)                                        |
-| `src/lib/`             | Pure logica met tests: normaliseren, zoeken, suggesties         |
+| `src/lib/`             | Pure logica met tests: zoeken, suggesties, Open Food Facts      |
 | `src/data/products.ts` | Productdatabase (~160 Nederlandse producten) met status en bron |
 | `src/data/sources.ts`  | De bronnen waarnaar de antwoorden verwijzen                     |
 | `deploy.sh`            | Bouwen en deployen naar Cloudflare Pages                        |
@@ -21,7 +26,7 @@ React 19 + zustand, gebouwd met Vite, strikte TypeScript.
 `src/data/products.ts` bewerken = product toevoegen:
 
 ```ts
-{ n: "productnaam", a: ["alias"], s: "yes" | "no" | "check", i: "uitleg", b: "vc-gluten" | "vc-tarwe" | "ncv" }
+{ n: "productnaam", a: ["alias"], s: "yes" | "no" | "check", i: "uitleg", b: "vc-gluten" | "vc-tarwe" | "ncv" | "off" }
 ```
 
 ## Lokaal draaien
@@ -68,6 +73,7 @@ Antwoorden verwijzen per product naar een geverifieerde bron:
 - [Voedingscentrum — Gluten en het glutenvrij dieet](https://www.voedingscentrum.nl/encyclopedie/gluten-en-het-glutenvrij-dieet.aspx)
 - [Voedingscentrum — Tarwe: volkorenmeel en bloem](https://www.voedingscentrum.nl/encyclopedie/tarwe-meel-bloem.aspx)
 - [Nederlandse Coeliakie Vereniging — glutenvrij.nl](https://www.glutenvrij.nl/)
+- [Open Food Facts](https://nl.openfoodfacts.org/) — etiketdata, ook gebruikt voor de live-zoekfunctie
 
 De site geeft algemene informatie en is geen medisch advies. Tarwevrij ≠ glutenvrij:
 rogge en gerst bevatten óók gluten.

@@ -86,3 +86,29 @@
   color: inherit;
   font-weight: 800;
 }
+.google-button {
+  display: inline-block;
+  margin-top: 4px;
+  background: var(--black);
+  color: var(--yellow);
+  text-decoration: none;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 15px;
+  padding: 10px 18px;
+  border: var(--border);
+  border-radius: 12px;
+  box-shadow: 4px 4px 0 rgba(28, 25, 23, 0.35);
+  transition:
+    transform 0.12s,
+    box-shadow 0.12s;
+}
+.google-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(28, 25, 23, 0.35);
+}
+.google-button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 rgba(28, 25, 23, 0.35);
+}

@@ -1,12 +1,23 @@
 import { create } from "zustand"
 import { PRODUCTS } from "../data/products"
 import { findProduct } from "../lib/findProduct"
+import type { OnlineMatch } from "../lib/lookUpOnline"
+import { lookUpOnline } from "../lib/lookUpOnline"
 import { normalize } from "../lib/normalize"
 import type { Suggestion } from "../lib/suggest"
 import { suggest } from "../lib/suggest"
 import type { Product } from "../types/product"
 
-export type CheckResult = { kind: "product"; product: Product } | { kind: "unknown"; term: string }
+export type CheckResult =
+  | { kind: "product"; product: Product }
+  /** Not in our list: looking it up on Open Food Facts. */
+  | { kind: "searching"; term: string }
+  | { kind: "online"; term: string; match: OnlineMatch }
+  /** Not on Open Food Facts either (or the lookup failed). */
+  | { kind: "notFound"; term: string }
+
+/** Bumped per lookup, so a slow answer for an older term is dropped. */
+let searchCounter = 0
 
 interface CheckState {
   query: string
@@ -61,16 +72,32 @@ export const useCheckStore = create<CheckState>()((set, get) => ({
         query = first.name
       }
     }
-    set({
-      query,
-      suggestionsOpen: false,
-      activeIndex: -1,
-      result: product ? { kind: "product", product } : { kind: "unknown", term },
-      resultId: get().resultId + 1,
-    })
+    const search = ++searchCounter
+    const show = (result: CheckResult): void => {
+      set({ result, resultId: get().resultId + 1 })
+    }
+    set({ query, suggestionsOpen: false, activeIndex: -1 })
+    if (product) {
+      show({ kind: "product", product })
+      return
+    }
+    show({ kind: "searching", term })
+    lookUpOnline(term).then(
+      match => {
+        if (search === searchCounter) {
+          show(match ? { kind: "online", term, match } : { kind: "notFound", term })
+        }
+      },
+      () => {
+        if (search === searchCounter) {
+          show({ kind: "notFound", term })
+        }
+      }
+    )
   },
 
   choose: suggestion => {
+    searchCounter++
     set({
       query: suggestion.name,
       suggestionsOpen: false,

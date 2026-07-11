@@ -1,6 +1,5 @@
 import type { ReactElement } from "react"
 import { useCheckStore } from "../../stores/useCheckStore"
-import { searchInputRef } from "../search/searchInputRef"
 import "./Examples.css"
 import { exampleTerms } from "./exampleTerms"
 
@@ -14,7 +13,6 @@ export function Examples(): ReactElement {
           key={example}
           type="button"
           onClick={() => {
-            searchInputRef.current?.focus()
             check(example)
           }}
         >

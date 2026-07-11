@@ -1,6 +1,5 @@
 import type { ReactElement } from "react"
 import "./SearchBox.css"
-import { searchInputRef } from "./searchInputRef"
 import { Suggestions } from "./Suggestions"
 import { useRotatingPlaceholder } from "./useRotatingPlaceholder"
 import { useSearchCombobox } from "./useSearchCombobox"
@@ -16,15 +15,15 @@ const PLACEHOLDER_TERMS = [
 ]
 
 export function SearchBox(): ReactElement {
-  const { query, suggestions, activeIndex, choose, check, inputProps } =
+  const { inputRef, query, suggestions, activeIndex, choose, check, inputProps } =
     useSearchCombobox("suggestions")
-  const placeholder = useRotatingPlaceholder(PLACEHOLDER_TERMS, searchInputRef)
+  const placeholder = useRotatingPlaceholder(PLACEHOLDER_TERMS, inputRef)
 
   return (
     <div className="search-wrap">
       <div className="search-box">
         <input
-          ref={searchInputRef}
+          ref={inputRef}
           className="product-input"
           type="text"
           placeholder={`Bijv. ${placeholder}…`}

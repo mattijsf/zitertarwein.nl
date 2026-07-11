@@ -14,4 +14,8 @@ export const footerSources = [
     name: "Nederlandse Coeliakie Vereniging — glutenvrij.nl",
     url: SOURCES.ncv.url,
   },
+  {
+    name: "Open Food Facts — open etiketdatabase",
+    url: SOURCES.off.url,
+  },
 ] as const

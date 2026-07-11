@@ -1,4 +1,5 @@
-import type { KeyboardEvent } from "react"
+import type { KeyboardEvent, RefObject } from "react"
+import { useRef } from "react"
 import type { Suggestion } from "../../lib/suggest"
 import { useCheckStore } from "../../stores/useCheckStore"
 import { useSuggestions } from "./useSuggestions"
@@ -6,6 +7,7 @@ import { useSuggestions } from "./useSuggestions"
 const BLUR_CLOSE_DELAY_MS = 120
 
 export interface SearchCombobox {
+  inputRef: RefObject<HTMLInputElement | null>
   query: string
   suggestions: Suggestion[]
   activeIndex: number
@@ -24,12 +26,21 @@ export interface SearchCombobox {
   }
 }
 
-/** Behaviour of the search field and its suggestion list, shared by every look. */
+/** Behaviour of the search field and its suggestion list. */
 export function useSearchCombobox(listId: string): SearchCombobox {
+  const inputRef = useRef<HTMLInputElement>(null)
   const query = useCheckStore(state => state.query)
   const activeIndex = useCheckStore(state => state.activeIndex)
-  const { type, openSuggestions, closeSuggestions, setActiveIndex, check, choose } =
-    useCheckStore.getState()
+  const { type, openSuggestions, closeSuggestions, setActiveIndex } = useCheckStore.getState()
+  // blur hides the on-screen keyboard on mobile, so the result is visible
+  const check = (): void => {
+    inputRef.current?.blur()
+    useCheckStore.getState().check()
+  }
+  const choose = (suggestion: Suggestion): void => {
+    inputRef.current?.blur()
+    useCheckStore.getState().choose(suggestion)
+  }
   const suggestions = useSuggestions()
   const open = suggestions.length > 0
 
@@ -66,13 +77,12 @@ export function useSearchCombobox(listId: string): SearchCombobox {
   }
 
   return {
+    inputRef,
     query,
     suggestions,
     activeIndex,
     choose,
-    check: () => {
-      check()
-    },
+    check,
     inputProps: {
       role: "combobox",
       "aria-expanded": open,

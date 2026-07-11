@@ -1,5 +1,4 @@
-// Sources the answers point to: verified pages from the Voedingscentrum and the Dutch Coeliac
-// Association.
+// Sources the answers point to.
 import type { Source } from "../types/product"
 
 export const SOURCES = {
@@ -14,6 +13,10 @@ export const SOURCES = {
   ncv: {
     name: "Nederlandse Coeliakie Vereniging (glutenvrij.nl)",
     url: "https://www.glutenvrij.nl/",
+  },
+  off: {
+    name: "Open Food Facts (etiketdatabase)",
+    url: "https://nl.openfoodfacts.org/",
   },
 } as const satisfies Record<string, Source>
 

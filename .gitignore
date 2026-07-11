@@ -4,3 +4,5 @@ node_modules/
 dist/
 coverage/
 *.tsbuildinfo
+.wrangler/
+zitertarwein-v1.0.0/
