@@ -1,6 +1,7 @@
 import { create } from "zustand"
 import { PRODUCTS } from "../data/products"
 import { findProduct } from "../lib/findProduct"
+import type { InstallPlatform } from "../lib/installPlatform"
 import type { OnlineMatch } from "../lib/lookUpOnline"
 import { lookUpOnline } from "../lib/lookUpOnline"
 import { normalize } from "../lib/normalize"
@@ -15,6 +16,8 @@ export type CheckResult =
   | { kind: "online"; term: string; match: OnlineMatch }
   /** Not on Open Food Facts either (or the lookup failed). */
   | { kind: "notFound"; term: string }
+  /** How to install the app, for browsers without an install prompt. */
+  | { kind: "installHelp"; platform: InstallPlatform }
 
 /** Bumped per lookup, so a slow answer for an older term is dropped. */
 let searchCounter = 0
@@ -36,6 +39,7 @@ interface CheckState {
   /** Look up the query (or a given term) and show the result. */
   check: (term?: string) => void
   choose: (suggestion: Suggestion) => void
+  showInstallHelp: (platform: InstallPlatform) => void
 }
 
 export const useCheckStore = create<CheckState>()((set, get) => ({
@@ -105,5 +109,10 @@ export const useCheckStore = create<CheckState>()((set, get) => ({
       result: { kind: "product", product: suggestion.product },
       resultId: get().resultId + 1,
     })
+  },
+
+  showInstallHelp: platform => {
+    searchCounter++
+    set({ result: { kind: "installHelp", platform }, resultId: get().resultId + 1 })
   },
 }))

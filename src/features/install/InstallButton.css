@@ -25,3 +25,10 @@
   transform: translate(3px, 3px);
   box-shadow: 0 0 0 var(--black);
 }
+
+@media (max-width: 460px) {
+  /* scrolls with the page, so it covers no content */
+  .install-button {
+    position: absolute;
+  }
+}

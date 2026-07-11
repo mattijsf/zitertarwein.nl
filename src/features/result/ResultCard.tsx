@@ -1,6 +1,8 @@
 import type { ReactElement } from "react"
+import { useEffect, useRef } from "react"
 import { SOURCES } from "../../data/sources"
 import { googleUrl } from "../../lib/googleUrl"
+import type { InstallPlatform } from "../../lib/installPlatform"
 import type { CheckResult } from "../../stores/useCheckStore"
 import { useCheckStore } from "../../stores/useCheckStore"
 import type { Product, Verdict } from "../../types/product"
@@ -16,8 +18,15 @@ const STYLE: Record<Verdict, { emoji: string; verdict: string }> = {
 export function ResultCard(): ReactElement {
   const result = useCheckStore(state => state.result)
   const resultId = useCheckStore(state => state.resultId)
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    // install help is opened from the top or bottom of the page: bring the card into view
+    if (result?.kind === "installHelp") {
+      ref.current?.scrollIntoView({ behavior: "smooth", block: "nearest" })
+    }
+  }, [result])
   return (
-    <div className={resultClass(result)} role="status" aria-live="polite">
+    <div ref={ref} className={resultClass(result)} role="status" aria-live="polite">
       {result && <ResultBody key={resultId} result={result} />}
     </div>
   )
@@ -34,6 +43,7 @@ function resultClass(result: CheckResult | null): string {
       return `result visible ${result.match.hasWheat ? "yes" : "check"}`
     case "searching":
     case "notFound":
+    case "installHelp":
       return "result visible"
   }
 }
@@ -101,6 +111,46 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
               Zoek op Google&nbsp;→
             </a>
           </p>
+        </>
+      )
+    case "installHelp":
+      return <InstallHelpBody platform={result.platform} />
+  }
+}
+
+function InstallHelpBody({ platform }: { platform: InstallPlatform }): ReactElement {
+  return (
+    <>
+      <div className="result-emoji">📲</div>
+      <div className="result-verdict">Zo installeer je de app</div>
+      <p className="result-info">
+        <InstallSteps platform={platform} />
+      </p>
+      <p className="result-info">Daarna staat 🌾 als app op je scherm — werkt ook offline.</p>
+    </>
+  )
+}
+
+function InstallSteps({ platform }: { platform: InstallPlatform }): ReactElement {
+  switch (platform) {
+    case "ios":
+      return (
+        <>
+          Open deze site in Safari, tik op de deelknop (vierkantje met pijl omhoog) en kies{" "}
+          <strong>‘Zet op beginscherm’</strong>.
+        </>
+      )
+    case "firefox":
+      return (
+        <>
+          Tik op het menu (⋮) van Firefox en kies <strong>‘Toevoegen aan startscherm’</strong>.
+        </>
+      )
+    case "other":
+      return (
+        <>
+          Open het browsermenu en kies <strong>‘App installeren’</strong> of{" "}
+          <strong>‘Toevoegen aan startscherm’</strong>.
         </>
       )
   }
