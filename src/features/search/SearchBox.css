@@ -55,9 +55,12 @@
 
 @media (max-width: 460px) {
   .search-box {
-    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .product-input {
+    flex-basis: 100%;
   }
   .check-button {
-    width: 100%;
+    flex: 1;
   }
 }
