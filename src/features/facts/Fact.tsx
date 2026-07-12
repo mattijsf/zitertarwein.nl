@@ -11,6 +11,7 @@ export function Fact(): ReactElement {
   }
   return (
     <p
+      id="fact"
       className="fact"
       title="Klik voor nog een weetje"
       style={{ background: FACT_COLORS[index % FACT_COLORS.length] }}
