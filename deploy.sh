@@ -1,10 +1,10 @@
 #!/bin/sh
-# Deploy naar de Cloudflare Worker "zitertarwein" (daar hangt zitertarwein.nl aan).
-# Wordt automatisch aangeroepen door de post-commit hook, of handmatig: ./deploy.sh
+# Deploy to the Cloudflare Worker "zitertarwein" (zitertarwein.nl points at it).
+# Invoked automatically by the post-commit hook, or manually: ./deploy.sh
 set -e
 cd "$(dirname "$0")"
 
-# Vite bouwt de site in dist/
+# Vite builds the site into dist/
 pnpm install --frozen-lockfile
 pnpm build
 

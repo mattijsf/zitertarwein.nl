@@ -3,7 +3,7 @@
 import type { Product } from "../types/product"
 
 export const PRODUCTS: readonly Product[] = [
-  // ── Granen & meel ─────────────────────────────────────────────
+  // ── Grains & flour ─────────────────────────────────────────────
   { n: "tarwe", a: ["tarwekorrels"], s: "yes", i: "Tarwe is… tarwe. Ook spelt en khorasantarwe (kamut) zijn tarwesoorten.", b: "vc-tarwe" },
   { n: "tarwebloem", a: ["bloem", "patentbloem"], s: "yes", i: "Bloem is gemalen en gezeefde tarwe.", b: "vc-tarwe" },
   { n: "volkorenmeel", a: ["tarwemeel", "meel"], s: "yes", i: "Volkorenmeel is gemalen volkoren tarwe.", b: "vc-tarwe" },
@@ -27,7 +27,7 @@ export const PRODUCTS: readonly Product[] = [
   { n: "teff", a: [], s: "no", i: "Geen tarwe, geen gluten.", b: "vc-gluten" },
   { n: "amarant", a: ["amaranth"], s: "no", i: "Geen tarwe, geen gluten.", b: "vc-gluten" },
 
-  // ── Brood & bakkerij ──────────────────────────────────────────
+  // ── Bread & bakery ──────────────────────────────────────────
   { n: "brood", a: ["boterham"], s: "yes", i: "Brood wordt in Nederland vrijwel altijd van tarwe gebakken.", b: "vc-tarwe" },
   { n: "wit brood", a: ["witbrood"], s: "yes", i: "Gebakken van tarwebloem.", b: "vc-tarwe" },
   { n: "bruin brood", a: ["bruinbrood"], s: "yes", i: "Gebakken van (deels volkoren) tarwemeel.", b: "vc-tarwe" },
@@ -47,7 +47,7 @@ export const PRODUCTS: readonly Product[] = [
   { n: "maïswafel", a: ["maiswafel"], s: "no", i: "Gepofte maïs, geen tarwe.", b: "vc-gluten" },
   { n: "croutons", a: [], s: "yes", i: "Geroosterd tarwebrood.", b: "vc-tarwe" },
 
-  // ── Pasta, noedels & granen op je bord ────────────────────────
+  // ── Pasta, noodles & grains ────────────────────────
   { n: "pasta", a: [], s: "yes", i: "Klassieke pasta is gemaakt van tarwegries (durumtarwe). Glutenvrije pasta van rijst of maïs bestaat ook.", b: "vc-tarwe" },
   { n: "spaghetti", a: [], s: "yes", i: "Gemaakt van durumtarwe.", b: "vc-tarwe" },
   { n: "macaroni", a: [], s: "yes", i: "Gemaakt van durumtarwe.", b: "vc-tarwe" },
@@ -67,7 +67,7 @@ export const PRODUCTS: readonly Product[] = [
   { n: "mihoen", a: ["rijstvermicelli"], s: "no", i: "Gemaakt van rijst, geen tarwe.", b: "vc-gluten" },
   { n: "bami", a: [], s: "yes", i: "Baminoedels zijn tarwenoedels.", b: "vc-tarwe" },
 
-  // ── Warme snacks & fastfood ───────────────────────────────────
+  // ── Hot snacks & fast food ───────────────────────────────────
   { n: "pizza", a: ["pizzabodem"], s: "yes", i: "De bodem is tarwedeeg. Glutenvrije bodems bestaan.", b: "vc-tarwe" },
   { n: "wrap", a: ["tortilla"], s: "check", i: "Tarwewraps: ja. Maïstortilla's: nee. In Nederland is tarwe de standaard — etiket checken.", b: "ncv" },
   { n: "pannenkoek", a: ["pannenkoeken"], s: "yes", i: "Beslag van tarwebloem (of tarwemeel).", b: "vc-tarwe" },
@@ -96,7 +96,7 @@ export const PRODUCTS: readonly Product[] = [
   { n: "soepballetjes", a: [], s: "check", i: "Bevatten vaak paneermeel van tarwe. Etiket checken.", b: "ncv" },
   { n: "kroepoek", a: [], s: "no", i: "Gemaakt van tapioca en garnaal — meestal geen tarwe. Bij twijfel etiket checken.", b: "ncv" },
 
-  // ── Koek, snoep & zoet ────────────────────────────────────────
+  // ── Biscuits, sweets & candy ────────────────────────────────────────
   { n: "koekjes", a: ["koekje", "biscuit", "biscuitjes"], s: "yes", i: "Vrijwel alle koekjes zijn gebakken van tarwebloem.", b: "vc-tarwe" },
   { n: "stroopwafel", a: ["stroopwafels"], s: "yes", i: "Tarwebloem met stroop. Heerlijk, maar vol tarwe.", b: "vc-tarwe" },
   { n: "speculaas", a: [], s: "yes", i: "Gebakken van tarwebloem met speculaaskruiden.", b: "vc-tarwe" },
@@ -152,7 +152,7 @@ export const PRODUCTS: readonly Product[] = [
   { n: "appelstroop", a: [], s: "no", i: "Ingekookte appels, geen tarwe.", b: "vc-gluten" },
   { n: "pindakaas", a: [], s: "no", i: "Pinda's (en soms wat olie/zout). 100%-pindakaas is sowieso tarwevrij.", b: "ncv" },
 
-  // ── Hartig & borrel ───────────────────────────────────────────
+  // ── Savoury snacks ───────────────────────────────────────────
   { n: "chips", a: ["paprikachips", "naturelchips"], s: "check", i: "Naturel chips is meestal tarwevrij; sommige smaakjes bevatten tarwe. Etiket checken.", b: "ncv" },
   { n: "popcorn", a: [], s: "no", i: "Gepofte maïs, geen tarwe.", b: "vc-gluten" },
   { n: "borrelnootjes", a: ["katjang pedis"], s: "yes", i: "Het krokante jasje is van tarwebloem.", b: "ncv" },
@@ -169,7 +169,7 @@ export const PRODUCTS: readonly Product[] = [
   { n: "zonnebloempitten", a: [], s: "no", i: "Geen tarwe.", b: "vc-gluten" },
   { n: "pijnboompitten", a: [], s: "no", i: "Geen tarwe.", b: "vc-gluten" },
 
-  // ── Vlees, vis & vega ─────────────────────────────────────────
+  // ── Meat, fish & veggie ─────────────────────────────────────────
   { n: "kip", a: ["kipfilet"], s: "no", i: "Onbewerkte kip bevat geen tarwe. Gepaneerde kip (schnitzel, nuggets) wél.", b: "vc-gluten" },
   { n: "biefstuk", a: ["rundvlees", "steak"], s: "no", i: "Puur vlees, geen tarwe.", b: "vc-gluten" },
   { n: "gehakt", a: ["rundergehakt"], s: "check", i: "Puur gehakt: geen tarwe. Gekruid gehakt en gehaktballen bevatten vaak paneermeel. Etiket checken.", b: "ncv" },
@@ -189,7 +189,7 @@ export const PRODUCTS: readonly Product[] = [
   { n: "vegaburger", a: ["vegetarische burger", "veggieburger"], s: "check", i: "Veel vleesvervangers bevatten tarwe(gluten) of paneermeel. Etiket checken.", b: "ncv" },
   { n: "vegetarische schnitzel", a: [], s: "yes", i: "Paneerlaag én vaak tarwe-eiwit in de vulling.", b: "ncv" },
 
-  // ── Gerechten & keuken ────────────────────────────────────────
+  // ── Dishes & cooking ────────────────────────────────────────
   { n: "tosti", a: ["tosti's"], s: "yes", i: "Gemaakt van brood, dus tarwe.", b: "vc-tarwe" },
   { n: "uitsmijter", a: [], s: "yes", i: "De eieren niet, maar het brood eronder wel.", b: "vc-tarwe" },
   { n: "wentelteefjes", a: ["wentelteefje"], s: "yes", i: "Oud (tarwe)brood in ei gewenteld.", b: "vc-tarwe" },
@@ -218,7 +218,7 @@ export const PRODUCTS: readonly Product[] = [
   { n: "tabouleh", a: ["taboulé"], s: "yes", i: "Gemaakt met bulgur, en bulgur is tarwe.", b: "vc-tarwe" },
   { n: "couscoussalade", a: [], s: "yes", i: "Couscous is tarwe.", b: "vc-tarwe" },
 
-  // ── Meer bakkerij & snoep ─────────────────────────────────────
+  // ── More bakery & sweets ─────────────────────────────────────
   { n: "boterkoek", a: [], s: "yes", i: "Boter én tarwebloem.", b: "vc-tarwe" },
   { n: "sprits", a: ["spritsen"], s: "yes", i: "Gebakken van tarwebloem.", b: "vc-tarwe" },
   { n: "jodenkoek", a: ["jodenkoeken"], s: "yes", i: "Gebakken van tarwebloem.", b: "vc-tarwe" },
@@ -237,7 +237,7 @@ export const PRODUCTS: readonly Product[] = [
   { n: "zuurtjes", a: ["zuurtje"], s: "no", i: "Suiker en smaakstof — geen tarwe.", b: "ncv" },
   { n: "lolly", a: ["lolly's"], s: "no", i: "Suiker — geen tarwe.", b: "ncv" },
 
-  // ── Zuivel ────────────────────────────────────────────────────
+  // ── Dairy ────────────────────────────────────────────────────
   { n: "melk", a: ["halfvolle melk", "volle melk"], s: "no", i: "Melk bevat geen tarwe.", b: "vc-gluten" },
   { n: "karnemelk", a: [], s: "no", i: "Geen tarwe.", b: "vc-gluten" },
   { n: "kaas", a: ["jonge kaas", "oude kaas", "goudse kaas"], s: "no", i: "Kaas bevat geen tarwe. Alleen bij smeerkaas met smaakjes even het etiket checken.", b: "vc-gluten" },
@@ -256,7 +256,7 @@ export const PRODUCTS: readonly Product[] = [
   { n: "amandelmelk", a: ["amandeldrink"], s: "no", i: "Gemaakt van amandelen, geen tarwe.", b: "vc-gluten" },
   { n: "rijstmelk", a: ["rijstdrink"], s: "no", i: "Gemaakt van rijst, geen tarwe.", b: "vc-gluten" },
 
-  // ── Groente & fruit ───────────────────────────────────────────
+  // ── Fruit & vegetables ───────────────────────────────────────────
   { n: "aardappel", a: ["aardappelen", "aardappels"], s: "no", i: "Aardappelen bevatten geen tarwe.", b: "vc-gluten" },
   { n: "zoete aardappel", a: ["bataat"], s: "no", i: "Geen tarwe.", b: "vc-gluten" },
   { n: "tomaat", a: ["tomaten"], s: "no", i: "Geen tarwe.", b: "vc-gluten" },
@@ -290,7 +290,7 @@ export const PRODUCTS: readonly Product[] = [
   { n: "blauwe bessen", a: ["bosbessen"], s: "no", i: "Geen tarwe.", b: "vc-gluten" },
   { n: "framboos", a: ["frambozen"], s: "no", i: "Geen tarwe.", b: "vc-gluten" },
 
-  // ── Noten & peulvruchten ──────────────────────────────────────
+  // ── Nuts & legumes ──────────────────────────────────────
   { n: "pinda", a: ["pinda's", "pindas"], s: "no", i: "Ongepaneerde pinda's bevatten geen tarwe. Borrelnootjes wél (tarwejasje).", b: "ncv" },
   { n: "amandelen", a: ["amandel"], s: "no", i: "Geen tarwe.", b: "vc-gluten" },
   { n: "walnoten", a: ["walnoot"], s: "no", i: "Geen tarwe.", b: "vc-gluten" },
@@ -301,7 +301,7 @@ export const PRODUCTS: readonly Product[] = [
   { n: "hummus", a: [], s: "no", i: "Kikkererwten, tahin, olie — normaal gesproken geen tarwe.", b: "ncv" },
   { n: "bruine bonen", a: ["kidneybonen", "bonen"], s: "no", i: "Geen tarwe.", b: "vc-gluten" },
 
-  // ── Sauzen & smaakmakers ──────────────────────────────────────
+  // ── Sauces & seasonings ──────────────────────────────────────
   { n: "sojasaus", a: ["shoyu"], s: "yes", i: "Klassieke sojasaus wordt gebrouwen mét tarwe. Tamari is de tarwevrije variant.", b: "ncv" },
   { n: "tamari", a: [], s: "no", i: "Sojasaus zonder tarwe. Check wel het etiket: niet elke tamari is 100% tarwevrij.", b: "ncv" },
   { n: "ketjap", a: ["ketjap manis"], s: "check", i: "Gemaakt op basis van sojasaus, dus bevat vaak tarwe. Etiket checken.", b: "ncv" },
@@ -321,13 +321,13 @@ export const PRODUCTS: readonly Product[] = [
   { n: "zout", a: [], s: "no", i: "Geen tarwe.", b: "vc-gluten" },
   { n: "peper", a: [], s: "no", i: "Geen tarwe.", b: "vc-gluten" },
 
-  // ── Ontbijt ───────────────────────────────────────────────────
+  // ── Breakfast ───────────────────────────────────────────────────
   { n: "muesli", a: [], s: "check", i: "Bevat vaak tarwevlokken en vrijwel altijd haver (besmettingsrisico). Etiket checken.", b: "ncv" },
   { n: "granola", a: [], s: "check", i: "Meestal op haverbasis: geen tarwe als ingrediënt, maar vaak sporen. Sommige granola bevat wél tarwe. Etiket checken.", b: "ncv" },
   { n: "cornflakes", a: [], s: "check", i: "Van maïs, maar bevat vaak gerstemoutextract (geen tarwe, wél gluten) en soms sporen. Etiket checken.", b: "ncv" },
   { n: "cruesli", a: [], s: "check", i: "Vaak met tarwe of haver. Etiket checken.", b: "ncv" },
 
-  // ── Dranken ───────────────────────────────────────────────────
+  // ── Drinks ───────────────────────────────────────────────────
   { n: "bier", a: [], s: "check", i: "Pils wordt van gerst gebrouwen (geen tarwe, wél gluten). Witbier en weizen bevatten wél tarwe.", b: "ncv" },
   { n: "pils", a: ["pilsener"], s: "no", i: "Gebrouwen van gerstemout: geen tarwe, maar wél gluten.", b: "ncv" },
   { n: "witbier", a: ["weizen", "weißbier", "hefeweizen", "wit bier"], s: "yes", i: "Witbier en weizen worden gebrouwen met tarwe. Het staat zelfs in de naam (Weizen = tarwe).", b: "ncv" },
