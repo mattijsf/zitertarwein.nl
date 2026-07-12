@@ -11,3 +11,11 @@ export const FACTS: readonly string[] = [
   "Wist je dat whisky tarwevrij is, ook als hij van tarwe is gestookt? Destillatie verwijdert het eiwit. 🥃",
   "Wist je dat tabouleh vooral uit bulgur bestaat — en bulgur is tarwe? 🥗",
 ]
+
+/** Card colours, cycled per fact. */
+export const FACT_COLORS: readonly string[] = [
+  "var(--sky)",
+  "var(--pink)",
+  "var(--purple)",
+  "var(--green)",
+]
