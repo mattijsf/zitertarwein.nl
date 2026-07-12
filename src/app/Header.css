@@ -13,6 +13,9 @@ header {
   border-radius: 50%;
   box-shadow: var(--shadow);
   transform: rotate(-4deg);
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
 }
 .logo {
   font-size: 58px;
@@ -27,6 +30,55 @@ header {
   }
   50% {
     transform: rotate(7deg);
+  }
+}
+/* Wind picks up when you hover over the field */
+.logo-sticker:hover .logo {
+  animation-duration: 1.2s;
+}
+
+/* Harvest cycle on click: mow → seedling sprouts → ripens into wheat */
+.logo.harvest {
+  animation: harvest 0.5s ease-in forwards;
+}
+@keyframes harvest {
+  55% {
+    transform: rotate(80deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(88deg) translateY(20px);
+    opacity: 0;
+  }
+}
+.logo.grow {
+  animation: grow 0.75s cubic-bezier(0.3, 1.3, 0.4, 1);
+}
+@keyframes grow {
+  from {
+    transform: scaleY(0.05) scaleX(0.7);
+  }
+  70% {
+    transform: scaleY(1.1);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.logo.ripen {
+  animation:
+    ripen 0.5s cubic-bezier(0.2, 1.6, 0.4, 1),
+    sway 3.5s ease-in-out 0.5s infinite;
+}
+@keyframes ripen {
+  from {
+    transform: scale(0.85);
+  }
+  60% {
+    transform: scale(1.14);
+  }
+  to {
+    transform: scale(1);
   }
 }
 h1 {

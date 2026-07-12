@@ -1,12 +1,14 @@
 import type { ReactElement } from "react"
 import "./Header.css"
+import { useHarvest } from "./useHarvest"
 
 export function Header(): ReactElement {
+  const { phase, start } = useHarvest()
   return (
     <header>
-      <span className="logo-sticker">
-        <span className="logo" aria-hidden="true">
-          🌾
+      <span className="logo-sticker" title="Oogsten!" onClick={start}>
+        <span className={phase === "idle" ? "logo" : `logo ${phase}`} aria-hidden="true">
+          {phase === "grow" ? "🌱" : "🌾"}
         </span>
       </span>
       <h1>
