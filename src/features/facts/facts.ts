@@ -10,6 +10,16 @@ export const FACTS: readonly string[] = [
   "Wist je dat borrelnootjes een jasje van tarwebloem hebben? 🥜",
   "Wist je dat whisky tarwevrij is, ook als hij van tarwe is gestookt? Destillatie verwijdert het eiwit. 🥃",
   "Wist je dat tabouleh vooral uit bulgur bestaat — en bulgur is tarwe? 🥗",
+  "Wist je dat macarons van amandelmeel worden gemaakt? Geen tarwe dus. 🍬",
+  "Wist je dat er geen bloem in bloemkool zit? Gelukkig maar. 🥦",
+  "Wist je dat gnocchi niet alleen aardappel is? Het deeg wordt gebonden met tarwebloem. 🥔",
+  "Wist je dat krabsticks (surimi) vaak tarwezetmeel bevatten? 🦀",
+  "Wist je dat matze ongerezen is, maar gewoon van tarwe wordt gebakken? 🫓",
+  "Wist je dat Brinta 100% volkoren tarwe is? De naam komt van BReakfast INstant TArwe. 🥣",
+  "Wist je dat seitan puur tarwegluten is? Meer tarwe dan dit wordt het niet. 🌾",
+  "Wist je dat couscous eigenlijk hele kleine tarwebolletjes zijn? 🍚",
+  "Wist je dat kroepoek van tapioca en garnaal wordt gemaakt? Meestal tarwevrij. 🦐",
+  "Wist je dat ontbijtkoek traditioneel van rogge is, maar veel merken er tarwe bij mengen? 🍞",
 ]
 
 /** Card colours, cycled per fact. */
