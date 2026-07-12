@@ -1,5 +1,6 @@
 /** Live lookup in the Open Food Facts label data, for products not in our own list. */
 import { offProductUrl } from "./offProductUrl"
+import rules from "./rules.json"
 
 /** The fields we ask Open Food Facts for. */
 export interface OffProduct {
@@ -27,9 +28,9 @@ export const FIELDS =
 const TIMEOUT_MS = 8000
 const RETRY_DELAY_MS = 4000
 
-const WHEAT_IN_TEXT =
-  /tarwe|wheat|weizen|blé|froment|durum|semol|spelt|khorasan|kamut|seitan|bulgur|couscous/i
-const WHEAT_IN_TAGS = /wheat|spelt|khorasan|triticum/i
+// same rules as the Python generator (sources read rules.json too)
+const WHEAT_IN_TEXT = new RegExp(rules.wheatText, "i")
+const WHEAT_IN_TAGS = new RegExp(rules.wheatTags, "i")
 
 function offSearchUrl(term: string): string {
   return (

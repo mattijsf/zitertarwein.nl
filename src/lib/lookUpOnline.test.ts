@@ -43,7 +43,7 @@ describe("pickCandidate", () => {
 describe("hasWheat", () => {
   it("finds wheat words in the ingredient text", () => {
     expect(hasWheat(off({ ingredientsTextNl: "TARWEBLOEM, suiker" }))).toBe(true)
-    expect(hasWheat(off({ ingredientsText: "farine de blé" }))).toBe(true)
+    expect(hasWheat(off({ ingredientsText: "farine de froment" }))).toBe(true)
     expect(hasWheat(off({ ingredientsText: "rijst, water, zout" }))).toBe(false)
   })
 

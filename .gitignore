@@ -7,3 +7,4 @@ coverage/
 .wrangler/
 zitertarwein-v1.0.0/
 food.parquet
+__pycache__/

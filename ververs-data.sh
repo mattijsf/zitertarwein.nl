@@ -14,7 +14,7 @@ echo "→ Bulk-export downloaden (± 8 GB)…"
 curl -sL "https://huggingface.co/datasets/openfoodfacts/product-database/resolve/main/food.parquet" -o "$TMP/food.parquet"
 
 echo "→ Importeren…"
-python3 importeer_off.py "$TMP/food.parquet"
+python3 genereer.py off="$TMP/food.parquet"
 
 if git diff --quiet src/data/off-products.json; then
   echo "Geen wijzigingen in de productdata."

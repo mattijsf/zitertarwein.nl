@@ -12,33 +12,49 @@ zoekopdracht als laatste redmiddel.
 
 React 19 + zustand, gebouwd met Vite, strikte TypeScript.
 
-| Pad                          | Doel                                                                 |
-| ---------------------------- | -------------------------------------------------------------------- |
-| `index.html`                 | Vite-entry: meta-tags en `#root`                                     |
-| `src/app/`                   | Opbouw van de pagina: kop, voet (pop-look)                           |
-| `src/features/`              | Zoekvak met autocomplete, resultaatkaart, voorbeelden                |
-| `src/stores/`                | Gedeelde staat (zustand)                                             |
-| `src/lib/`                   | Pure logica met tests: zoeken, suggesties, Open Food Facts           |
-| `src/data/products.ts`       | Handgemaakte productdatabase (~310 producten) met status en bron     |
-| `src/data/off-products.json` | Supermarktproducten uit Open Food Facts (gegenereerd, niet bewerken) |
-| `src/data/sources.ts`        | De bronnen waarnaar de antwoorden verwijzen                          |
-| `deploy.sh`                  | Bouwen en deployen naar Cloudflare                                   |
-| `importeer_off.py`           | Genereert `src/data/off-products.json`                               |
+| Pad                          | Doel                                                               |
+| ---------------------------- | ------------------------------------------------------------------ |
+| `index.html`                 | Vite-entry: meta-tags en `#root`                                   |
+| `src/app/`                   | Opbouw van de pagina: kop, voet (pop-look)                         |
+| `src/features/`              | Zoekvak met autocomplete, resultaatkaart, voorbeelden              |
+| `src/stores/`                | Gedeelde staat (zustand)                                           |
+| `src/lib/`                   | Pure logica met tests: zoeken, suggesties, Open Food Facts         |
+| `src/lib/rules.json`         | Gedeelde tarwe-detectieregels (site én importscripts)              |
+| `src/data/products.ts`       | Handgemaakte productdatabase (~310 producten) met status en bron   |
+| `src/data/off-products.json` | Supermarktproducten met etiketdata (gegenereerd, niet bewerken)    |
+| `src/data/sources.ts`        | De bronnen waarnaar de antwoorden verwijzen                        |
+| `deploy.sh`                  | Bouwen en deployen naar Cloudflare                                 |
+| `genereer.py`                | Genereert `src/data/off-products.json` uit één of meer databronnen |
+| `bronnen/`                   | Bron-modules: `off_parquet.py` (Open Food Facts), `csv_export.py`  |
 
-`src/data/off-products.json` opnieuw genereren vanuit de Open Food Facts bulk-export
-(geen API-limieten, ± 8 GB download, licentie ODbL):
+## Productdata genereren
+
+`src/data/off-products.json` wordt gegenereerd met `genereer.py`; elke databron is een
+module in `bronnen/`. Bronnen combineren kan door ze achter elkaar op te
+geven — de eerste bron wint bij dubbele namen, en CSV-bronnen worden
+integraal opgenomen:
 
 ```bash
 pip3 install duckdb
 curl -L https://huggingface.co/datasets/openfoodfacts/product-database/resolve/main/food.parquet -o food.parquet
-python3 importeer_off.py food.parquet
+python3 genereer.py off=food.parquet
+# of met een extra (supermarkt)export erbij:
+python3 genereer.py csv=supermarkt-export.csv off=food.parquet
 ```
 
-Het script selecteert de populairste Nederlandse producten met
-ingrediëntinformatie plus extra dekking per risico-categorie (sauzen,
-soepen, koek, snoep, …), en overschrijft `src/data/off-products.json` alleen bij een
-geslaagde import. De grote lijst (eigen chunk) wordt in de browser pas ná het renderen
-van de pagina geladen.
+CSV-formaat: kolommen `naam` en `ingredienten` (verplicht) plus optioneel
+`merk`, `barcode` en `sporen`; scheidingsteken wordt herkend. Zie
+`bronnen/csv_export.py`. Een nieuwe bron toevoegen = één module met een
+`lees(pad)`-functie die het gedeelde productformaat oplevert.
+
+Uit de Open Food Facts-export (± 8 GB, licentie ODbL) selecteert de
+generator de populairste Nederlandse producten met ingrediëntinformatie
+plus extra dekking per risico-categorie (sauzen, soepen, koek, snoep, …).
+`src/data/off-products.json` wordt alleen bij een geslaagde run overschreven, en wordt in
+de browser (eigen chunk) pas ná het renderen van de pagina geladen.
+
+De detectieregels (welke woorden en tags op tarwe wijzen) staan één keer
+in `src/lib/rules.json` en worden door zowel de site als de importscripts gebruikt.
 
 Alles-in-één verversing (download + import + commit + autodeploy):
 
