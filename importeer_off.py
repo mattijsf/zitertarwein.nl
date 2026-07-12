@@ -1,15 +1,42 @@
 #!/usr/bin/env python3
-"""Haal populaire NL-producten met ingrediënten op uit Open Food Facts
-en genereer src/data/off-products.json voor zitertarwein.nl."""
-import json, os, re, sys, time, unicodedata, urllib.request, urllib.parse
+"""Genereer src/data/off-products.json uit de Open Food Facts bulk-export (food.parquet).
+
+Gebruik:
+  python3 importeer_off.py [pad/naar/food.parquet]
+
+De export (± 8 GB, licentie ODbL) is te downloaden met:
+  curl -L https://huggingface.co/datasets/openfoodfacts/product-database/resolve/main/food.parquet -o food.parquet
+
+Selectie: de populairste Nederlandse producten mét ingrediëntinformatie,
+aangevuld met de top per risico-categorie (sauzen, soepen, koek, snoep, …).
+Tarwe-analyse gebruikt zowel de gestructureerde ingrediënt-tags als de
+ingrediëntentekst; sporen en gluten-zonder-tarwe worden apart gemarkeerd.
+"""
+import json, os, re, sys, unicodedata
+
+import duckdb
 
 PROJECT = os.path.dirname(os.path.abspath(__file__))
-TARWE_RE = re.compile(
+PARQUET = sys.argv[1] if len(sys.argv) > 1 else os.path.join(PROJECT, "food.parquet")
+
+TARWE_TEKST_RE = re.compile(
     r"tarwe|wheat|weizen|bl[eé]\b|froment|durum|semol|spelt|khorasan|kamut|seitan|bulgur|couscous",
     re.I,
 )
-TARWE_TAG_RE = re.compile(r"wheat|spelt|khorasan|triticum", re.I)
-GLUTEN_TAG_RE = re.compile(r"gluten", re.I)
+TARWE_TAG_RE = re.compile(r"wheat|spelt|khorasan|triticum|seitan", re.I)
+GLUTEN_RE = re.compile(r"gluten", re.I)
+
+MAX_GLOBAAL = 3000     # populairste producten, ongeacht categorie
+MAX_PER_CATEGORIE = 60 # extra dekking per risico-categorie
+MAX_TOTAAL = 4000
+
+RISICO_CATEGORIEEN = [
+    "en:sauces", "en:soups", "en:biscuits", "en:cakes", "en:candies",
+    "en:breakfast-cereals", "en:meat-alternatives", "en:meat-analogues",
+    "en:snacks", "en:pizzas", "en:breads", "en:pastas", "en:chocolates",
+    "en:ice-creams-and-sorbets", "en:beers", "en:prepared-meals",
+    "en:desserts", "en:crisps", "en:noodles",
+]
 
 
 def norm(s):
@@ -18,96 +45,108 @@ def norm(s):
 
 
 def bestaande_namen():
-    src = open(f"{PROJECT}/src/data/products.ts", encoding="utf-8").read()
+    src = open(os.path.join(PROJECT, "src", "data", "products.ts"), encoding="utf-8").read()
     namen = set(norm(m) for m in re.findall(r'n: "([^"]+)"', src))
     for aliassen in re.findall(r'a: \[([^\]]*)\]', src):
         namen.update(norm(m) for m in re.findall(r'"([^"]+)"', aliassen))
     return namen
 
 
-def haal_pagina(pagina):
-    velden = "code,product_name,product_name_nl,brands,ingredients_text_nl,ingredients_text,allergens_tags,ingredients_tags,traces_tags"
-    url = (
-        "https://nl.openfoodfacts.org/cgi/search.pl?"
-        + urllib.parse.urlencode({
-            "search_simple": 1,
-            "action": "process",
-            "json": 1,
-            "tagtype_0": "countries",
-            "tag_contains_0": "contains",
-            "tag_0": "netherlands",
-            "sort_by": "unique_scans_n",
-            "page_size": 50,
-            "page": pagina,
-            "fields": velden,
-        })
-    )
-    req = urllib.request.Request(url, headers={"User-Agent": "zitertarwein.nl importer (mattijs.fuijkschot@pm.me)"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.load(r).get("products", [])
+def laad_producten():
+    con = duckdb.connect()
+    query = """
+        SELECT
+          code,
+          coalesce(
+            list_filter(product_name, x -> x.lang = 'nl')[1].text,
+            list_filter(product_name, x -> x.lang = 'main')[1].text
+          ) AS naam,
+          brands,
+          coalesce(
+            list_filter(ingredients_text, x -> x.lang = 'nl')[1].text,
+            list_filter(ingredients_text, x -> x.lang = 'main')[1].text
+          ) AS ingredienten,
+          list_transform(ingredients_tags, x -> x)   AS ingr_tags,
+          list_transform(allergens_tags, x -> x)     AS allerg_tags,
+          list_transform(traces_tags, x -> x)        AS sporen_tags,
+          list_transform(categories_tags, x -> x)    AS cat_tags,
+          coalesce(unique_scans_n, 0)                AS scans
+        FROM read_parquet(?)
+        WHERE list_contains(countries_tags, 'en:netherlands')
+          AND (len(ingredients_tags) > 0 OR len(ingredients_text) > 0)
+        ORDER BY scans DESC
+    """
+    return con.execute(query, [PARQUET]).fetchall()
 
 
-def bepaal_status(p):
-    tekst = (p.get("ingredients_text_nl") or p.get("ingredients_text") or "").strip()
-    ingr_tags = " ".join(p.get("ingredients_tags") or [])
-    allerg_tags = " ".join(p.get("allergens_tags") or [])
-    traces_tags = " ".join(p.get("traces_tags") or [])
-    if not tekst and not ingr_tags:
-        return None  # geen etiketinfo: overslaan
-    if TARWE_RE.search(tekst) or TARWE_TAG_RE.search(ingr_tags) or TARWE_TAG_RE.search(allerg_tags):
-        return "yes"
-    if GLUTEN_TAG_RE.search(allerg_tags) or GLUTEN_TAG_RE.search(traces_tags) or TARWE_TAG_RE.search(traces_tags):
-        return "check"  # gluten (mogelijk rogge/gerst) of sporen: niet zeker
-    return "no"
+def analyseer(ingredienten, ingr_tags, allerg_tags, sporen_tags):
+    """Geeft (status, sporen_vlag)."""
+    tekst = ingredienten or ""
+    ingr = " ".join(ingr_tags or [])
+    allerg = " ".join(allerg_tags or [])
+    sporen = " ".join(sporen_tags or [])
+    if TARWE_TAG_RE.search(ingr) or TARWE_TAG_RE.search(allerg) or TARWE_TEKST_RE.search(tekst):
+        return "yes", 0
+    if GLUTEN_RE.search(allerg):
+        return "check", 0  # gluten als ingrediënt (bijv. rogge/gerst), geen duidelijke tarwe
+    if GLUTEN_RE.search(sporen) or TARWE_TAG_RE.search(sporen):
+        return "check", 1  # alleen mogelijke sporen
+    return "no", 0
 
 
 def main():
+    if not os.path.exists(PARQUET):
+        sys.exit(f"parquet-bestand niet gevonden: {PARQUET} (zie docstring voor download)")
     bekend = bestaande_namen()
-    uit, gezien = [], set()
-    for pagina in range(1, 25):
-        producten = None
-        for poging in range(6):
-            try:
-                producten = haal_pagina(pagina)
-                break
-            except Exception as e:
-                print(f"pagina {pagina} poging {poging + 1} mislukt: {e}", file=sys.stderr, flush=True)
-                time.sleep(120)
-        if producten is None:
-            break
-        if not producten:
-            break
-        for p in producten:
-            naam = (p.get("product_name_nl") or p.get("product_name") or "").strip()
-            if not (3 <= len(naam) <= 42) or not re.search(r"[a-zA-Z]{3}", naam):
-                continue
-            sleutel = norm(naam)
-            if sleutel in bekend or sleutel in gezien:
-                continue
-            status = bepaal_status(p)
-            if not status or not p.get("code"):
-                continue
-            merk = (p.get("brands") or "").split(",")[0].strip()
-            gezien.add(sleutel)
-            uit.append({"n": naam, "m": merk, "s": status, "c": p["code"]})
-        time.sleep(30)  # onder de rate-limit blijven (~2 verzoeken/min)
-        print(f"pagina {pagina}: totaal {len(uit)}", flush=True)
-        if len(uit) >= 1000:
-            break
+    rijen = laad_producten()
+    print(f"{len(rijen)} NL-producten met ingrediëntinfo in de export")
 
-    uit = uit[:1000]
-    if len(uit) < 50:
-        print(f"maar {len(uit)} producten opgehaald — off-products.json NIET overschreven", file=sys.stderr)
-        sys.exit(1)
+    kandidaten, per_naam = [], {}
+    for code, naam, merken, ingredienten, ingr_tags, allerg_tags, sporen_tags, cat_tags, scans in rijen:
+        naam = (naam or "").strip()
+        if not (3 <= len(naam) <= 42) or not re.search(r"[a-zA-Z]{3}", naam):
+            continue
+        sleutel = norm(naam)
+        if sleutel in bekend or sleutel in per_naam:
+            continue
+        status, sporen_vlag = analyseer(ingredienten, ingr_tags, allerg_tags, sporen_tags)
+        merk = (merken or "").split(",")[0].strip()
+        item = {"n": naam, "m": merk, "s": status, "c": code}
+        if sporen_vlag:
+            item["sp"] = 1
+        per_naam[sleutel] = True
+        kandidaten.append((item, cat_tags or [], scans))
+
+    # Populairste producten wereldwijd binnen NL…
+    geselecteerd, codes = [], set()
+    for item, _, _ in kandidaten[:MAX_GLOBAAL]:
+        geselecteerd.append(item)
+        codes.add(item["c"])
+    # …plus gerichte dekking per risico-categorie.
+    for categorie in RISICO_CATEGORIEEN:
+        teller = 0
+        for item, cats, _ in kandidaten:
+            if teller >= MAX_PER_CATEGORIE or len(geselecteerd) >= MAX_TOTAAL:
+                break
+            if item["c"] in codes or categorie not in cats:
+                continue
+            geselecteerd.append(item)
+            codes.add(item["c"])
+            teller += 1
+
+    if len(geselecteerd) < 100:
+        sys.exit(f"maar {len(geselecteerd)} producten — off-products.json NIET overschreven")
+
     # Supermarktproducten met etiketdata uit Open Food Facts (https://nl.openfoodfacts.org/,
     # licentie ODbL). JSON kent geen commentaar: één product per regel, niet met de hand bewerken.
-    with open(f"{PROJECT}/src/data/off-products.json", "w", encoding="utf-8") as f:
-        f.write("[\n" + ",\n".join("  " + json.dumps(p, ensure_ascii=False) for p in uit) + "\n]\n")
-    print(f"klaar: {len(uit)} producten naar src/data/off-products.json")
+    with open(os.path.join(PROJECT, "src", "data", "off-products.json"), "w", encoding="utf-8") as f:
+        f.write("[\n" + ",\n".join("  " + json.dumps(p, ensure_ascii=False) for p in geselecteerd) + "\n]\n")
+
     telling = {}
-    for p in uit:
+    for p in geselecteerd:
         telling[p["s"]] = telling.get(p["s"], 0) + 1
-    print("verdeling:", telling)
+    print(f"klaar: {len(geselecteerd)} producten naar src/data/off-products.json")
+    print("verdeling:", telling, "| waarvan alleen-sporen:", sum(1 for p in geselecteerd if p.get("sp")))
 
 
 main()

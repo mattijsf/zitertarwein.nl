@@ -1,5 +1,6 @@
 import type { Product } from "../types/product"
 import { normalize } from "./normalize"
+import { searchNames } from "./searchNames"
 
 export interface Suggestion {
   product: Product
@@ -19,18 +20,18 @@ export function suggest(term: string, products: readonly Product[]): Suggestion[
   const scored: Suggestion[] = []
   for (const product of products) {
     let best: Suggestion | undefined
-    for (const name of [product.n, ...product.a]) {
-      const n = normalize(name)
+    for (const { name, key, isBrand } of searchNames(product)) {
       let score: number
-      if (n.startsWith(t)) {
+      if (key.startsWith(t)) {
         score = 0
-      } else if (n.includes(t)) {
+      } else if (key.includes(t)) {
         score = 1
       } else {
         continue
       }
       if (!best || score < best.score) {
-        best = { product, name, score }
+        // brand match: show the full product name, not just the brand
+        best = { product, name: isBrand ? product.n : name, score }
       }
     }
     if (best) {

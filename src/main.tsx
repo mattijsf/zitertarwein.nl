@@ -16,5 +16,8 @@ createRoot(root).render(
   </StrictMode>
 )
 
-void useCatalogStore.getState().loadOffProducts()
+// the big supermarket list follows once the page has rendered
+window.addEventListener("load", () => {
+  void useCatalogStore.getState().loadOffProducts()
+})
 registerServiceWorker()

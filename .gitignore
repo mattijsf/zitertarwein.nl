@@ -6,3 +6,4 @@ coverage/
 *.tsbuildinfo
 .wrangler/
 zitertarwein-v1.0.0/
+food.parquet

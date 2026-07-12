@@ -22,4 +22,6 @@ export interface Product {
   b: SourceId
   /** Page for this exact product (Open Food Facts), shown instead of the general source. */
   url?: string
+  /** Brand (supermarket products); also a search alias. */
+  m?: string
 }

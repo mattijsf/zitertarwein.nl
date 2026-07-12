@@ -2,10 +2,11 @@ import { describe, expect, it } from "vitest"
 import { offToProduct } from "./offToProduct"
 
 describe("offToProduct", () => {
-  it("adds the brand to the name, keeps the bare name as alias", () => {
+  it("adds the brand to the name, keeps the bare name and the brand as aliases", () => {
     expect(offToProduct({ n: "Pindakaas", m: "Calvé", s: "no", c: "87" })).toMatchObject({
       n: "Pindakaas (Calvé)",
-      a: ["Pindakaas"],
+      a: ["Pindakaas", "Calvé"],
+      m: "Calvé",
       s: "no",
       b: "off",
       url: "https://nl.openfoodfacts.org/product/87",
@@ -22,5 +23,10 @@ describe("offToProduct", () => {
   it("explains the verdict and skips unknown statuses", () => {
     expect(offToProduct({ n: "Koek", m: "", s: "yes", c: "1" })?.i).toContain("zit hier tarwe in")
     expect(offToProduct({ n: "Koek", m: "", s: "ja", c: "1" })).toBeUndefined()
+  })
+
+  it("tells traces apart from gluten without wheat", () => {
+    expect(offToProduct({ n: "Reep", m: "", s: "check", c: "1", sp: 1 })?.i).toContain("sporen")
+    expect(offToProduct({ n: "Koek", m: "", s: "check", c: "1" })?.i).toContain("rogge of gerst")
   })
 })

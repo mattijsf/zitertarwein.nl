@@ -19,21 +19,26 @@ React 19 + zustand, gebouwd met Vite, strikte TypeScript.
 | `src/features/`              | Zoekvak met autocomplete, resultaatkaart, voorbeelden                |
 | `src/stores/`                | Gedeelde staat (zustand)                                             |
 | `src/lib/`                   | Pure logica met tests: zoeken, suggesties, Open Food Facts           |
-| `src/data/products.ts`       | Handgemaakte productdatabase (~265 producten) met status en bron     |
+| `src/data/products.ts`       | Handgemaakte productdatabase (~310 producten) met status en bron     |
 | `src/data/off-products.json` | Supermarktproducten uit Open Food Facts (gegenereerd, niet bewerken) |
 | `src/data/sources.ts`        | De bronnen waarnaar de antwoorden verwijzen                          |
 | `deploy.sh`                  | Bouwen en deployen naar Cloudflare                                   |
 | `importeer_off.py`           | Genereert `src/data/off-products.json`                               |
 
-`src/data/off-products.json` opnieuw genereren (populairste NL-producten met etiketdata):
+`src/data/off-products.json` opnieuw genereren vanuit de Open Food Facts bulk-export
+(geen API-limieten, ± 8 GB download, licentie ODbL):
 
 ```bash
-python3 importeer_off.py
+pip3 install duckdb
+curl -L https://huggingface.co/datasets/openfoodfacts/product-database/resolve/main/food.parquet -o food.parquet
+python3 importeer_off.py food.parquet
 ```
 
-Het script respecteert de rate-limits van Open Food Facts (lange pauzes,
-automatische herkansingen) en overschrijft `src/data/off-products.json` alleen bij een
-geslaagde import. De site laadt die lijst los (eigen chunk) na de eerste weergave.
+Het script selecteert de populairste Nederlandse producten met
+ingrediëntinformatie plus extra dekking per risico-categorie (sauzen,
+soepen, koek, snoep, …), en overschrijft `src/data/off-products.json` alleen bij een
+geslaagde import. De grote lijst (eigen chunk) wordt in de browser pas ná het renderen
+van de pagina geladen.
 
 `src/data/products.ts` bewerken = product toevoegen:
 
