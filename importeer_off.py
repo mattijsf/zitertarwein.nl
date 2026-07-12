@@ -20,11 +20,12 @@ PROJECT = os.path.dirname(os.path.abspath(__file__))
 PARQUET = sys.argv[1] if len(sys.argv) > 1 else os.path.join(PROJECT, "food.parquet")
 
 TARWE_TEKST_RE = re.compile(
-    r"tarwe|wheat|weizen|bl[eé]\b|froment|durum|semol|spelt|khorasan|kamut|seitan|bulgur|couscous",
+    r"[\w-]*(?:tarwe|wheat|weizen|bl[eé]\b|froment|durum|semol|spelt|khorasan|kamut|seitan|bulgur|couscous)[\w-]*",
     re.I,
 )
 TARWE_TAG_RE = re.compile(r"wheat|spelt|khorasan|triticum|seitan", re.I)
 GLUTEN_RE = re.compile(r"gluten", re.I)
+GLUTENVRIJ_RE = re.compile(r"glutenvrij|gluten[ -]?free|sans gluten|glutenfrei", re.I)
 
 MAX_GLOBAAL = 3000     # populairste producten, ongeacht categorie
 MAX_PER_CATEGORIE = 60 # extra dekking per risico-categorie
@@ -70,6 +71,7 @@ def laad_producten():
           list_transform(allergens_tags, x -> x)     AS allerg_tags,
           list_transform(traces_tags, x -> x)        AS sporen_tags,
           list_transform(categories_tags, x -> x)    AS cat_tags,
+          list_transform(labels_tags, x -> x)        AS label_tags,
           coalesce(unique_scans_n, 0)                AS scans
         FROM read_parquet(?)
         WHERE list_contains(countries_tags, 'en:netherlands')
@@ -79,19 +81,30 @@ def laad_producten():
     return con.execute(query, [PARQUET]).fetchall()
 
 
-def analyseer(ingredienten, ingr_tags, allerg_tags, sporen_tags):
-    """Geeft (status, sporen_vlag)."""
+def analyseer(ingredienten, ingr_tags, allerg_tags, sporen_tags, label_tags):
+    """Geeft (status, sporen_vlag, bewijswoord, glutenvrij_claim)."""
     tekst = ingredienten or ""
     ingr = " ".join(ingr_tags or [])
     allerg = " ".join(allerg_tags or [])
     sporen = " ".join(sporen_tags or [])
-    if TARWE_TAG_RE.search(ingr) or TARWE_TAG_RE.search(allerg) or TARWE_TEKST_RE.search(tekst):
-        return "yes", 0
-    if GLUTEN_RE.search(allerg):
-        return "check", 0  # gluten als ingrediënt (bijv. rogge/gerst), geen duidelijke tarwe
+    labels = " ".join(label_tags or [])
+
+    tekst_match = TARWE_TEKST_RE.search(tekst)
+    tag_match = TARWE_TAG_RE.search(ingr) or TARWE_TAG_RE.search(allerg)
+    glutenvrij = bool(re.search(r"en:no-gluten|en:gluten-free", labels)) or bool(GLUTENVRIJ_RE.search(tekst))
+
+    if tekst_match or tag_match:
+        woord = tekst_match.group(0).strip("-") if tekst_match else tag_match.group(0)
+        if glutenvrij:
+            # Bijv. "tarwezetmeel (glutenvrij)": vrijwel eiwitvrij, maar bij
+            # tarweallergie tóch relevant. Eigen uitleg in de frontend.
+            return "check", 0, woord, 1
+        return "yes", 0, woord, 0
+    if GLUTEN_RE.search(allerg) and not glutenvrij:
+        return "check", 0, "", 0  # gluten als ingrediënt (bijv. rogge/gerst), geen duidelijke tarwe
     if GLUTEN_RE.search(sporen) or TARWE_TAG_RE.search(sporen):
-        return "check", 1  # alleen mogelijke sporen
-    return "no", 0
+        return "check", 1, "", 0  # alleen mogelijke sporen
+    return "no", 0, "", 0
 
 
 def main():
@@ -102,18 +115,22 @@ def main():
     print(f"{len(rijen)} NL-producten met ingrediëntinfo in de export")
 
     kandidaten, per_naam = [], {}
-    for code, naam, merken, ingredienten, ingr_tags, allerg_tags, sporen_tags, cat_tags, scans in rijen:
+    for code, naam, merken, ingredienten, ingr_tags, allerg_tags, sporen_tags, cat_tags, label_tags, scans in rijen:
         naam = (naam or "").strip()
         if not (3 <= len(naam) <= 42) or not re.search(r"[a-zA-Z]{3}", naam):
             continue
         sleutel = norm(naam)
         if sleutel in bekend or sleutel in per_naam:
             continue
-        status, sporen_vlag = analyseer(ingredienten, ingr_tags, allerg_tags, sporen_tags)
+        status, sporen_vlag, woord, glutenvrij = analyseer(ingredienten, ingr_tags, allerg_tags, sporen_tags, label_tags)
         merk = (merken or "").split(",")[0].strip()
         item = {"n": naam, "m": merk, "s": status, "c": code}
         if sporen_vlag:
             item["sp"] = 1
+        if woord and woord.lower() != "tarwe":
+            item["w"] = woord.lower()
+        if glutenvrij:
+            item["gv"] = 1
         per_naam[sleutel] = True
         kandidaten.append((item, cat_tags or [], scans))
 

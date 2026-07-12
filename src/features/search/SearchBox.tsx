@@ -1,6 +1,7 @@
 import type { ReactElement } from "react"
 import { useMemo } from "react"
 import { useExamplesStore } from "../../stores/useExamplesStore"
+import { ScanButton } from "../scanner/ScanButton"
 import "./SearchBox.css"
 import { Suggestions } from "./Suggestions"
 import { useRotatingPlaceholder } from "./useRotatingPlaceholder"
@@ -27,6 +28,7 @@ export function SearchBox(): ReactElement {
           aria-label="Zoek een product"
           {...inputProps}
         />
+        <ScanButton />
         <button className="check-button" type="button" onClick={check}>
           Check!
         </button>

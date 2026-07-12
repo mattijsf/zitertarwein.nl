@@ -25,6 +25,16 @@ describe("suggest", () => {
     expect(suggest("barilla", [pasta])[0]?.name).toBe("Penne (Barilla)")
   })
 
+  it("tolerates typos when nothing matches", () => {
+    const list = [product("stroopwafel"), product("kroket")]
+    expect(suggest("stropwafel", list).map(s => [s.name, s.score])).toEqual([["stroopwafel", 3]])
+    // also on the start of a longer name
+    expect(suggest("krok", list)[0]?.name).toBe("kroket")
+    expect(suggest("kroet", list)[0]?.score).toBe(3)
+    // short terms are left alone
+    expect(suggest("krt", list)).toEqual([])
+  })
+
   it("returns nothing for an empty term", () => {
     expect(suggest("  ", products)).toEqual([])
   })

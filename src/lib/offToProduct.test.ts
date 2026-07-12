@@ -25,6 +25,15 @@ describe("offToProduct", () => {
     expect(offToProduct({ n: "Koek", m: "", s: "ja", c: "1" })).toBeUndefined()
   })
 
+  it("names the wheat word it found and explains gluten-free claims", () => {
+    expect(offToProduct({ n: "Koek", m: "", s: "yes", c: "1", w: "speltmeel" })?.i).toContain(
+      "tarwe in (gevonden: “speltmeel”)."
+    )
+    expect(offToProduct({ n: "Brood", m: "", s: "check", c: "1", gv: 1 })?.i).toContain(
+      "claimt óók glutenvrij"
+    )
+  })
+
   it("tells traces apart from gluten without wheat", () => {
     expect(offToProduct({ n: "Reep", m: "", s: "check", c: "1", sp: 1 })?.i).toContain("sporen")
     expect(offToProduct({ n: "Koek", m: "", s: "check", c: "1" })?.i).toContain("rogge of gerst")

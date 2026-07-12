@@ -6,6 +6,7 @@ import type { InstallPlatform } from "../../lib/installPlatform"
 import type { CheckResult } from "../../stores/useCheckStore"
 import { useCheckStore } from "../../stores/useCheckStore"
 import type { Product, Verdict } from "../../types/product"
+import { ShareLink } from "../share/ShareLink"
 import { Confetti } from "./Confetti"
 import "./ResultCard.css"
 
@@ -45,6 +46,7 @@ function resultClass(result: CheckResult | null): string {
       return "result visible check"
     case "searching":
     case "notFound":
+    case "barcodeUnknown":
     case "installHelp":
       return "result visible"
   }
@@ -88,7 +90,12 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
             &nbsp;·&nbsp;{" "}
             <a href={googleUrl(term)} target="_blank" rel="noopener noreferrer">
               zoek op Google
-            </a>
+            </a>{" "}
+            &nbsp;·&nbsp;{" "}
+            <ShareLink
+              name={term}
+              verdict={match.hasWheat ? "Waarschijnlijk wel tarwe." : "Waarschijnlijk geen tarwe."}
+            />
           </p>
         </>
       )
@@ -104,6 +111,19 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
             tarwe moet daar verplicht (vetgedrukt) vermeld staan.
           </p>
           <GoogleButton term={result.term} />
+        </>
+      )
+    case "barcodeUnknown":
+      return (
+        <>
+          <div className="result-emoji">🕵️</div>
+          <div className="result-verdict">Barcode onbekend…</div>
+          <div className="result-product">{result.code}</div>
+          <p className="result-info">
+            Deze streepjescode staat (nog) niet in Open Food Facts. Check de ingrediëntenlijst op
+            het etiket — tarwe moet daar verplicht (vetgedrukt) vermeld staan.
+          </p>
+          <GoogleButton term={result.code} />
         </>
       )
     case "unavailable":
@@ -187,7 +207,8 @@ function ProductBody({ product }: { product: Product }): ReactElement {
         Bron:{" "}
         <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
           {sourceName}
-        </a>
+        </a>{" "}
+        &nbsp;·&nbsp; <ShareLink name={product.n} verdict={style.verdict} />
       </p>
       {product.s === "no" && <Confetti />}
     </>

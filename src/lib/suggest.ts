@@ -1,4 +1,5 @@
 import type { Product } from "../types/product"
+import { editDistance } from "./editDistance"
 import { normalize } from "./normalize"
 import { searchNames } from "./searchNames"
 
@@ -6,11 +7,13 @@ export interface Suggestion {
   product: Product
   /** The name or alias that matched, shown in the list. */
   name: string
-  /** 0 = starts with the term, 1 = contains it. */
+  /** 0 = starts with the term, 1 = contains it, 2 + edit distance = typo match. */
   score: number
 }
 
 const MAX_SUGGESTIONS = 7
+/** Shorter terms are too ambiguous for typo matching. */
+const MIN_TYPO_LENGTH = 4
 
 export function suggest(term: string, products: readonly Product[]): Suggestion[] {
   const t = normalize(term)
@@ -38,6 +41,25 @@ export function suggest(term: string, products: readonly Product[]): Suggestion[
       scored.push(best)
     }
   }
+  if (scored.length === 0 && t.length >= MIN_TYPO_LENGTH) {
+    scored.push(...suggestTypos(t, products))
+  }
   scored.sort((a, b) => a.score - b.score || a.name.localeCompare(b.name, "nl"))
   return scored.slice(0, MAX_SUGGESTIONS)
+}
+
+/** Nothing matched: tolerate typos ("stropwafel" finds stroopwafel). */
+function suggestTypos(t: string, products: readonly Product[]): Suggestion[] {
+  const max = t.length >= 8 ? 2 : 1
+  const found: Suggestion[] = []
+  for (const product of products) {
+    for (const { name, key, isBrand } of searchNames(product)) {
+      const d = Math.min(editDistance(t, key, max), editDistance(t, key.slice(0, t.length), max))
+      if (d <= max) {
+        found.push({ product, name: isBrand ? product.n : name, score: 2 + d })
+        break
+      }
+    }
+  }
+  return found
 }

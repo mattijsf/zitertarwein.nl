@@ -1,0 +1,49 @@
+.scanner {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: rgba(28, 25, 23, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.scanner[hidden] {
+  display: none;
+}
+.scanner-card {
+  background: var(--white);
+  border: var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 16px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+}
+.scan-video {
+  width: 100%;
+  border: var(--border);
+  border-radius: 12px;
+  background: #000;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.scanner-text {
+  margin: 12px 0;
+  font-weight: 700;
+}
+.scan-close {
+  border: var(--border);
+  background: var(--yellow);
+  font: inherit;
+  font-weight: 800;
+  padding: 9px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--black);
+}
+.scan-close:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--black);
+}

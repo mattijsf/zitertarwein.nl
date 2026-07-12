@@ -40,6 +40,19 @@ soepen, koek, snoep, …), en overschrijft `src/data/off-products.json` alleen b
 geslaagde import. De grote lijst (eigen chunk) wordt in de browser pas ná het renderen
 van de pagina geladen.
 
+Alles-in-één verversing (download + import + commit + autodeploy):
+
+```bash
+./ververs-data.sh
+```
+
+Periodiek draaien kan met een crontab-regel, bijvoorbeeld op de 1e van de
+maand om 06:00:
+
+```
+0 6 1 * * /path/to/zitertarwein.nl/ververs-data.sh >> /tmp/zitertarwein-verversing.log 2>&1
+```
+
 `src/data/products.ts` bewerken = product toevoegen:
 
 ```ts

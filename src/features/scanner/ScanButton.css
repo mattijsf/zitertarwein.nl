@@ -1,0 +1,15 @@
+.scan-button {
+  border: var(--border);
+  background: var(--white);
+  font-size: 19px;
+  padding: 0 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+.scan-button:hover {
+  transform: translateY(-1px);
+}
+.scan-button:active {
+  transform: scale(0.94);
+}

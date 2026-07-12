@@ -22,7 +22,7 @@ export interface OnlineMatch {
 }
 
 const SEARCH_URL = "https://nl.openfoodfacts.org/cgi/search.pl"
-const FIELDS =
+export const FIELDS =
   "code,product_name,product_name_nl,brands,ingredients_text,ingredients_text_nl,allergens_tags,ingredients_tags"
 const TIMEOUT_MS = 8000
 const RETRY_DELAY_MS = 4000
@@ -42,7 +42,7 @@ function firstNonEmpty(...values: string[]): string {
   return values.find(v => v) ?? ""
 }
 
-function field(obj: object, key: string): unknown {
+export function field(obj: object, key: string): unknown {
   const value: unknown = Reflect.get(obj, key)
   return value
 }
@@ -71,18 +71,21 @@ export function parseSearchResponse(json: unknown): OffProduct[] {
     return []
   }
   const list: unknown[] = products
-  return list
-    .filter((p): p is object => typeof p === "object" && p !== null)
-    .map(p => ({
-      code: stringField(p, "code"),
-      productName: stringField(p, "product_name"),
-      productNameNl: stringField(p, "product_name_nl"),
-      brands: stringField(p, "brands"),
-      ingredientsText: stringField(p, "ingredients_text"),
-      ingredientsTextNl: stringField(p, "ingredients_text_nl"),
-      allergensTags: tagsField(p, "allergens_tags"),
-      ingredientsTags: tagsField(p, "ingredients_tags"),
-    }))
+  return list.filter((p): p is object => typeof p === "object" && p !== null).map(parseProduct)
+}
+
+/** One product object from the API, with the fields we use. */
+export function parseProduct(p: object): OffProduct {
+  return {
+    code: stringField(p, "code"),
+    productName: stringField(p, "product_name"),
+    productNameNl: stringField(p, "product_name_nl"),
+    brands: stringField(p, "brands"),
+    ingredientsText: stringField(p, "ingredients_text"),
+    ingredientsTextNl: stringField(p, "ingredients_text_nl"),
+    allergensTags: tagsField(p, "allergens_tags"),
+    ingredientsTags: tagsField(p, "ingredients_tags"),
+  }
 }
 
 function ingredients(p: OffProduct): string {
