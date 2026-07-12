@@ -1,14 +1,11 @@
 import type { ReactElement } from "react"
 import "./Header.css"
+import { LogoSticker } from "./LogoSticker"
 
 export function Header(): ReactElement {
   return (
     <header>
-      <span className="logo-sticker">
-        <span className="logo" aria-hidden="true">
-          🌾
-        </span>
-      </span>
+      <LogoSticker />
       <h1>
         Zit er <span className="accent">tarwe</span> in?
       </h1>
