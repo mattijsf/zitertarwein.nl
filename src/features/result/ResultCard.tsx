@@ -19,6 +19,7 @@ const STYLE: Record<Verdict, { emoji: string; verdict: string }> = {
 export function ResultCard(): ReactElement {
   const result = useCheckStore(state => state.result)
   const resultId = useCheckStore(state => state.resultId)
+  const clear = useCheckStore(state => state.clear)
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
     // install help is opened from the top or bottom of the page: bring the card into view
@@ -26,9 +27,33 @@ export function ResultCard(): ReactElement {
       ref.current?.scrollIntoView({ behavior: "smooth", block: "nearest" })
     }
   }, [result])
+  useEffect(() => {
+    if (!result) {
+      return
+    }
+    const onKeyDown = (e: KeyboardEvent): void => {
+      if (e.key === "Escape") {
+        useCheckStore.getState().clear()
+      }
+    }
+    document.addEventListener("keydown", onKeyDown)
+    return () => {
+      document.removeEventListener("keydown", onKeyDown)
+    }
+  }, [result])
   return (
     <div ref={ref} className={resultClass(result)} role="status" aria-live="polite">
       {result && <ResultBody key={resultId} result={result} />}
+      {result && (
+        <button
+          type="button"
+          className="close-button"
+          aria-label="Wis resultaat en zoekopdracht"
+          onClick={clear}
+        >
+          ✕
+        </button>
+      )}
     </div>
   )
 }

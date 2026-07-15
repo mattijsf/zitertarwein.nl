@@ -49,6 +49,8 @@ interface CheckState {
   /** Look up a scanned barcode on Open Food Facts. */
   checkBarcode: (code: string) => void
   showInstallHelp: (platform: InstallPlatform) => void
+  /** Wipes the result and the query, and drops a pending online lookup. */
+  clear: () => void
 }
 
 export const useCheckStore = create<CheckState>()((set, get) => {
@@ -157,6 +159,11 @@ export const useCheckStore = create<CheckState>()((set, get) => {
     showInstallHelp: platform => {
       searchCounter++
       show({ kind: "installHelp", platform })
+    },
+
+    clear: () => {
+      searchCounter++
+      set({ query: "", suggestionsOpen: false, activeIndex: -1, result: null })
     },
   }
 })

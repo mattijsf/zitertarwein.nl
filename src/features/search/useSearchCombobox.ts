@@ -71,6 +71,10 @@ export function useSearchCombobox(listId: string): SearchCombobox {
         break
       }
       case "Escape":
+        // an open list takes this Escape; the result card ignores it then
+        if (open) {
+          e.stopPropagation()
+        }
         closeSuggestions()
         break
     }

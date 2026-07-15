@@ -21,11 +21,20 @@ function sharedName(result: CheckResult | null): string | null {
 export function useShareLink(): void {
   const result = useCheckStore(state => state.result)
   const name = sharedName(result)
+  const hadResult = useRef(false)
   useEffect(() => {
+    if (result === null) {
+      // cleared: drop ?p= (but leave a shared link alone until it has been opened)
+      if (hadResult.current) {
+        history.replaceState(null, "", location.pathname)
+      }
+      return
+    }
+    hadResult.current = true
     if (name !== null) {
       history.replaceState(null, "", shareSearch(name))
     }
-  }, [name])
+  }, [result, name])
 
   const opened = useRef(false)
   useEffect(() => {
