@@ -25,6 +25,21 @@
   box-sizing: border-box;
 }
 
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+/* No selection boxes when tapping interactive bits; answer text and the
+   input stay selectable so people can copy them. */
+button,
+summary,
+.fact,
+.suggestions li,
+.logo-sticker,
+.examples {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 body {
   font-family:
     ui-rounded,
