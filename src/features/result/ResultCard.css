@@ -127,7 +127,8 @@
   opacity: 1;
   transform: translateY(-2px);
 }
-.result-source {
+.result-source,
+.result-ref {
   margin-top: 18px;
   padding-top: 14px;
   border-top: 1.5px dashed var(--line);
@@ -135,7 +136,8 @@
   font-weight: 600;
   color: var(--ink-soft);
 }
-.result-source a {
+.result-source a,
+.result-ref a {
   color: inherit;
   font-weight: 800;
 }

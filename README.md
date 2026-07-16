@@ -123,6 +123,9 @@ Answers reference a verified source per product:
 - [Voedingscentrum — Tarwe: volkorenmeel en bloem](https://www.voedingscentrum.nl/encyclopedie/tarwe-meel-bloem.aspx)
 - [Nederlandse Coeliakie Vereniging — glutenvrij.nl](https://www.glutenvrij.nl/)
 - [Open Food Facts](https://nl.openfoodfacts.org/) — label data, also used for the live search
+- [NVWA — allergenen op het etiket](https://www.nvwa.nl/onderwerpen/allergenen) — legal basis for the mandatory (bold) wheat mention on labels (EU 1169/2011)
+- [MDL Fonds — coeliakie](https://www.mdlfonds.nl/ziekten/coeliakie/)
+- [Thuisarts.nl — coeliakie](https://www.thuisarts.nl/coeliakie) — medical information
 
 The site provides general information and is not medical advice.
 Wheat-free is not the same as gluten-free: rye and barley also contain

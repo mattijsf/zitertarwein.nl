@@ -1,3 +1,4 @@
+import { nvwaAllergensUrl } from "../data/nvwaAllergensUrl"
 import { SOURCES } from "../data/sources"
 
 /** The sources listed in the footer. */
@@ -17,5 +18,17 @@ export const footerSources = [
   {
     name: "Open Food Facts — open etiketdatabase (ODbL)",
     url: SOURCES.off.url,
+  },
+  {
+    name: "NVWA — allergenen op het etiket (EU-verordening 1169/2011)",
+    url: nvwaAllergensUrl,
+  },
+  {
+    name: "MDL Fonds — over coeliakie",
+    url: "https://www.mdlfonds.nl/ziekten/coeliakie/",
+  },
+  {
+    name: "Thuisarts.nl — coeliakie (medische informatie)",
+    url: "https://www.thuisarts.nl/coeliakie",
   },
 ] as const

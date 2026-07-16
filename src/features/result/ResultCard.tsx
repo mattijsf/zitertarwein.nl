@@ -1,5 +1,6 @@
 import type { ReactElement } from "react"
 import { useEffect, useRef } from "react"
+import { nvwaAllergensUrl } from "../../data/nvwaAllergensUrl"
 import { SOURCES } from "../../data/sources"
 import { googleUrl } from "../../lib/googleUrl"
 import type { InstallPlatform } from "../../lib/installPlatform"
@@ -165,6 +166,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
             tarwe moet daar verplicht (vetgedrukt) vermeld staan.
           </p>
           <GoogleButton term={result.term} />
+          <LabelRuleRef />
         </>
       )
     case "barcodeUnknown":
@@ -180,6 +182,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
             het etiket — tarwe moet daar verplicht (vetgedrukt) vermeld staan.
           </p>
           <GoogleButton term={result.code} />
+          <LabelRuleRef />
         </>
       )
     case "unavailable":
@@ -207,6 +210,18 @@ function GoogleButton({ term }: { term: string }): ReactElement {
     <p className="result-info">
       <a className="google-button" href={googleUrl(term)} target="_blank" rel="noopener noreferrer">
         Zoek op Google&nbsp;→
+      </a>
+    </p>
+  )
+}
+
+/** Source for the "wheat must be on the label in bold" rule. */
+function LabelRuleRef(): ReactElement {
+  return (
+    <p className="result-ref">
+      Bron etiketregel:{" "}
+      <a href={nvwaAllergensUrl} target="_blank" rel="noopener noreferrer">
+        NVWA — allergenen op het etiket
       </a>
     </p>
   )
