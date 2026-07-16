@@ -8,23 +8,28 @@ const MARGIN_ABOVE = 12
 
 /**
  * Insurance for tall keyboards: whenever the visual viewport changes while
- * typing, verify the field is fully visible; if it is (partially) behind the
+ * typing, verify the search box is fully visible; if it is (partially) behind the
  * keyboard, one native smooth scroll fixes exactly the measured overlap.
  * Debounced so it runs after the keyboard settles. Returns the input's focus
  * handler.
  */
-export function useKeyboardAvoidance(inputRef: RefObject<HTMLInputElement | null>): () => void {
+export function useKeyboardAvoidance(
+  inputRef: RefObject<HTMLInputElement | null>,
+  boxRef: RefObject<HTMLElement | null>
+): () => void {
   const timer = useRef(0)
 
   const ensureFieldVisible = useCallback(() => {
     clearTimeout(timer.current)
     timer.current = window.setTimeout(() => {
-      const input = inputRef.current
+      const box = boxRef.current
       const vv = window.visualViewport
-      if (!input || document.activeElement !== input || !vv) {
+      if (document.activeElement !== inputRef.current || !vv || !box) {
         return
       }
-      const rect = input.getBoundingClientRect()
+      // Measure the whole search box: on mobile it wraps to two rows and the
+      // CHECK button row must stay above the keyboard too.
+      const rect = box.getBoundingClientRect()
       const belowOverlap = rect.bottom - (vv.offsetTop + vv.height) + MARGIN_BELOW
       const aboveOverlap = vv.offsetTop - rect.top + MARGIN_ABOVE
       if (belowOverlap > 0) {
@@ -33,7 +38,7 @@ export function useKeyboardAvoidance(inputRef: RefObject<HTMLInputElement | null
         window.scrollBy({ top: -aboveOverlap, behavior: "smooth" })
       }
     }, DEBOUNCE_MS)
-  }, [inputRef])
+  }, [inputRef, boxRef])
 
   useEffect(() => {
     const vv = window.visualViewport

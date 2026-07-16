@@ -22,7 +22,7 @@ export function SearchBox(): ReactElement {
   const boxRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
   useSuggestionsClamp(listRef, boxRef, suggestions.length > 0, suggestions)
-  const onFocusKeepVisible = useKeyboardAvoidance(inputRef)
+  const onFocusKeepVisible = useKeyboardAvoidance(inputRef, boxRef)
 
   return (
     <div className="search-wrap">
