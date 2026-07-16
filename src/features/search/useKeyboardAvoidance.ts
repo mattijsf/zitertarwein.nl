@@ -50,7 +50,11 @@ export function useKeyboardAvoidance(
       glideStop.current = false
       const id = ++glideId.current // a newer glide takes over from an older one
       const start = performance.now()
-      const distance = (): number => el.getBoundingClientRect().top - offset
+      // Measure against the VISUAL viewport top: Firefox pans it down when the
+      // keyboard opens without resizing the layout viewport, so layout
+      // coordinates alone would put the bar above the visible area.
+      const distance = (): number =>
+        el.getBoundingClientRect().top - ((window.visualViewport?.offsetTop ?? 0) + offset)
       const settle = (): void => {
         const d = distance()
         if (Math.abs(d) > 2) {
