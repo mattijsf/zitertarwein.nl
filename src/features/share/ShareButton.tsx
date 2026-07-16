@@ -17,10 +17,10 @@ export function ShareButton(target: ShareTarget): ReactElement {
         "✓"
       ) : (
         <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
-          <g stroke="#1c1917" strokeWidth="2.2" strokeLinecap="round">
-            <circle cx="6" cy="12" r="2.7" fill="#1c1917" />
-            <circle cx="17.5" cy="5.5" r="2.7" fill="#1c1917" />
-            <circle cx="17.5" cy="18.5" r="2.7" fill="#1c1917" />
+          <g stroke="#503417" strokeWidth="2.2" strokeLinecap="round">
+            <circle cx="6" cy="12" r="2.7" fill="#503417" />
+            <circle cx="17.5" cy="5.5" r="2.7" fill="#503417" />
+            <circle cx="17.5" cy="18.5" r="2.7" fill="#503417" />
             <path d="M8.4 10.6 15 6.9M8.4 13.4l6.6 3.7" fill="none" />
           </g>
         </svg>

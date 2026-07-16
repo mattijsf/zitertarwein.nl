@@ -69,13 +69,13 @@ export function RerollButton({ onReroll }: { onReroll: () => void }): ReactEleme
           width="20"
           height="20"
           rx="5"
-          fill="#fffdf7"
-          stroke="#1c1917"
+          fill="#fffdf6"
+          stroke="#503417"
           strokeWidth="2.5"
         />
         <g>
           {pips.map(([x, y]) => (
-            <circle key={`${x},${y}`} cx={x} cy={y} r="2.1" fill="#1c1917" />
+            <circle key={`${x},${y}`} cx={x} cy={y} r="2.1" fill="#503417" />
           ))}
         </g>
       </svg>

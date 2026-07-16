@@ -3,34 +3,33 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--black);
-  background: var(--pink);
+  border: 1.5px solid var(--line);
+  background: var(--gold-soft);
   border-radius: 50%;
   width: 38px;
   height: 38px;
   padding: 0;
-  margin: 5px 3px 5px 6px;
-  font-size: 14px;
-  font-weight: 800;
+  margin: 4px 3px 4px 6px;
+  font-size: 14.5px;
+  font-weight: 700;
   font-family: inherit;
-  color: var(--black);
+  color: var(--ink);
   cursor: pointer;
   vertical-align: middle;
-  box-shadow: 3px 3px 0 var(--black);
+  box-shadow: var(--shadow-small);
   /* the original picked up the first chip's tilt */
-  transform: rotate(-2deg);
+  transform: rotate(-1.5deg);
   transition:
-    transform 0.12s,
-    box-shadow 0.12s;
+    transform 0.15s,
+    box-shadow 0.15s;
 }
 .reroll-button svg {
   transform: rotate(-10deg);
 }
 .reroll-button:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0 var(--black);
+  transform: translateY(-2px);
+  box-shadow: 0 7px 16px rgba(80, 52, 23, 0.18);
 }
 .reroll-button:active {
-  transform: translate(2px, 2px);
-  box-shadow: 0 0 0 var(--black);
+  transform: translateY(1px);
 }

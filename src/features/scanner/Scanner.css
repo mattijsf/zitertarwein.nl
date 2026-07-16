@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: 20;
-  background: rgba(28, 25, 23, 0.82);
+  background: rgba(80, 52, 23, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,10 +12,10 @@
   display: none;
 }
 .scanner-card {
-  background: var(--white);
-  border: var(--border);
-  border-radius: 18px;
-  box-shadow: var(--shadow);
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: 22px;
+  box-shadow: var(--shadow-soft);
   padding: 16px;
   max-width: 420px;
   width: 100%;
@@ -23,8 +23,8 @@
 }
 .scan-video {
   width: 100%;
-  border: var(--border);
-  border-radius: 12px;
+  border: 2px solid var(--line);
+  border-radius: 14px;
   background: #000;
   aspect-ratio: 4 / 3;
   object-fit: cover;
@@ -34,16 +34,16 @@
   font-weight: 700;
 }
 .scan-close {
-  border: var(--border);
-  background: var(--yellow);
+  border: none;
+  background: linear-gradient(160deg, var(--gold), var(--gold-deep));
+  color: #fff;
   font: inherit;
   font-weight: 800;
-  padding: 9px 18px;
-  border-radius: 12px;
+  padding: 10px 20px;
+  border-radius: 999px;
   cursor: pointer;
-  box-shadow: 3px 3px 0 var(--black);
+  box-shadow: 0 5px 14px rgba(185, 127, 20, 0.35);
 }
 .scan-close:active {
-  transform: translate(2px, 2px);
-  box-shadow: 0 0 0 var(--black);
+  transform: translateY(1px);
 }

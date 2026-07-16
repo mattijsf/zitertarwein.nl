@@ -1,15 +1,14 @@
 .result {
-  margin-top: 28px;
-  border: var(--border);
-  border-radius: 18px;
-  padding: 30px 28px;
-  background: var(--white);
-  box-shadow: var(--shadow);
+  margin-top: 26px;
+  border: 2px solid var(--line-soft);
+  border-radius: 24px;
+  padding: 28px 26px;
+  background: var(--paper);
+  box-shadow: var(--shadow-soft);
   display: none;
   position: relative;
   overflow: hidden;
-  animation: stamp 0.35s cubic-bezier(0.2, 1.5, 0.4, 1);
-  transform: rotate(-1deg);
+  animation: stamp 0.35s cubic-bezier(0.2, 1.4, 0.4, 1);
 }
 .result.visible {
   display: block;
@@ -17,28 +16,36 @@
 @keyframes stamp {
   from {
     opacity: 0;
-    transform: rotate(3deg) scale(1.15);
+    transform: translateY(14px) scale(0.97);
   }
   to {
     opacity: 1;
-    transform: rotate(-1deg) scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 .result.yes {
-  background: var(--red);
+  background: linear-gradient(165deg, #fdeee7, var(--red-soft));
+  border-color: rgba(217, 95, 67, 0.45);
 }
 .result.no {
-  background: var(--green);
+  background: linear-gradient(165deg, #eff7e2, var(--green-soft));
+  border-color: rgba(95, 158, 60, 0.45);
 }
 .result.check {
-  background: var(--blue);
+  background: linear-gradient(165deg, #fdf3d8, var(--gold-soft));
+  border-color: rgba(226, 167, 46, 0.5);
 }
 
 .result-emoji {
-  font-size: 52px;
+  width: 58px;
+  height: 58px;
   line-height: 1;
   display: inline-block;
   animation: boing 0.5s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+.result-emoji svg {
+  width: 100%;
+  height: 100%;
 }
 @keyframes boing {
   0% {
@@ -52,23 +59,31 @@
   }
 }
 .result-verdict {
-  font-size: 30px;
-  font-weight: 900;
+  font-size: 28px;
+  font-weight: 800;
   margin-top: 10px;
   letter-spacing: -0.01em;
-  text-transform: uppercase;
+}
+.yes .result-verdict {
+  color: var(--red-deep);
+}
+.no .result-verdict {
+  color: var(--green-deep);
+}
+.check .result-verdict {
+  color: var(--gold-deep);
 }
 .result-product {
   display: inline-block;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 800;
   margin-top: 8px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  background: var(--white);
-  border: 2px solid var(--black);
-  border-radius: 8px;
-  padding: 2px 10px;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
 }
 .result-info {
   margin-top: 14px;
@@ -79,31 +94,31 @@
 .close-button,
 .share-button {
   position: absolute;
-  top: 10px;
+  top: 12px;
   width: 30px;
   height: 30px;
-  border: 2px solid var(--black);
+  border: 1.5px solid var(--line);
   border-radius: 50%;
-  background: var(--white);
-  color: var(--black);
-  font-size: 14px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 13px;
   font-weight: 800;
   line-height: 1;
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.65;
   transition:
     opacity 0.15s,
     transform 0.15s;
 }
 .close-button {
-  right: 10px;
+  right: 12px;
 }
 .close-button:hover {
   opacity: 1;
   transform: rotate(90deg);
 }
 .share-button {
-  right: 46px;
+  right: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -115,9 +130,10 @@
 .result-source {
   margin-top: 18px;
   padding-top: 14px;
-  border-top: 2px solid var(--black);
+  border-top: 1.5px dashed var(--line);
   font-size: 14px;
   font-weight: 600;
+  color: var(--ink-soft);
 }
 .result-source a {
   color: inherit;
@@ -126,26 +142,19 @@
 .google-button {
   display: inline-block;
   margin-top: 4px;
-  background: var(--black);
-  color: var(--yellow);
+  background: linear-gradient(160deg, var(--gold), var(--gold-deep));
+  color: #fff;
   text-decoration: none;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
+  font-weight: 800;
   font-size: 15px;
-  padding: 10px 18px;
-  border: var(--border);
-  border-radius: 12px;
-  box-shadow: 4px 4px 0 rgba(28, 25, 23, 0.35);
+  padding: 10px 20px;
+  border-radius: 999px;
+  box-shadow: 0 5px 14px rgba(185, 127, 20, 0.35);
   transition:
-    transform 0.12s,
-    box-shadow 0.12s;
+    transform 0.15s,
+    box-shadow 0.15s;
 }
 .google-button:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 rgba(28, 25, 23, 0.35);
-}
-.google-button:active {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 rgba(28, 25, 23, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(185, 127, 20, 0.45);
 }

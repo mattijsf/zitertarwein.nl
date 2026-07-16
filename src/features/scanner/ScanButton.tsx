@@ -23,8 +23,8 @@ export function ScanButton(): ReactElement | null {
       <svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true">
         <path
           d="M8.2 6.5 L9.8 3.8 H14.2 L15.8 6.5"
-          fill="#fffdf7"
-          stroke="#1c1917"
+          fill="#fffdf6"
+          stroke="#503417"
           strokeWidth="2.2"
           strokeLinejoin="round"
         />
@@ -34,12 +34,12 @@ export function ScanButton(): ReactElement | null {
           width="20"
           height="13.5"
           rx="3.5"
-          fill="#fffdf7"
-          stroke="#1c1917"
+          fill="#fffdf6"
+          stroke="#503417"
           strokeWidth="2.2"
         />
-        <circle cx="12" cy="13" r="4.2" fill="#74c0fc" stroke="#1c1917" strokeWidth="2.2" />
-        <circle cx="13.4" cy="11.7" r="1.1" fill="#fffdf7" />
+        <circle cx="12" cy="13" r="4.2" fill="#eaba3b" stroke="#503417" strokeWidth="2.2" />
+        <circle cx="13.4" cy="11.7" r="1.1" fill="#fffdf6" />
       </svg>
     </button>
   )

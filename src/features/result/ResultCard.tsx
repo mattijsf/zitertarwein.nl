@@ -11,11 +11,12 @@ import { ShareLink } from "../share/ShareLink"
 import type { ShareTarget } from "../share/useShare"
 import { Confetti } from "./Confetti"
 import "./ResultCard.css"
+import { ResultIcon } from "./ResultIcon"
 
-const STYLE: Record<Verdict, { emoji: string; verdict: string }> = {
-  yes: { emoji: "🌾", verdict: "Ja, tarwe!" },
-  no: { emoji: "🎉", verdict: "Nee, geen tarwe!" },
-  check: { emoji: "🧐", verdict: "Check het etiket…" },
+const VERDICT: Record<Verdict, string> = {
+  yes: "Ja, tarwe!",
+  no: "Nee, geen tarwe!",
+  check: "Check het etiket…",
 }
 
 export function ResultCard(): ReactElement {
@@ -72,11 +73,7 @@ export function ResultCard(): ReactElement {
 /** What the corner share button shares: real answers only (cards with a source line). */
 function shareTarget(result: CheckResult | null): ShareTarget | null {
   if (result?.kind === "product") {
-    return {
-      name: result.product.n,
-      verdict: STYLE[result.product.s].verdict,
-      query: result.product.n,
-    }
+    return { name: result.product.n, verdict: VERDICT[result.product.s], query: result.product.n }
   }
   if (result?.kind === "online") {
     const { match } = result
@@ -115,7 +112,9 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
     case "searching":
       return (
         <>
-          <div className="result-emoji">🔎</div>
+          <div className="result-emoji">
+            <ResultIcon name="search" />
+          </div>
           <div className="result-verdict">Even opzoeken…</div>
           <div className="result-product">{result.term}</div>
           <p className="result-info">
@@ -127,7 +126,9 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
       const { match, term } = result
       return (
         <>
-          <div className="result-emoji">{match.hasWheat ? "🌾" : "🤔"}</div>
+          <div className="result-emoji">
+            <ResultIcon name={match.hasWheat ? "yes" : "check"} />
+          </div>
           <div className="result-verdict">{onlineVerdict(match.hasWheat)}</div>
           <div className="result-product">{match.name}</div>
           <p className="result-info">
@@ -154,7 +155,9 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
     case "notFound":
       return (
         <>
-          <div className="result-emoji">🕵️</div>
+          <div className="result-emoji">
+            <ResultIcon name="unknown" />
+          </div>
           <div className="result-verdict">Die kennen we niet…</div>
           <div className="result-product">{result.term}</div>
           <p className="result-info">
@@ -167,7 +170,9 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
     case "barcodeUnknown":
       return (
         <>
-          <div className="result-emoji">🕵️</div>
+          <div className="result-emoji">
+            <ResultIcon name="unknown" />
+          </div>
           <div className="result-verdict">Barcode onbekend…</div>
           <div className="result-product">{result.code}</div>
           <p className="result-info">
@@ -180,7 +185,9 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
     case "unavailable":
       return (
         <>
-          <div className="result-emoji">📡</div>
+          <div className="result-emoji">
+            <ResultIcon name="outage" />
+          </div>
           <div className="result-verdict">Bron even niet bereikbaar…</div>
           <div className="result-product">{result.term}</div>
           <p className="result-info">
@@ -208,12 +215,14 @@ function GoogleButton({ term }: { term: string }): ReactElement {
 function InstallHelpBody({ platform }: { platform: InstallPlatform }): ReactElement {
   return (
     <>
-      <div className="result-emoji">📲</div>
+      <div className="result-emoji">
+        <ResultIcon name="install" />
+      </div>
       <div className="result-verdict">Zo installeer je de app</div>
       <p className="result-info">
         <InstallSteps platform={platform} />
       </p>
-      <p className="result-info">Daarna staat 🌾 als app op je scherm — werkt ook offline.</p>
+      <p className="result-info">Daarna staat de tarwe als app op je scherm — werkt ook offline.</p>
     </>
   )
 }
@@ -244,14 +253,16 @@ function InstallSteps({ platform }: { platform: InstallPlatform }): ReactElement
 }
 
 function ProductBody({ product }: { product: Product }): ReactElement {
-  const style = STYLE[product.s]
+  const verdict = VERDICT[product.s]
   const source = SOURCES[product.b]
   const sourceUrl = product.url ?? source.url
   const sourceName = product.url ? "Open Food Facts — etiket van dit product" : source.name
   return (
     <>
-      <div className="result-emoji">{style.emoji}</div>
-      <div className="result-verdict">{style.verdict}</div>
+      <div className="result-emoji">
+        <ResultIcon name={product.s} />
+      </div>
+      <div className="result-verdict">{verdict}</div>
       <div className="result-product">{product.n}</div>
       <p className="result-info">{product.i}</p>
       <p className="result-source">
@@ -259,7 +270,7 @@ function ProductBody({ product }: { product: Product }): ReactElement {
         <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
           {sourceName}
         </a>{" "}
-        &nbsp;·&nbsp; <ShareLink name={product.n} verdict={style.verdict} query={product.n} />
+        &nbsp;·&nbsp; <ShareLink name={product.n} verdict={verdict} query={product.n} />
       </p>
       {product.s === "no" && <Confetti />}
     </>

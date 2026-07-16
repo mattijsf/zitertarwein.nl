@@ -1,14 +1,17 @@
 import type { ReactElement } from "react"
+import { FieldScene } from "./FieldScene"
 import "./Header.css"
+import { LogoSheaf } from "./LogoSheaf"
 
 export function Header(): ReactElement {
   return (
     <header>
-      <span className="logo-sticker">
-        <span className="logo" aria-hidden="true">
-          🌾
+      <div className="scene" aria-hidden="true">
+        <FieldScene />
+        <span className="logo-sticker">
+          <LogoSheaf />
         </span>
-      </span>
+      </div>
       <h1>
         Zit er <span className="accent">tarwe</span> in?
       </h1>

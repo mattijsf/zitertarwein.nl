@@ -3,12 +3,16 @@
 }
 .search-box {
   display: flex;
-  gap: 10px;
-  background: var(--white);
-  border: var(--border);
-  border-radius: 18px;
-  padding: 9px;
-  box-shadow: var(--shadow);
+  gap: 8px;
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: 22px;
+  padding: 8px;
+  box-shadow: var(--shadow-soft);
+  transition: border-color 0.2s;
+}
+.search-box:focus-within {
+  border-color: var(--gold);
 }
 .input-wrap {
   flex: 1;
@@ -24,7 +28,7 @@
   font-weight: 600;
   padding: 10px 34px 10px 14px;
   background: transparent;
-  color: var(--black);
+  color: var(--ink);
   min-width: 0;
   font-family: inherit;
 }
@@ -37,46 +41,47 @@
   height: 26px;
   border: none;
   border-radius: 50%;
-  background: rgba(28, 25, 23, 0.08);
-  color: #8a7d64;
+  background: rgba(80, 52, 23, 0.08);
+  color: var(--ink-soft);
   font-size: 13px;
   font-weight: 800;
   line-height: 1;
   cursor: pointer;
 }
 .input-clear:hover {
-  background: rgba(28, 25, 23, 0.16);
-  color: var(--black);
+  background: rgba(80, 52, 23, 0.16);
+  color: var(--ink);
 }
 .product-input::placeholder {
-  color: #b3a98f;
+  color: #c2ab8a;
   font-weight: 500;
 }
 .check-button {
-  border: var(--border);
-  background: var(--black);
-  color: var(--yellow);
-  font-size: 17px;
-  font-weight: 900;
+  border: none;
+  background: linear-gradient(160deg, var(--gold), var(--gold-deep));
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
   font-family: inherit;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
-  padding: 12px 22px;
-  border-radius: 12px;
+  letter-spacing: 0.04em;
+  padding: 12px 24px;
+  border-radius: 16px;
   cursor: pointer;
   transition:
-    transform 0.12s,
-    box-shadow 0.12s;
+    transform 0.15s,
+    box-shadow 0.15s;
   white-space: nowrap;
-  box-shadow: 4px 4px 0 rgba(28, 25, 23, 0.35);
+  box-shadow: 0 6px 16px rgba(185, 127, 20, 0.35);
+  text-shadow: 0 1px 0 rgba(80, 52, 23, 0.25);
 }
 .check-button:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 rgba(28, 25, 23, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 9px 20px rgba(185, 127, 20, 0.45);
 }
 .check-button:active {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 rgba(28, 25, 23, 0.35);
+  transform: translateY(1px);
+  box-shadow: 0 3px 8px rgba(185, 127, 20, 0.35);
 }
 
 @media (max-width: 460px) {

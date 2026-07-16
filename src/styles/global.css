@@ -1,14 +1,22 @@
 :root {
-  --yellow: #ffd43b;
-  --black: #1c1917;
-  --white: #fffdf7;
-  --red: #ff6b6b;
-  --green: #51db83;
-  --blue: #74c0fc;
-  --purple: #d0bfff;
-  --pink: #ffa8c5;
-  --border: 3px solid var(--black);
-  --shadow: 6px 6px 0 var(--black);
+  --cream: #fbf2dd;
+  --paper: #fffdf6;
+  --ink: #503417;
+  --ink-soft: #8a6c49;
+  --gold: #e2a72e;
+  --gold-deep: #b97f14;
+  --gold-soft: #f7e6b5;
+  --green: #5f9e3c;
+  --green-deep: #3e7325;
+  --green-soft: #e5f2d3;
+  --red: #d95f43;
+  --red-deep: #ad3f24;
+  --red-soft: #fbe0d5;
+  --sky: #d3ecf5;
+  --line: rgba(80, 52, 23, 0.25);
+  --line-soft: rgba(80, 52, 23, 0.14);
+  --shadow-soft: 0 10px 28px rgba(80, 52, 23, 0.14);
+  --shadow-small: 0 4px 12px rgba(80, 52, 23, 0.12);
 }
 
 * {
@@ -19,9 +27,19 @@
 
 body {
   font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background: var(--yellow);
-  color: var(--black);
+    ui-rounded,
+    "SF Pro Rounded",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  background:
+    radial-gradient(1000px 460px at 50% -120px, var(--sky) 0%, rgba(211, 236, 245, 0) 70%),
+    linear-gradient(#fdf7e9, var(--cream));
+  color: var(--ink);
   min-height: 100vh;
   min-height: 100dvh; /* mobile browsers: leave the dynamic toolbar out */
   display: flex;
@@ -37,7 +55,7 @@ body {
 
 main {
   width: 100%;
-  max-width: 580px;
+  max-width: 600px;
   padding: 0 20px;
   flex: 1;
 }

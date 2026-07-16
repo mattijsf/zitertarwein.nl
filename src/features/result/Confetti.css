@@ -7,9 +7,9 @@
 .confetti span {
   position: absolute;
   top: -16px;
-  width: 10px;
-  height: 10px;
-  border: 2px solid var(--black);
+  width: 7px;
+  height: 13px;
+  border-radius: 50% / 60%;
   animation: flutter linear forwards;
 }
 @keyframes flutter {

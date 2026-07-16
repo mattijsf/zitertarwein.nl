@@ -1,58 +1,58 @@
 .examples {
-  margin-top: 26px;
+  margin-top: 24px;
   text-align: center;
   font-size: 15px;
   font-weight: 700;
+  color: var(--ink-soft);
 }
 .example-chips button {
-  border: var(--border);
+  border: 1.5px solid var(--line);
   border-radius: 999px;
   padding: 7px 15px;
-  margin: 5px 3px;
-  font-size: 14px;
-  font-weight: 800;
+  margin: 4px 3px;
+  font-size: 14.5px;
+  font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  color: var(--black);
-  box-shadow: 3px 3px 0 var(--black);
+  color: var(--ink);
+  box-shadow: var(--shadow-small);
   transition:
-    transform 0.12s,
-    box-shadow 0.12s;
+    transform 0.15s,
+    box-shadow 0.15s;
 }
 .example-chips button:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 var(--black);
+  transform: translateY(-2px) rotate(-1deg);
+  box-shadow: 0 7px 16px rgba(80, 52, 23, 0.18);
 }
 .example-chips button:active {
-  transform: translate(2px, 2px);
-  box-shadow: 0 0 0 var(--black);
+  transform: translateY(1px);
 }
 .example-chips button:nth-of-type(6n + 1) {
-  background: var(--white);
-  transform: rotate(-2deg);
+  background: var(--paper);
+  transform: rotate(-1.5deg);
 }
 .example-chips button:nth-of-type(6n + 2) {
-  background: var(--pink);
-  transform: rotate(1.5deg);
+  background: var(--gold-soft);
+  transform: rotate(1deg);
 }
 .example-chips button:nth-of-type(6n + 3) {
-  background: var(--blue);
+  background: var(--green-soft);
   transform: rotate(-1deg);
 }
 .example-chips button:nth-of-type(6n + 4) {
-  background: var(--green);
-  transform: rotate(2deg);
+  background: var(--red-soft);
+  transform: rotate(1.5deg);
 }
 .example-chips button:nth-of-type(6n + 5) {
-  background: var(--purple);
-  transform: rotate(-1.5deg);
+  background: var(--sky);
+  transform: rotate(-0.5deg);
 }
 .example-chips button:nth-of-type(6n + 6) {
-  background: var(--white);
-  transform: rotate(1deg);
+  background: var(--paper);
+  transform: rotate(0.8deg);
 }
 .example-chips button:nth-of-type(n):hover {
-  transform: translate(-2px, -2px) rotate(0deg);
+  transform: translateY(-2px) rotate(0deg);
 }
 .example-chips button {
   animation: chip-pop 0.25s cubic-bezier(0.2, 1.4, 0.4, 1) backwards;

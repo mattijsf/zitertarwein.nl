@@ -1,73 +1,112 @@
+/* Field scene with sun, hills and swaying wheat */
 header {
   text-align: center;
-  padding: 52px 0 30px;
+  padding: 18px 0 26px;
+}
+.scene {
+  position: relative;
+}
+.scene > svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 26px;
+  border: 2px solid var(--line-soft);
+  box-shadow: var(--shadow-soft);
+}
+.scene .stalk {
+  transform-origin: bottom center;
+  transform-box: fill-box;
+  animation: sway 3.6s ease-in-out infinite;
+}
+.scene .sun {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: sun-spin 40s linear infinite;
+}
+@keyframes sun-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 .logo-sticker {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 108px;
-  height: 108px;
-  background: var(--white);
-  border: var(--border);
-  border-radius: 50%;
-  box-shadow: var(--shadow);
-  transform: rotate(-4deg);
+  position: absolute;
+  left: 50%;
+  bottom: -34px;
+  transform: translateX(-50%);
+  width: 112px;
+  height: 112px;
+  pointer-events: none;
+}
+.logo-sticker svg {
+  width: 100%;
+  height: 100%;
 }
 .logo {
-  font-size: 58px;
-  display: inline-block;
+  transform-origin: 50% 92%;
+  transform-box: fill-box;
   animation: sway 3.5s ease-in-out infinite;
-  transform-origin: bottom center;
 }
 @keyframes sway {
   0%,
   100% {
-    transform: rotate(-7deg);
+    transform: rotate(-4deg);
   }
   50% {
-    transform: rotate(7deg);
+    transform: rotate(4deg);
   }
 }
 h1 {
-  font-size: clamp(34px, 7.5vw, 52px);
-  font-weight: 900;
+  font-size: clamp(32px, 7vw, 46px);
+  font-weight: 800;
   letter-spacing: -0.02em;
-  margin-top: 26px;
-  text-transform: uppercase;
+  margin-top: 46px;
+  color: var(--ink);
 }
 h1 .accent {
-  display: inline-block;
-  background: var(--white);
-  border: var(--border);
-  box-shadow: 4px 4px 0 var(--black);
-  padding: 0 14px;
-  transform: rotate(-2deg);
+  color: var(--gold-deep);
+  position: relative;
+  white-space: nowrap;
+}
+h1 .accent::after {
+  content: "";
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  bottom: 4px;
+  height: 10px;
+  background: var(--gold-soft);
+  border-radius: 6px;
+  z-index: -1;
+  transform: rotate(-1.2deg);
 }
 .tagline {
-  margin-top: 16px;
+  margin-top: 8px;
   font-size: 17px;
   font-weight: 600;
+  color: var(--ink-soft);
 }
 
 /* Short windows: compact header, so the examples stay in view */
 @media (max-height: 700px) {
   header {
-    padding: 18px 0 16px;
+    padding-top: 10px;
+  }
+  .scene > svg {
+    max-height: 130px;
+    object-fit: cover;
   }
   .logo-sticker {
-    width: 70px;
-    height: 70px;
-  }
-  .logo {
-    font-size: 36px;
+    width: 76px;
+    height: 76px;
+    bottom: -22px;
   }
   h1 {
-    font-size: clamp(24px, 5vw, 34px);
-    margin-top: 14px;
+    font-size: clamp(24px, 5vw, 32px);
+    margin-top: 32px;
   }
   .tagline {
-    margin-top: 6px;
+    margin-top: 4px;
     font-size: 15px;
   }
 }

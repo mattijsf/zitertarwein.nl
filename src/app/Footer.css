@@ -1,26 +1,28 @@
 footer {
   width: 100%;
-  max-width: 580px;
-  padding: 52px 20px 64px;
+  max-width: 600px;
+  padding: 48px 20px 64px;
   padding-bottom: calc(64px + env(safe-area-inset-bottom));
   text-align: center;
   font-size: 13.5px;
+  color: var(--ink-soft);
 }
 .sources-card {
-  background: var(--white);
-  border: var(--border);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow-small);
   padding: 14px 22px;
   margin-bottom: 22px;
   text-align: center;
+  color: var(--ink);
 }
 .sources-card summary {
   cursor: pointer;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  font-weight: 900;
+  font-weight: 800;
   list-style: none;
 }
 .sources-card summary::-webkit-details-marker {
@@ -28,9 +30,11 @@ footer {
 }
 .sources-card summary::after {
   content: " ▾";
+  color: var(--gold-deep);
 }
 .sources-card[open] summary::after {
   content: " ▴";
+  color: var(--gold-deep);
 }
 .sources-card[open] summary {
   margin-bottom: 10px;
@@ -38,8 +42,9 @@ footer {
 .sources-note {
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1.5px dashed rgba(28, 25, 23, 0.25);
+  border-top: 1.5px dashed var(--line);
   font-weight: 500;
+  color: var(--ink-soft);
 }
 footer ul {
   list-style: none;
@@ -49,11 +54,11 @@ footer li {
   font-weight: 600;
 }
 footer a {
-  color: var(--black);
+  color: var(--gold-deep);
   font-weight: 800;
 }
 .disclaimer {
-  max-width: 470px;
+  max-width: 480px;
   margin: 0 auto;
   font-weight: 500;
 }

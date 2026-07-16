@@ -2,7 +2,7 @@ import type { ReactElement } from "react"
 import { useEffect, useState } from "react"
 import "./Confetti.css"
 
-const COLORS = ["#ffd43b", "#51db83", "#74c0fc", "#ff6b6b", "#ffa8c5", "#d0bfff"]
+const COLORS = ["#eaba3b", "#d6981f", "#f2d27c", "#8fc267", "#e2a72e", "#c9922a"]
 const PIECES = 28
 const LIFETIME_MS = 2200
 
@@ -22,7 +22,7 @@ function randomPieces(): Piece[] {
   }))
 }
 
-/** A burst of falling squares; remount it to play it again. */
+/** A burst of falling grains; remount it to play it again. */
 export function Confetti(): ReactElement | null {
   const [pieces] = useState(randomPieces)
   const [done, setDone] = useState(false)
