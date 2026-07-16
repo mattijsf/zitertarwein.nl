@@ -2,14 +2,14 @@
 <html lang="nl">
   <head>
     <meta charset="UTF-8" />
-    <!-- interactive-widget=resizes-content: the layout shrinks with the
-         keyboard so a tall keyboard never covers the input field.
-         maximum-scale=1 + user-scalable=no stop the automatic zoom-in on input
-         focus (Firefox needs the latter; iOS keeps allowing user pinch-zoom
-         regardless, as it ignores these for gestures). -->
+    <!-- No interactive-widget: Chrome's default (resizes-visual) keeps the
+         layout fully intact when the keyboard opens and only scrolls the field
+         into view — exactly "scroll, don't reflow, don't zoom".
+         maximum-scale=1 + user-scalable=no block the automatic zoom-in on input
+         focus (iOS keeps allowing user pinch-zoom regardless). -->
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, interactive-widget=resizes-content"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"
     />
     <title>Zit er tarwe in? 🌾</title>
     <meta

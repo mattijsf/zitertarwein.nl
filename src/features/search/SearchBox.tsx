@@ -5,6 +5,7 @@ import { useExamplesStore } from "../../stores/useExamplesStore"
 import { ScanButton } from "../scanner/ScanButton"
 import "./SearchBox.css"
 import { Suggestions } from "./Suggestions"
+import { useKeyboardAvoidance } from "./useKeyboardAvoidance"
 import { useRotatingPlaceholder } from "./useRotatingPlaceholder"
 import { useSearchCombobox } from "./useSearchCombobox"
 import { useSuggestionsClamp } from "./useSuggestionsClamp"
@@ -21,6 +22,7 @@ export function SearchBox(): ReactElement {
   const boxRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
   useSuggestionsClamp(listRef, boxRef, suggestions.length > 0, suggestions)
+  const onFocusKeepVisible = useKeyboardAvoidance(inputRef)
 
   return (
     <div className="search-wrap">
@@ -38,6 +40,7 @@ export function SearchBox(): ReactElement {
             {...inputProps}
             onFocus={() => {
               setFocused(true)
+              onFocusKeepVisible()
             }}
             onBlur={() => {
               inputProps.onBlur()
