@@ -123,17 +123,26 @@ export function ResultIcon({ name }: { name: ResultIconName }): ReactElement {
             stroke="#503417"
             strokeWidth="2.6"
           />
+          <g stroke="#c99422" strokeWidth="0.8" strokeLinecap="round" fill="none">
+            <path d="M22.5 15.5 L20.5 11.5" />
+            <path d="M25.5 14.5 L27.5 10.5" />
+            <path d="M24 13 L24 9.5" />
+          </g>
           <path
-            d="M24 33 Q23.5 25 24 19"
+            d="M24 32.5 Q23.7 24 24 15"
             fill="none"
             stroke="#b97f14"
-            strokeWidth="1.8"
+            strokeWidth="1.6"
             strokeLinecap="round"
           />
           <g fill="#eaba3b" stroke="#a96f0f" strokeWidth="0.8">
-            <ellipse cx="21" cy="19" rx="2.2" ry="3.4" transform="rotate(24 21 19)" />
-            <ellipse cx="27" cy="17" rx="2.2" ry="3.4" transform="rotate(-24 27 17)" />
-            <ellipse cx="24" cy="13" rx="2" ry="3.2" />
+            <ellipse cx="22.4" cy="26.5" rx="1.8" ry="3" transform="rotate(-20 22.4 26.5)" />
+            <ellipse cx="25.6" cy="25.2" rx="1.8" ry="3" transform="rotate(20 25.6 25.2)" />
+            <ellipse cx="22.4" cy="22.2" rx="1.7" ry="2.8" transform="rotate(-20 22.4 22.2)" />
+            <ellipse cx="25.6" cy="20.9" rx="1.7" ry="2.8" transform="rotate(20 25.6 20.9)" />
+            <ellipse cx="22.5" cy="18.2" rx="1.6" ry="2.6" transform="rotate(-20 22.5 18.2)" />
+            <ellipse cx="25.5" cy="17" rx="1.6" ry="2.6" transform="rotate(20 25.5 17)" />
+            <ellipse cx="24" cy="14.4" rx="1.5" ry="2.6" />
           </g>
           <circle cx="24" cy="35.5" r="1.6" fill="#503417" />
         </svg>
