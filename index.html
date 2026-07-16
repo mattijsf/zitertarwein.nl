@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <!-- interactive-widget=resizes-content: the layout shrinks with the
-         keyboard so a tall keyboard never covers the input field. The input
-         font size must stay >= 16px or mobile browsers zoom in on focus. -->
+         keyboard so a tall keyboard never covers the input field.
+         maximum-scale=1 stops the automatic zoom-in on input focus (iOS still
+         allows user pinch-zoom; it ignores maximum-scale for gestures). -->
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1, interactive-widget=resizes-content"
     />
     <title>Zit er tarwe in? 🌾</title>
     <meta
