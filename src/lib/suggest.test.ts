@@ -20,6 +20,12 @@ describe("suggest", () => {
     expect(suggest("CRÔ", products)[0]?.name).toBe("croissant")
   })
 
+  it("ignores punctuation and whitespace", () => {
+    const list = [product("B'tween"), product("Coca-Cola")]
+    expect(suggest("btween", list)[0]?.name).toBe("B'tween")
+    expect(suggest("coca cola", list)[0]?.name).toBe("Coca-Cola")
+  })
+
   it("shows the product name, not the brand, on a brand match", () => {
     const pasta: Product = { ...product("Penne (Barilla)", ["Penne", "Barilla"]), m: "Barilla" }
     expect(suggest("barilla", [pasta])[0]?.name).toBe("Penne (Barilla)")

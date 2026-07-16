@@ -31,8 +31,10 @@ RULES = load_rules()
 
 
 def norm(s):
+    """Lowercase, strip accents and all punctuation/whitespace (mirrors the
+    site's normalize() so dedupe matches search behaviour)."""
     s = unicodedata.normalize("NFD", s.lower())
-    return "".join(c for c in s if not unicodedata.combining(c)).strip()
+    return re.sub(r"[^a-z0-9]", "", "".join(c for c in s if not unicodedata.combining(c)))
 
 
 def analyze(text, ingredient_tags=None, allergen_tags=None, trace_tags=None, label_tags=None):
