@@ -7,7 +7,9 @@ export function Header(): ReactElement {
   return (
     <header>
       <div className="scene" aria-hidden="true">
-        <FieldScene />
+        <div className="scene-frame">
+          <FieldScene />
+        </div>
         <span className="logo-sticker">
           <LogoSheaf />
         </span>

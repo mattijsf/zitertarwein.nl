@@ -6,13 +6,16 @@ header {
 .scene {
   position: relative;
 }
-.scene > svg {
-  width: 100%;
-  height: auto;
-  display: block;
+.scene-frame {
   border-radius: 26px;
   border: 2px solid var(--line-soft);
   box-shadow: var(--shadow-soft);
+  overflow: hidden; /* Firefox does not clip svg paint to border-radius */
+}
+.scene-frame svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 .scene .stalk {
   transform-origin: bottom center;
@@ -95,7 +98,7 @@ h1 .accent::after {
   header {
     padding-top: 10px;
   }
-  .scene > svg {
+  .scene-frame svg {
     max-height: 130px;
     object-fit: cover;
   }
