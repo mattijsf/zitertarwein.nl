@@ -2,29 +2,22 @@ import type { RefObject } from "react"
 import { useCallback, useEffect, useRef } from "react"
 
 const SMALL_SCREEN_MAX_WIDTH = 700
-const KEYBOARD_SETTLE_MS = 400
+const DEBOUNCE_MS = 200
+const MARGIN_BELOW = 24
+const MARGIN_ABOVE = 12
 
 /**
- * Insurance for tall keyboards: if the field ends up outside the visible area
- * after the keyboard opened, ask the browser (once, natively) to bring it back
- * into view. No custom animation, so nothing to fight. Returns the input's
- * focus handler.
+ * Insurance for tall keyboards: whenever the visual viewport changes while
+ * typing, verify the field is fully visible; if it is (partially) behind the
+ * keyboard, one native smooth scroll fixes exactly the measured overlap.
+ * Debounced so it runs after the keyboard settles. Returns the input's focus
+ * handler.
  */
 export function useKeyboardAvoidance(inputRef: RefObject<HTMLInputElement | null>): () => void {
   const timer = useRef(0)
-  useEffect(
-    () => () => {
-      clearTimeout(timer.current)
-    },
-    []
-  )
 
-  return useCallback(() => {
-    if (window.innerWidth > SMALL_SCREEN_MAX_WIDTH) {
-      return
-    }
+  const ensureFieldVisible = useCallback(() => {
     clearTimeout(timer.current)
-    // after the keyboard has settled
     timer.current = window.setTimeout(() => {
       const input = inputRef.current
       const vv = window.visualViewport
@@ -32,9 +25,36 @@ export function useKeyboardAvoidance(inputRef: RefObject<HTMLInputElement | null
         return
       }
       const rect = input.getBoundingClientRect()
-      if (rect.bottom > vv.offsetTop + vv.height || rect.top < vv.offsetTop) {
-        input.scrollIntoView({ block: "center", behavior: "smooth" })
+      const belowOverlap = rect.bottom - (vv.offsetTop + vv.height) + MARGIN_BELOW
+      const aboveOverlap = vv.offsetTop - rect.top + MARGIN_ABOVE
+      if (belowOverlap > 0) {
+        window.scrollBy({ top: belowOverlap, behavior: "smooth" })
+      } else if (aboveOverlap > 0) {
+        window.scrollBy({ top: -aboveOverlap, behavior: "smooth" })
       }
-    }, KEYBOARD_SETTLE_MS)
+    }, DEBOUNCE_MS)
   }, [inputRef])
+
+  useEffect(() => {
+    const vv = window.visualViewport
+    const onResize = (): void => {
+      if (
+        document.activeElement === inputRef.current &&
+        window.innerWidth <= SMALL_SCREEN_MAX_WIDTH
+      ) {
+        ensureFieldVisible()
+      }
+    }
+    vv?.addEventListener("resize", onResize)
+    return () => {
+      vv?.removeEventListener("resize", onResize)
+      clearTimeout(timer.current)
+    }
+  }, [inputRef, ensureFieldVisible])
+
+  return useCallback(() => {
+    if (window.innerWidth <= SMALL_SCREEN_MAX_WIDTH) {
+      ensureFieldVisible()
+    }
+  }, [ensureFieldVisible])
 }
