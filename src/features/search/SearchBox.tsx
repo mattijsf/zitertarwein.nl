@@ -56,9 +56,7 @@ export function SearchBox(): ReactElement {
             aria-label="Wis invoer"
             onMouseDown={e => {
               e.preventDefault() // keep focus in the field
-              const { setQuery, closeSuggestions } = useCheckStore.getState()
-              setQuery("")
-              closeSuggestions()
+              useCheckStore.getState().clear() // input, suggestions, result card and ?p= link
               inputRef.current?.focus()
             }}
           >
