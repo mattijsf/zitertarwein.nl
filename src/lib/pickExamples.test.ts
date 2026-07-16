@@ -34,7 +34,7 @@ describe("pickExamples", () => {
   ]
 
   it("takes two of each verdict", () => {
-    const picked = pickExamples(products)
+    const picked = pickExamples(products).examples
     expect(picked).toHaveLength(6)
     for (const s of ["yes", "no", "check"] as const) {
       expect(picked.filter(p => p.s === s)).toHaveLength(2)
@@ -43,7 +43,28 @@ describe("pickExamples", () => {
 
   it("skips products without a story", () => {
     for (let i = 0; i < 20; i++) {
-      expect(pickExamples(products).map(p => p.n)).not.toContain("kaal")
+      expect(pickExamples(products).examples.map(p => p.n)).not.toContain("kaal")
     }
+  })
+
+  it("skips recently shown products while enough fresh ones are left", () => {
+    const verdicts: Verdict[] = ["yes", "no", "check"]
+    const many = verdicts.flatMap(s =>
+      ["1", "2", "3", "4", "5", "6"].map(i => product(`${s}${i}`, s))
+    )
+    const first = pickExamples(many)
+    expect(first.recent.size).toBe(6)
+    const second = pickExamples(many, first.recent)
+    for (const p of second.examples) {
+      expect(first.recent.has(p.n)).toBe(false)
+    }
+    expect(second.recent.size).toBe(12)
+  })
+
+  it("starts over when a verdict runs out of fresh products", () => {
+    const recent = new Set(["a", "b"])
+    const { examples, recent: next } = pickExamples(products, recent)
+    expect(examples).toHaveLength(6)
+    expect(next.size).toBe(6)
   })
 })

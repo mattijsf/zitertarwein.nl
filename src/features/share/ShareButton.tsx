@@ -1,34 +1,17 @@
 import type { ReactElement } from "react"
-import { shareProduct } from "./shareProduct"
-import { useCopied } from "./useCopied"
+import type { ShareTarget } from "./useShare"
+import { useShare } from "./useShare"
 
 /** Round share icon in the corner of an answer card. */
-export function ShareButton({
-  name,
-  verdict,
-  query,
-}: {
-  name: string
-  verdict: string
-  query: string
-}): ReactElement {
-  const [copied, setCopied] = useCopied()
+export function ShareButton(target: ShareTarget): ReactElement {
+  const { copied, share } = useShare(target)
   return (
     <button
       type="button"
       className="share-button"
       aria-label="Deel dit antwoord"
       title="Delen"
-      onClick={() => {
-        shareProduct(name, verdict, query).then(
-          outcome => {
-            setCopied(outcome === "copied")
-          },
-          () => {
-            // clipboard refused: nothing to show
-          }
-        )
-      }}
+      onClick={share}
     >
       {copied ? (
         "✓"

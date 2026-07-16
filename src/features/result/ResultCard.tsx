@@ -7,6 +7,8 @@ import type { CheckResult } from "../../stores/useCheckStore"
 import { useCheckStore } from "../../stores/useCheckStore"
 import type { Product, Verdict } from "../../types/product"
 import { ShareButton } from "../share/ShareButton"
+import { ShareLink } from "../share/ShareLink"
+import type { ShareTarget } from "../share/useShare"
 import { Confetti } from "./Confetti"
 import "./ResultCard.css"
 
@@ -68,9 +70,7 @@ export function ResultCard(): ReactElement {
 }
 
 /** What the corner share button shares: real answers only (cards with a source line). */
-function shareTarget(
-  result: CheckResult | null
-): { name: string; verdict: string; query: string } | null {
+function shareTarget(result: CheckResult | null): ShareTarget | null {
   if (result?.kind === "product") {
     return {
       name: result.product.n,
@@ -144,7 +144,9 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
             &nbsp;·&nbsp;{" "}
             <a href={googleUrl(term)} target="_blank" rel="noopener noreferrer">
               zoek op Google
-            </a>
+            </a>{" "}
+            &nbsp;·&nbsp;{" "}
+            <ShareLink name={match.name} verdict={onlineVerdict(match.hasWheat)} query={term} />
           </p>
         </>
       )
@@ -256,7 +258,8 @@ function ProductBody({ product }: { product: Product }): ReactElement {
         Bron:{" "}
         <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
           {sourceName}
-        </a>
+        </a>{" "}
+        &nbsp;·&nbsp; <ShareLink name={product.n} verdict={style.verdict} query={product.n} />
       </p>
       {product.s === "no" && <Confetti />}
     </>
