@@ -5,12 +5,17 @@ header {
 }
 .scene {
   position: relative;
+  /* Shadow lives here, outside the frame's clip-path (which would clip
+     its own shadow: filters render before clipping). */
+  filter: drop-shadow(0 10px 18px rgba(80, 52, 23, 0.16));
 }
 .scene-frame {
   border-radius: 26px;
   border: 2px solid var(--line-soft);
-  box-shadow: var(--shadow-soft);
-  overflow: hidden; /* Firefox does not clip svg paint to border-radius */
+  /* Firefox does not reliably clip svg paint to border-radius, not even
+     with overflow:hidden — clip-path enforces the rounding exactly. */
+  overflow: hidden;
+  clip-path: inset(0 round 26px);
 }
 .scene-frame svg {
   width: 100%;
