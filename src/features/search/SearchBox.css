@@ -10,17 +10,43 @@
   padding: 9px;
   box-shadow: var(--shadow);
 }
+.input-wrap {
+  flex: 1;
+  position: relative;
+  display: flex;
+  min-width: 0;
+}
 .product-input {
   flex: 1;
   border: none;
   outline: none;
   font-size: 19px;
   font-weight: 600;
-  padding: 10px 14px;
+  padding: 10px 34px 10px 14px;
   background: transparent;
   color: var(--black);
   min-width: 0;
   font-family: inherit;
+}
+.input-clear {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(28, 25, 23, 0.08);
+  color: #8a7d64;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+}
+.input-clear:hover {
+  background: rgba(28, 25, 23, 0.16);
+  color: var(--black);
 }
 .product-input::placeholder {
   color: #b3a98f;
@@ -57,7 +83,7 @@
   .search-box {
     flex-wrap: wrap;
   }
-  .product-input {
+  .input-wrap {
     flex-basis: 100%;
   }
   .check-button {
