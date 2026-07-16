@@ -4,8 +4,9 @@ import { useCallback, useEffect, useRef } from "react"
 const SMALL_SCREEN_MAX_WIDTH = 700
 const KEYBOARD_SLIDE_MS = 300
 const PARK_MARGIN = 10
-const GLIDE_MS = 380
-const SAFETY_NET_EXTRA_MS = 150
+const GLIDE_MAX_MS = 700
+const SAFETY_NET_EXTRA_MS = 200
+const EASE_MS = 90
 
 /**
  * On small screens, parks the search bar at the top when typing starts, so the
@@ -21,6 +22,7 @@ export function useKeyboardAvoidance(
   const safetyNet = useRef(0)
   const frame = useRef(0)
   const glideStop = useRef(false)
+  const glideId = useRef(0)
 
   // the user taking over (touch/wheel) aborts the glide
   useEffect(() => {
@@ -38,41 +40,48 @@ export function useKeyboardAvoidance(
     }
   }, [])
 
-  // Smooth frame-by-frame scroll. The browser's native smooth scrolling gets
-  // cancelled by its own focus handling, so we drive it ourselves.
+  // Converging glide: every frame moves a fraction toward the element's
+  // CURRENT position. Self-correcting when the browser scrolls on its own
+  // mid-animation (Firefox does after focus), so it cannot overshoot. The
+  // browser's native smooth scrolling gets cancelled by its own focus
+  // handling, so we drive it ourselves.
   const glideTo = useCallback(
-    (targetY: number, duration = GLIDE_MS): void => {
-      const startY = window.scrollY
-      const delta = targetY - startY
-      if (Math.abs(delta) < 2) {
-        clampSuggestions()
-        return
-      }
+    (el: HTMLElement, offset = PARK_MARGIN, maxMs = GLIDE_MAX_MS): void => {
       glideStop.current = false
+      const id = ++glideId.current // a newer glide takes over from an older one
       const start = performance.now()
-      // Safety net: if animation frames never run (throttled background
-      // view), jump to the target so the layout still ends up right.
-      safetyNet.current = window.setTimeout(() => {
-        if (!glideStop.current && Math.abs(window.scrollY - targetY) > 4) {
-          window.scrollTo(0, targetY)
-          clampSuggestions()
+      const distance = (): number => el.getBoundingClientRect().top - offset
+      const settle = (): void => {
+        const d = distance()
+        if (Math.abs(d) > 2) {
+          window.scrollBy(0, d)
         }
-      }, duration + SAFETY_NET_EXTRA_MS)
-      const net = safetyNet.current
+        clampSuggestions()
+      }
+      // Safety net: if animation frames never run (throttled background
+      // view), still end up in the right place.
+      const net = window.setTimeout(() => {
+        if (!glideStop.current && id === glideId.current) {
+          settle()
+        }
+      }, maxMs + SAFETY_NET_EXTRA_MS)
+      safetyNet.current = net
+      let prev = start
       const step = (now: number): void => {
-        if (glideStop.current) {
+        if (glideStop.current || id !== glideId.current) {
           clearTimeout(net)
           return
         }
-        const t = Math.min(1, (now - start) / duration)
-        const eased = 1 - Math.pow(1 - t, 3) // ease-out cubic
-        window.scrollTo(0, startY + delta * eased)
-        if (t < 1) {
-          frame.current = requestAnimationFrame(step)
-        } else {
+        const d = distance()
+        if (Math.abs(d) < 1 || now - start > maxMs) {
           clearTimeout(net)
-          clampSuggestions()
+          settle()
+          return
         }
+        const dt = now - prev
+        prev = now
+        window.scrollBy(0, d * (1 - Math.exp(-dt / EASE_MS))) // exponential ease-out
+        frame.current = requestAnimationFrame(step)
       }
       frame.current = requestAnimationFrame(step)
     },
@@ -90,7 +99,7 @@ export function useKeyboardAvoidance(
       if (document.activeElement !== inputRef.current || !wrap) {
         return
       }
-      glideTo(window.scrollY + wrap.getBoundingClientRect().top - PARK_MARGIN)
+      glideTo(wrap)
     }, KEYBOARD_SLIDE_MS)
   }, [inputRef, wrapRef, glideTo])
 }
