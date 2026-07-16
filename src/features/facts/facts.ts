@@ -22,6 +22,9 @@ export const FACTS: readonly string[] = [
   "Wist je dat ontbijtkoek traditioneel van rogge is, maar veel merken er tarwe bij mengen?",
   "Wist je dat tarwe bij de 14 allergenen hoort die verplicht op elk etiket moeten staan — daarom staat het vetgedrukt?",
   "Wist je dat ook restaurants en bakkers je wettelijk moeten kunnen vertellen of er tarwe in zit? Vraag er gerust naar.",
+  "Wist je dat tarwe niet alleen in eten zit? Ook cosmetica, tandpasta en speeldeeg kunnen tarwe bevatten.",
+  "Wist je dat tarweallergie iets anders is dan coeliakie? Het zijn twee verschillende reacties van je afweersysteem.",
+  "Wist je dat mensen met een tarweallergie maïs en rijst meestal prima verdragen?",
 ]
 
 /** Card colours, cycled per fact. */

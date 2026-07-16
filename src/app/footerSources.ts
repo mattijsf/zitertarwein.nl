@@ -28,6 +28,10 @@ export const footerSources = [
     url: "https://www.mdlfonds.nl/ziekten/coeliakie/",
   },
   {
+    name: "Stichting Voedselallergie — tarweallergie",
+    url: "https://www.voedselallergie.nl/allergenen/tarwe/",
+  },
+  {
     name: "Thuisarts.nl — coeliakie (medische informatie)",
     url: "https://www.thuisarts.nl/coeliakie",
   },

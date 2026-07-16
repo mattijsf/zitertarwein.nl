@@ -125,6 +125,7 @@ Answers reference a verified source per product:
 - [Open Food Facts](https://nl.openfoodfacts.org/) — label data, also used for the live search
 - [NVWA — allergenen op het etiket](https://www.nvwa.nl/onderwerpen/allergenen) — legal basis for the mandatory (bold) wheat mention on labels (EU 1169/2011)
 - [MDL Fonds — coeliakie](https://www.mdlfonds.nl/ziekten/coeliakie/)
+- [Stichting Voedselallergie — tarweallergie](https://www.voedselallergie.nl/allergenen/tarwe/) — patient organisation, wheat-specific
 - [Thuisarts.nl — coeliakie](https://www.thuisarts.nl/coeliakie) — medical information
 
 The site provides general information and is not medical advice.
