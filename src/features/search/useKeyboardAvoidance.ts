@@ -8,16 +8,21 @@ const GLIDE_MAX_MS = 700
 const SAFETY_NET_EXTRA_MS = 200
 const EASE_MS = 90
 
+export interface KeyboardAvoidance {
+  onFocus: () => void
+  onBlur: () => void
+}
+
 /**
  * On small screens, parks the search bar at the top when typing starts, so the
  * suggestions get the room between the input and the keyboard. Returns the
- * input's focus handler.
+ * input's focus and blur handlers.
  */
 export function useKeyboardAvoidance(
   inputRef: RefObject<HTMLInputElement | null>,
   wrapRef: RefObject<HTMLElement | null>,
   clampSuggestions: () => void
-): () => void {
+): KeyboardAvoidance {
   const timer = useRef(0)
   const safetyNet = useRef(0)
   const frame = useRef(0)
@@ -92,7 +97,7 @@ export function useKeyboardAvoidance(
     [clampSuggestions]
   )
 
-  return useCallback(() => {
+  const onFocus = useCallback(() => {
     if (window.innerWidth > SMALL_SCREEN_MAX_WIDTH) {
       return
     }
@@ -106,4 +111,11 @@ export function useKeyboardAvoidance(
       glideTo(wrap)
     }, KEYBOARD_SLIDE_MS)
   }, [inputRef, wrapRef, glideTo])
+
+  // Leaving the field ends the glide: no late correction jumps on blur.
+  const onBlur = useCallback(() => {
+    glideStop.current = true
+  }, [])
+
+  return { onFocus, onBlur }
 }

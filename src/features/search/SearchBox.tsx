@@ -22,7 +22,7 @@ export function SearchBox(): ReactElement {
   const wrapRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
   const clampSuggestions = useSuggestionsClamp(listRef, suggestions.length > 0, suggestions)
-  const onFocusAvoidKeyboard = useKeyboardAvoidance(inputRef, wrapRef, clampSuggestions)
+  const keyboardAvoidance = useKeyboardAvoidance(inputRef, wrapRef, clampSuggestions)
 
   return (
     <div ref={wrapRef} className="search-wrap">
@@ -40,10 +40,11 @@ export function SearchBox(): ReactElement {
             {...inputProps}
             onFocus={() => {
               setFocused(true)
-              onFocusAvoidKeyboard()
+              keyboardAvoidance.onFocus()
             }}
             onBlur={() => {
               inputProps.onBlur()
+              keyboardAvoidance.onBlur()
               setTimeout(() => {
                 setFocused(document.activeElement === inputRef.current)
               }, CLEAR_BLUR_DELAY_MS)
