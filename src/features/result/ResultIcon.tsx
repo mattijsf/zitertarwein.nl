@@ -68,18 +68,32 @@ export function ResultIcon({ name }: { name: ResultIconName }): ReactElement {
       return (
         <svg viewBox="0 0 48 48">
           <circle cx="24" cy="24" r="22" fill="#f7e6b5" />
-          <ellipse
-            cx="21"
-            cy="20"
-            rx="5"
-            ry="8"
-            fill="#eaba3b"
-            stroke="#a96f0f"
-            strokeWidth="1.4"
-            transform="rotate(18 21 20)"
+          <g transform="rotate(-8 20 24)">
+            <rect
+              x="11.5"
+              y="14"
+              width="17"
+              height="20"
+              rx="2.5"
+              fill="#fffdf6"
+              stroke="#8a6c49"
+              strokeWidth="1.6"
+            />
+            <g stroke="#c9b8a0" strokeWidth="1.4" strokeLinecap="round">
+              <path d="M15 19.5 h10" />
+              <path d="M15 23.5 h10" />
+              <path d="M15 27.5 h6.5" />
+            </g>
+          </g>
+          <circle
+            cx="28.5"
+            cy="26.5"
+            r="7.5"
+            fill="rgba(211,236,245,0.55)"
+            stroke="#503417"
+            strokeWidth="2.8"
           />
-          <circle cx="22" cy="21" r="11.5" fill="none" stroke="#503417" strokeWidth="3.2" />
-          {LENS}
+          <path d="M34 32 L39.5 37.5" stroke="#503417" strokeWidth="3.6" strokeLinecap="round" />
         </svg>
       )
     case "search":
