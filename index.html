@@ -4,11 +4,12 @@
     <meta charset="UTF-8" />
     <!-- interactive-widget=resizes-content: the layout shrinks with the
          keyboard so a tall keyboard never covers the input field.
-         maximum-scale=1 stops the automatic zoom-in on input focus (iOS still
-         allows user pinch-zoom; it ignores maximum-scale for gestures). -->
+         maximum-scale=1 + user-scalable=no stop the automatic zoom-in on input
+         focus (Firefox needs the latter; iOS keeps allowing user pinch-zoom
+         regardless, as it ignores these for gestures). -->
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1, interactive-widget=resizes-content"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, interactive-widget=resizes-content"
     />
     <title>Zit er tarwe in? 🌾</title>
     <meta

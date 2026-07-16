@@ -87,8 +87,11 @@ h1 .accent::after {
   color: var(--ink-soft);
 }
 
-/* Short windows: compact header, so the examples stay in view */
-@media (max-height: 700px) {
+/* Short landscape windows: compact header, so the examples stay in view.
+   Portrait is left out on purpose: there the keyboard shrinks the viewport
+   below the threshold and the sudden compact layout looks like the page
+   zooms on focus. */
+@media (max-height: 700px) and (orientation: landscape) {
   header {
     padding-top: 10px;
   }
