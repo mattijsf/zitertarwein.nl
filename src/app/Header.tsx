@@ -1,7 +1,7 @@
 import type { ReactElement } from "react"
 import { FieldScene } from "./FieldScene"
 import "./Header.css"
-import { LogoSheaf } from "./LogoSheaf"
+import { LogoWheatEar } from "./LogoWheatEar"
 
 export function Header(): ReactElement {
   return (
@@ -11,7 +11,7 @@ export function Header(): ReactElement {
           <FieldScene />
         </div>
         <span className="logo-sticker">
-          <LogoSheaf />
+          <LogoWheatEar />
         </span>
       </div>
       <h1>
