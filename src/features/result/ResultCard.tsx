@@ -6,7 +6,7 @@ import type { InstallPlatform } from "../../lib/installPlatform"
 import type { CheckResult } from "../../stores/useCheckStore"
 import { useCheckStore } from "../../stores/useCheckStore"
 import type { Product, Verdict } from "../../types/product"
-import { ShareLink } from "../share/ShareLink"
+import { ShareButton } from "../share/ShareButton"
 import { Confetti } from "./Confetti"
 import "./ResultCard.css"
 
@@ -20,6 +20,7 @@ export function ResultCard(): ReactElement {
   const result = useCheckStore(state => state.result)
   const resultId = useCheckStore(state => state.resultId)
   const clear = useCheckStore(state => state.clear)
+  const share = shareTarget(result)
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
     // install help is opened from the top or bottom of the page: bring the card into view
@@ -54,8 +55,38 @@ export function ResultCard(): ReactElement {
           ✕
         </button>
       )}
+      {share && (
+        <ShareButton
+          key={`share-${resultId}`}
+          name={share.name}
+          verdict={share.verdict}
+          query={share.query}
+        />
+      )}
     </div>
   )
+}
+
+/** What the corner share button shares: real answers only (cards with a source line). */
+function shareTarget(
+  result: CheckResult | null
+): { name: string; verdict: string; query: string } | null {
+  if (result?.kind === "product") {
+    return {
+      name: result.product.n,
+      verdict: STYLE[result.product.s].verdict,
+      query: result.product.n,
+    }
+  }
+  if (result?.kind === "online") {
+    const { match } = result
+    return { name: match.name, verdict: onlineVerdict(match.hasWheat), query: result.term }
+  }
+  return null
+}
+
+function onlineVerdict(hasWheat: boolean): string {
+  return hasWheat ? "Waarschijnlijk wel tarwe" : "Waarschijnlijk geen tarwe"
 }
 
 function resultClass(result: CheckResult | null): string {
@@ -97,9 +128,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
       return (
         <>
           <div className="result-emoji">{match.hasWheat ? "🌾" : "🤔"}</div>
-          <div className="result-verdict">
-            {match.hasWheat ? "Waarschijnlijk wel tarwe" : "Waarschijnlijk geen tarwe"}
-          </div>
+          <div className="result-verdict">{onlineVerdict(match.hasWheat)}</div>
           <div className="result-product">{match.name}</div>
           <p className="result-info">
             {match.hasWheat
@@ -115,12 +144,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
             &nbsp;·&nbsp;{" "}
             <a href={googleUrl(term)} target="_blank" rel="noopener noreferrer">
               zoek op Google
-            </a>{" "}
-            &nbsp;·&nbsp;{" "}
-            <ShareLink
-              name={term}
-              verdict={match.hasWheat ? "Waarschijnlijk wel tarwe." : "Waarschijnlijk geen tarwe."}
-            />
+            </a>
           </p>
         </>
       )
@@ -232,8 +256,7 @@ function ProductBody({ product }: { product: Product }): ReactElement {
         Bron:{" "}
         <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
           {sourceName}
-        </a>{" "}
-        &nbsp;·&nbsp; <ShareLink name={product.n} verdict={style.verdict} />
+        </a>
       </p>
       {product.s === "no" && <Confetti />}
     </>

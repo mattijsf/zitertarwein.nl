@@ -7,8 +7,13 @@ function canShare(): boolean {
 }
 
 /** Web Share where the browser has it, otherwise the clipboard. */
-export async function shareProduct(name: string, verdict: string): Promise<"shared" | "copied"> {
-  const url = shareUrl(location.origin, name)
+export async function shareProduct(
+  name: string,
+  verdict: string,
+  /** The search the link runs; differs from the name for online answers. */
+  query: string
+): Promise<"shared" | "copied"> {
+  const url = shareUrl(location.origin, query)
   const text = shareText(name, verdict)
   if (canShare()) {
     try {

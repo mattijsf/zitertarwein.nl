@@ -3,16 +3,8 @@ import { PRODUCTS } from "../../data/products"
 import { findProduct } from "../../lib/findProduct"
 import { readSharedTerm, shareSearch } from "../../lib/shareUrl"
 import { useCatalogStore } from "../../stores/useCatalogStore"
-import type { CheckResult } from "../../stores/useCheckStore"
 import { useCheckStore } from "../../stores/useCheckStore"
-
-/** The product an answer can be shared as, or null for cards without an answer. */
-function sharedName(result: CheckResult | null): string | null {
-  if (result?.kind === "product") {
-    return result.product.n
-  }
-  return result?.kind === "online" ? result.term : null
-}
+import { sharedQuery } from "./sharedQuery"
 
 /**
  * Keeps ?p=<product> in the address bar in step with the answer, and opens the answer for a
@@ -20,7 +12,7 @@ function sharedName(result: CheckResult | null): string | null {
  */
 export function useShareLink(): void {
   const result = useCheckStore(state => state.result)
-  const name = sharedName(result)
+  const name = sharedQuery(result)
   const hadResult = useRef(false)
   useEffect(() => {
     if (result === null) {
