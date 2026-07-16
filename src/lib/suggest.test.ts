@@ -25,7 +25,7 @@ describe("suggest", () => {
     expect(suggest("barilla", [pasta])[0]?.name).toBe("Penne (Barilla)")
   })
 
-  it("tolerates typos when nothing matches", () => {
+  it("tolerates typos", () => {
     const list = [product("stroopwafel"), product("kroket")]
     expect(suggest("stropwafel", list).map(s => [s.name, s.score])).toEqual([["stroopwafel", 3]])
     // also on the start of a longer name
@@ -33,6 +33,15 @@ describe("suggest", () => {
     expect(suggest("kroet", list)[0]?.score).toBe(3)
     // short terms are left alone
     expect(suggest("krt", list)).toEqual([])
+  })
+
+  it("mixes typo matches in after the regular hits", () => {
+    const list = [product("kroket"), product("krokant"), product("bitterbal")]
+    // krokant starts with "kroka"; kroket is one edit away
+    expect(suggest("kroka", list).map(s => [s.name, s.score])).toEqual([
+      ["krokant", 0],
+      ["kroket", 3],
+    ])
   })
 
   it("returns nothing for an empty term", () => {
