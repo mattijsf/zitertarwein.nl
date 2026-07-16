@@ -10,21 +10,32 @@ export function ResultIcon({ name }: { name: ResultIconName }): ReactElement {
       return (
         <svg viewBox="0 0 48 48">
           <circle cx="24" cy="24" r="22" fill="#f6cdbd" />
-          <g transform="translate(2 3)">
-            <path
-              d="M22 40 Q21 24 22 12"
-              fill="none"
-              stroke="#b97f14"
-              strokeWidth="2.6"
-              strokeLinecap="round"
-            />
-            <path d="M22 28 Q14 23 12 15 Q21 18 22 25 Z" fill="#6da544" />
-            <g fill="#eaba3b" stroke="#a96f0f" strokeWidth="1">
-              <ellipse cx="17" cy="12" rx="3.4" ry="5.4" transform="rotate(24 17 12)" />
-              <ellipse cx="27" cy="9" rx="3.4" ry="5.4" transform="rotate(-24 27 9)" />
-              <ellipse cx="17" cy="4" rx="3.2" ry="5" transform="rotate(24 17 4)" />
-              <ellipse cx="27" cy="1" rx="3.2" ry="5" transform="rotate(-24 27 1)" />
-            </g>
+          <g stroke="#c99422" strokeWidth="1" strokeLinecap="round" fill="none">
+            <path d="M21.5 17 L18.5 7.5" />
+            <path d="M26.5 15.5 L29.5 6" />
+            <path d="M24 13.5 L24 5" />
+          </g>
+          <path
+            d="M24 40 Q23.6 30 24 16"
+            fill="none"
+            stroke="#b97f14"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+          />
+          <path
+            d="M24 34 Q18.5 31.5 16.8 26 Q22 28.5 24 32 Z"
+            fill="#6da544"
+            stroke="#4c7a2e"
+            strokeWidth="1"
+          />
+          <g fill="#eaba3b" stroke="#a96f0f" strokeWidth="1">
+            <ellipse cx="21.8" cy="30.5" rx="2.2" ry="3.6" transform="rotate(-20 21.8 30.5)" />
+            <ellipse cx="26.2" cy="28.9" rx="2.2" ry="3.6" transform="rotate(20 26.2 28.9)" />
+            <ellipse cx="21.8" cy="26.1" rx="2.1" ry="3.4" transform="rotate(-20 21.8 26.1)" />
+            <ellipse cx="26.2" cy="24.5" rx="2.1" ry="3.4" transform="rotate(20 26.2 24.5)" />
+            <ellipse cx="21.9" cy="21.8" rx="2" ry="3.2" transform="rotate(-20 21.9 21.8)" />
+            <ellipse cx="26.1" cy="20.2" rx="2" ry="3.2" transform="rotate(20 26.1 20.2)" />
+            <ellipse cx="24" cy="16.8" rx="1.9" ry="3.3" />
           </g>
         </svg>
       )
