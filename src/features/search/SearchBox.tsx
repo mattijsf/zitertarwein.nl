@@ -1,12 +1,14 @@
 import type { ReactElement } from "react"
-import { useMemo, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import { useCheckStore } from "../../stores/useCheckStore"
 import { useExamplesStore } from "../../stores/useExamplesStore"
 import { ScanButton } from "../scanner/ScanButton"
 import "./SearchBox.css"
 import { Suggestions } from "./Suggestions"
+import { useKeyboardAvoidance } from "./useKeyboardAvoidance"
 import { useRotatingPlaceholder } from "./useRotatingPlaceholder"
 import { useSearchCombobox } from "./useSearchCombobox"
+import { useSuggestionsClamp } from "./useSuggestionsClamp"
 
 const CLEAR_BLUR_DELAY_MS = 150
 
@@ -17,9 +19,13 @@ export function SearchBox(): ReactElement {
   const placeholderTerms = useMemo(() => examples.map(p => p.n), [examples])
   const placeholder = useRotatingPlaceholder(placeholderTerms, inputRef)
   const [focused, setFocused] = useState(false)
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLUListElement>(null)
+  const clampSuggestions = useSuggestionsClamp(listRef, suggestions.length > 0, suggestions)
+  const onFocusAvoidKeyboard = useKeyboardAvoidance(inputRef, wrapRef, clampSuggestions)
 
   return (
-    <div className="search-wrap">
+    <div ref={wrapRef} className="search-wrap">
       <div className="search-box">
         <div className="input-wrap">
           <input
@@ -34,6 +40,7 @@ export function SearchBox(): ReactElement {
             {...inputProps}
             onFocus={() => {
               setFocused(true)
+              onFocusAvoidKeyboard()
             }}
             onBlur={() => {
               inputProps.onBlur()
@@ -65,6 +72,7 @@ export function SearchBox(): ReactElement {
       </div>
       <Suggestions
         id="suggestions"
+        listRef={listRef}
         suggestions={suggestions}
         query={query}
         activeIndex={activeIndex}

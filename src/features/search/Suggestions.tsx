@@ -1,4 +1,4 @@
-import type { ReactElement } from "react"
+import type { ReactElement, RefObject } from "react"
 import type { Suggestion } from "../../lib/suggest"
 import type { Verdict } from "../../types/product"
 import { HighlightedName } from "./HighlightedName"
@@ -12,6 +12,7 @@ const HINT: Record<Verdict, string> = {
 
 interface SuggestionsProps {
   id: string
+  listRef: RefObject<HTMLUListElement | null>
   suggestions: Suggestion[]
   query: string
   activeIndex: number
@@ -20,6 +21,7 @@ interface SuggestionsProps {
 
 export function Suggestions({
   id,
+  listRef,
   suggestions,
   query,
   activeIndex,
@@ -27,6 +29,7 @@ export function Suggestions({
 }: SuggestionsProps): ReactElement {
   return (
     <ul
+      ref={listRef}
       id={id}
       className={suggestions.length > 0 ? "suggestions open" : "suggestions"}
       role="listbox"
