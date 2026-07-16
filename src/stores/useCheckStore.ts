@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import { decodeEntities } from "../lib/decodeEntities"
 import { findProduct } from "../lib/findProduct"
 import type { InstallPlatform } from "../lib/installPlatform"
 import { lookUpBarcode } from "../lib/lookUpBarcode"
@@ -141,7 +142,7 @@ export const useCheckStore = create<CheckState>()((set, get) => {
         switch (lookup.kind) {
           case "found": {
             const { product } = lookup
-            const name = product.productNameNl || product.productName || code
+            const name = decodeEntities(product.productNameNl || product.productName || code)
             set({ query: name })
             show({ kind: "online", term: name, match: toMatch(product, name) })
             break

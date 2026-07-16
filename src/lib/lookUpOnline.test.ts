@@ -70,6 +70,12 @@ describe("toMatch", () => {
     })
   })
 
+  it("decodes HTML entities in the name", () => {
+    expect(toMatch(off({ productName: "Pindakaas &amp; jam" }), "pinda").name).toBe(
+      "Pindakaas & jam"
+    )
+  })
+
   it("falls back to the search term", () => {
     expect(toMatch(off({}), "pinda").name).toBe("pinda")
   })

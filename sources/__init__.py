@@ -10,7 +10,7 @@ list of products in the shared format:
       "cats": [category tags], "scans": popularity (int)
     }
 """
-import json, os, re, unicodedata
+import html, json, os, re, unicodedata
 
 _PROJECT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -64,7 +64,8 @@ def analyze(text, ingredient_tags=None, allergen_tags=None, trace_tags=None, lab
 def make_product(name, brand, code, text, ingredient_tags=None, allergen_tags=None,
                  trace_tags=None, label_tags=None, cats=None, scans=0):
     """Builds one product in the shared format, or None if unusable."""
-    name = (name or "").strip()
+    name = html.unescape((name or "").strip())
+    brand = html.unescape(brand or "")
     if not (3 <= len(name) <= 42) or not re.search(r"[a-zA-Z]{3}", name):
         return None
     if not (text or "").strip() and not (ingredient_tags or []):

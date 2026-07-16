@@ -1,4 +1,5 @@
 /** Live lookup in the Open Food Facts label data, for products not in our own list. */
+import { decodeEntities } from "./decodeEntities"
 import { offProductUrl } from "./offProductUrl"
 import rules from "./rules.json"
 
@@ -104,7 +105,7 @@ export function hasWheat(p: OffProduct): boolean {
 }
 
 export function toMatch(p: OffProduct, term: string): OnlineMatch {
-  const name = firstNonEmpty(p.productNameNl, p.productName, term)
+  const name = decodeEntities(firstNonEmpty(p.productNameNl, p.productName, term))
   const brand = p.brands ? ` (${p.brands.split(",")[0]?.trim() ?? ""})` : ""
   return {
     name: name + brand,
