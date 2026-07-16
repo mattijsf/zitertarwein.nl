@@ -20,6 +20,10 @@ export const FACTS: readonly string[] = [
   "Wist je dat couscous eigenlijk hele kleine tarwebolletjes zijn?",
   "Wist je dat kroepoek van tapioca en garnaal wordt gemaakt? Meestal tarwevrij.",
   "Wist je dat ontbijtkoek traditioneel van rogge is, maar veel merken er tarwe bij mengen?",
+  "Wist je dat ongeveer 1 op de 100 Nederlanders coeliakie heeft? De meesten weten het zelf niet eens.",
+  "Wist je dat tarwe bij de 14 allergenen hoort die verplicht op elk etiket moeten staan — daarom staat het vetgedrukt?",
+  "Wist je dat er geen medicijn tegen coeliakie bestaat? Glutenvrij eten is de enige behandeling.",
+  "Wist je dat ook restaurants en bakkers je wettelijk moeten kunnen vertellen welke allergenen erin zitten? Vraag er gerust naar.",
 ]
 
 /** Card colours, cycled per fact. */
