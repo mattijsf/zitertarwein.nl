@@ -2,10 +2,11 @@
 <html lang="nl">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content"
-    />
+    <!-- Note: no interactive-widget=resizes-content — the keyboard overlays the
+         page instead of reflowing it (no layout jump); the suggestion dropdown
+         handles the reduced space itself via visualViewport. The input font size
+         must stay >= 16px or mobile browsers zoom in on focus (another jump). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zit er tarwe in? 🌾</title>
     <meta
       name="description"
