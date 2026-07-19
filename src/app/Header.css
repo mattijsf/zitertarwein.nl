@@ -65,7 +65,7 @@ header {
   }
 }
 h1 {
-  font-size: clamp(32px, 7vw, 46px);
+  font-size: clamp(28px, 6vw, 40px);
   font-weight: 800;
   letter-spacing: -0.02em;
   margin-top: 46px;
@@ -91,7 +91,7 @@ h1 .accent::after {
 .tagline {
   margin-top: 8px;
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--ink-soft);
 }
 

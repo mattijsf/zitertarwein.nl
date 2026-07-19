@@ -65,7 +65,7 @@ export function SearchBox(): ReactElement {
         </div>
         <ScanButton />
         <button className="check-button" type="button" onClick={check}>
-          Check!
+          Check
         </button>
       </div>
       <Suggestions

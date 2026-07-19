@@ -11,7 +11,7 @@
   padding: 7px 15px;
   margin: 4px 3px;
   font-size: 14.5px;
-  font-weight: 700;
+  font-weight: 600;
   font-family: inherit;
   cursor: pointer;
   color: var(--ink);
@@ -27,32 +27,8 @@
 .example-chips button:active {
   transform: translateY(1px);
 }
-.example-chips button:nth-of-type(6n + 1) {
+.example-chips button {
   background: var(--paper);
-  transform: rotate(-1.5deg);
-}
-.example-chips button:nth-of-type(6n + 2) {
-  background: var(--gold-soft);
-  transform: rotate(1deg);
-}
-.example-chips button:nth-of-type(6n + 3) {
-  background: var(--green-soft);
-  transform: rotate(-1deg);
-}
-.example-chips button:nth-of-type(6n + 4) {
-  background: var(--red-soft);
-  transform: rotate(1.5deg);
-}
-.example-chips button:nth-of-type(6n + 5) {
-  background: var(--sky);
-  transform: rotate(-0.5deg);
-}
-.example-chips button:nth-of-type(6n + 6) {
-  background: var(--paper);
-  transform: rotate(0.8deg);
-}
-.example-chips button:nth-of-type(n):hover {
-  transform: translateY(-2px) rotate(0deg);
 }
 .example-chips button {
   animation: chip-pop 0.25s cubic-bezier(0.2, 1.4, 0.4, 1) backwards;

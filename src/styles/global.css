@@ -15,8 +15,8 @@
   --sky: #d3ecf5;
   --line: rgba(80, 52, 23, 0.25);
   --line-soft: rgba(80, 52, 23, 0.14);
-  --shadow-soft: 0 10px 28px rgba(80, 52, 23, 0.14);
-  --shadow-small: 0 4px 12px rgba(80, 52, 23, 0.12);
+  --shadow-soft: 0 8px 22px rgba(80, 52, 23, 0.1);
+  --shadow-small: 0 3px 10px rgba(80, 52, 23, 0.08);
 }
 
 * {

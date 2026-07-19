@@ -25,9 +25,4 @@ export const FACTS: readonly string[] = [
 ]
 
 /** Card colours, cycled per fact. */
-export const FACT_COLORS: readonly string[] = [
-  "var(--gold-soft)",
-  "var(--green-soft)",
-  "var(--sky)",
-  "var(--red-soft)",
-]
+export const FACT_COLORS: readonly string[] = ["var(--paper)"]
