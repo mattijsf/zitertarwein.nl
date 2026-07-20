@@ -49,6 +49,9 @@ export function BrowseIndex({ buckets, onJump }: Props): ReactElement {
       }
       activeRef.current = bucket.label
       setActive(bucket.label)
+      if ("vibrate" in navigator) {
+        navigator.vibrate(8) // haptic tick per letter
+      }
       const bodyTop = bar.parentElement?.getBoundingClientRect().top ?? 0
       const y = Math.min(Math.max(clientY, r.top + BUBBLE_INSET), r.bottom - BUBBLE_INSET)
       setBubble({ label: bucket.label, top: y - bodyTop })
