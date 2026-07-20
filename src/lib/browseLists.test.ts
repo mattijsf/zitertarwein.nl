@@ -21,12 +21,12 @@ describe("browseLists", () => {
   ]
   const lists = browseLists(products)
 
-  it("puts curated products first, each group alphabetical", () => {
+  it("sorts alphabetically, curated and supermarket products mixed", () => {
     expect(lists.all.map(p => p.n)).toEqual([
       "appel",
+      "Appelsap (Merk)",
       "brood",
       "haver",
-      "Appelsap (Merk)",
       "Zoute koekjes (Merk)",
     ])
   })

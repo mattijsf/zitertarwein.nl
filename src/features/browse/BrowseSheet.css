@@ -74,11 +74,40 @@
   font-size: 14px;
   cursor: pointer;
 }
-.browse-scroll {
+.browse-body {
+  position: relative;
   flex: 1;
+  min-height: 0;
+}
+.browse-scroll {
+  position: absolute;
+  inset: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
+  padding-right: 22px;
+}
+.browse-index {
+  position: absolute;
+  right: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--gold-deep);
+  user-select: none;
+  touch-action: none;
+  cursor: pointer;
+}
+.browse-index span {
+  line-height: 1;
+  padding: 0 4px;
+  pointer-events: none;
 }
 .browse-list {
   list-style: none;
