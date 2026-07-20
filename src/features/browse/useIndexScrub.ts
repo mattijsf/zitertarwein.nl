@@ -1,57 +1,84 @@
 import type { RefObject } from "react"
 import { useEffect, useEffectEvent } from "react"
 
-/** After a tap (click), the letter and bubble stay up this long. */
-const TAP_LINGER_MS = 320
-
 interface Handlers {
-  /** The finger's (or click's) Y position. */
+  /** The finger's (or mouse's) Y position. */
   onScrub: (clientY: number) => void
-  /** Finger lifted, or a short while after a tap. */
+  /** Finger lifted or mouse released. */
   onEnd: () => void
 }
 
+function clientY(e: MouseEvent | TouchEvent): number | undefined {
+  return "touches" in e ? e.touches[0]?.clientY : e.clientY
+}
+
 /**
- * Tap or drag on the A-Z bar. Native listeners because React's touch listeners are passive and
- * can't stop the page from scrolling.
+ * Scrubbing works from either edge: the A-Z bar on the right and an invisible zone on the left.
+ * Once a scrub starts, tracking moves to the document so the finger can drift anywhere; only its
+ * Y position matters. Native listeners because React's touch listeners are passive and can't
+ * stop the page from scrolling.
  */
-export function useIndexScrub(barRef: RefObject<HTMLElement | null>, handlers: Handlers): void {
+export function useIndexScrub(
+  barRef: RefObject<HTMLElement | null>,
+  leftRef: RefObject<HTMLElement | null>,
+  handlers: Handlers
+): void {
   const scrub = useEffectEvent(handlers.onScrub)
   const end = useEffectEvent(handlers.onEnd)
   useEffect(() => {
-    const bar = barRef.current
-    if (!bar) {
-      return
-    }
-    let tapTimer: ReturnType<typeof setTimeout> | undefined
-    const onClick = (e: MouseEvent): void => {
-      scrub(e.clientY)
-      tapTimer = setTimeout(() => {
-        end()
-      }, TAP_LINGER_MS)
-    }
-    const onTouch = (e: TouchEvent): void => {
-      e.preventDefault()
-      const touch = e.touches[0]
-      if (touch) {
-        scrub(touch.clientY)
+    const zones = [barRef.current, leftRef.current].filter(zone => zone !== null)
+    let scrubbing = false
+
+    const scrubTo = (e: MouseEvent | TouchEvent): void => {
+      const y = clientY(e)
+      if (y !== undefined) {
+        scrub(y)
       }
     }
-    const onTouchEnd = (): void => {
+    const onMove = (e: MouseEvent | TouchEvent): void => {
+      if (!scrubbing) {
+        return
+      }
+      if (e.cancelable) {
+        e.preventDefault()
+      }
+      scrubTo(e)
+    }
+    const stopTracking = (): void => {
+      document.removeEventListener("mousemove", onMove)
+      document.removeEventListener("touchmove", onMove)
+      document.removeEventListener("mouseup", onEnd)
+      document.removeEventListener("touchend", onEnd)
+      document.removeEventListener("touchcancel", onEnd)
+    }
+    function onEnd(): void {
+      scrubbing = false
       end()
+      stopTracking()
     }
-    bar.addEventListener("click", onClick)
-    bar.addEventListener("touchstart", onTouch, { passive: false })
-    bar.addEventListener("touchmove", onTouch, { passive: false })
-    bar.addEventListener("touchend", onTouchEnd)
-    bar.addEventListener("touchcancel", onTouchEnd)
+    const onStart = (e: MouseEvent | TouchEvent): void => {
+      if (e.cancelable) {
+        e.preventDefault()
+      }
+      scrubbing = true
+      scrubTo(e)
+      document.addEventListener("mousemove", onMove)
+      document.addEventListener("touchmove", onMove, { passive: false })
+      document.addEventListener("mouseup", onEnd)
+      document.addEventListener("touchend", onEnd)
+      document.addEventListener("touchcancel", onEnd)
+    }
+
+    for (const zone of zones) {
+      zone.addEventListener("mousedown", onStart)
+      zone.addEventListener("touchstart", onStart, { passive: false })
+    }
     return () => {
-      clearTimeout(tapTimer)
-      bar.removeEventListener("click", onClick)
-      bar.removeEventListener("touchstart", onTouch)
-      bar.removeEventListener("touchmove", onTouch)
-      bar.removeEventListener("touchend", onTouchEnd)
-      bar.removeEventListener("touchcancel", onTouchEnd)
+      for (const zone of zones) {
+        zone.removeEventListener("mousedown", onStart)
+        zone.removeEventListener("touchstart", onStart)
+      }
+      stopTracking()
     }
-  }, [barRef])
+  }, [barRef, leftRef])
 }

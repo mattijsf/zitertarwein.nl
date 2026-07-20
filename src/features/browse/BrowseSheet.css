@@ -87,6 +87,15 @@
   overscroll-behavior: contain;
   padding-right: 40px;
 }
+.browse-scrub-left {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 28px; /* invisible scrub zone, no letters */
+  touch-action: none;
+  cursor: pointer;
+}
 .browse-index {
   position: absolute;
   right: 0;

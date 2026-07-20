@@ -13,11 +13,13 @@ interface Props {
 const BUBBLE_INSET = 20
 
 /**
- * A-Z bar on the right edge: tap or drag to jump to a letter. While scrubbing, the current
- * letter grows and a bubble next to the finger shows it, popping on each change.
+ * A-Z bar on the right edge (plus an invisible scrub zone on the left): tap or drag to jump to a
+ * letter. The bar defines the vertical mapping for both. While scrubbing, the current letter
+ * grows and a bubble next to the finger shows it, popping on each change.
  */
 export function BrowseIndex({ buckets, onJump }: Props): ReactElement {
   const barRef = useRef<HTMLDivElement>(null)
+  const leftRef = useRef<HTMLDivElement>(null)
   const bubbleRef = useRef<HTMLDivElement>(null)
   // read by the scrub handler between renders: same letter means no re-jump/re-pop
   const activeRef = useRef<string | null>(null)
@@ -36,7 +38,7 @@ export function BrowseIndex({ buckets, onJump }: Props): ReactElement {
     }
   }, [popId])
 
-  useIndexScrub(barRef, {
+  useIndexScrub(barRef, leftRef, {
     onScrub: clientY => {
       const bar = barRef.current
       if (!bar || buckets.length === 0) {
@@ -66,6 +68,7 @@ export function BrowseIndex({ buckets, onJump }: Props): ReactElement {
 
   return (
     <>
+      <div ref={leftRef} className="browse-scrub-left" aria-hidden="true" />
       <div ref={barRef} className="browse-index" aria-hidden="true">
         {buckets.map(bucket => (
           <span key={bucket.label} className={bucket.label === active ? "active" : undefined}>
