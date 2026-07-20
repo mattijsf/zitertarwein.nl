@@ -27,6 +27,20 @@ export function useShareLink(): void {
       history.replaceState(null, "", shareSearch(name))
     }
   }, [result, name])
+  useEffect(() => {
+    // Picking from the browse sheet pops its history entry after the answer is shown, which
+    // lands on the entry before it, without ?p=. Put the answer's link back once there.
+    const onPopState = (): void => {
+      const query = sharedQuery(useCheckStore.getState().result)
+      if (history.state === null && query !== null) {
+        history.replaceState(null, "", shareSearch(query))
+      }
+    }
+    window.addEventListener("popstate", onPopState)
+    return () => {
+      window.removeEventListener("popstate", onPopState)
+    }
+  }, [])
 
   const opened = useRef(false)
   useEffect(() => {

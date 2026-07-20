@@ -1,0 +1,26 @@
+.browse-open-wrap {
+  margin-top: 22px;
+  text-align: center;
+}
+.browse-open {
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 9px 20px;
+  font-size: 14.5px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: var(--shadow-small);
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+.browse-open:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 16px rgba(80, 52, 23, 0.16);
+}
+.browse-open:active {
+  transform: translateY(1px);
+}

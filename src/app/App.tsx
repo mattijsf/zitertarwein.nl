@@ -1,4 +1,6 @@
 import type { ReactElement } from "react"
+import { BrowseButton } from "../features/browse/BrowseButton"
+import { BrowseSheet } from "../features/browse/BrowseSheet"
 import { Examples } from "../features/examples/Examples"
 import { Fact } from "../features/facts/Fact"
 import { ResultCard } from "../features/result/ResultCard"
@@ -17,7 +19,9 @@ export function App(): ReactElement {
         <SearchBox />
         <ResultCard />
         <Examples />
+        <BrowseButton />
         <Fact />
+        <BrowseSheet />
         <Scanner />
       </main>
       <Footer />

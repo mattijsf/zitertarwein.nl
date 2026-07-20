@@ -47,6 +47,8 @@ interface CheckState {
   /** Look up the query (or a given term) and show the result. */
   check: (term?: string) => void
   choose: (suggestion: Suggestion) => void
+  /** Fills the field with a name and shows that product's answer. */
+  showProduct: (product: Product, name: string) => void
   /** Look up a scanned barcode on Open Food Facts. */
   checkBarcode: (code: string) => void
   showInstallHelp: (platform: InstallPlatform) => void
@@ -122,13 +124,17 @@ export const useCheckStore = create<CheckState>()((set, get) => {
     },
 
     choose: suggestion => {
+      get().showProduct(suggestion.product, suggestion.name)
+    },
+
+    showProduct: (product, name) => {
       searchCounter++
       set({
-        query: suggestion.name,
+        query: name,
         suggestionsOpen: false,
         activeIndex: -1,
       })
-      show({ kind: "product", product: suggestion.product })
+      show({ kind: "product", product })
     },
 
     checkBarcode: code => {
