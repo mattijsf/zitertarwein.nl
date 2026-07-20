@@ -108,6 +108,54 @@
   line-height: 1;
   padding: 0 4px;
   pointer-events: none;
+  transition:
+    transform 0.1s,
+    color 0.1s;
+}
+.browse-index span.active {
+  color: var(--ink);
+  transform: scale(1.9);
+  font-weight: 800;
+}
+.browse-bubble {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%) scale(0.6);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 800;
+  box-shadow: 0 6px 18px rgba(185, 127, 20, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.12s,
+    transform 0.12s;
+}
+.browse-bubble.show {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+.browse-bubble.pop {
+  animation: bubblePop 0.18s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+@keyframes bubblePop {
+  0% {
+    transform: translateY(-50%) scale(0.8);
+  }
+  60% {
+    transform: translateY(-50%) scale(1.12);
+  }
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
 }
 .browse-list {
   list-style: none;
