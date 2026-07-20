@@ -4,21 +4,16 @@ import { nvwaAllergensUrl } from "../../data/nvwaAllergensUrl"
 import { SOURCES } from "../../data/sources"
 import { googleUrl } from "../../lib/googleUrl"
 import type { InstallPlatform } from "../../lib/installPlatform"
+import { VERDICT } from "../../lib/verdict"
 import type { CheckResult } from "../../stores/useCheckStore"
 import { useCheckStore } from "../../stores/useCheckStore"
-import type { Product, Verdict } from "../../types/product"
+import type { Product } from "../../types/product"
 import { ShareButton } from "../share/ShareButton"
 import { ShareLink } from "../share/ShareLink"
 import type { ShareTarget } from "../share/useShare"
 import { Confetti } from "./Confetti"
 import "./ResultCard.css"
 import { ResultIcon } from "./ResultIcon"
-
-const VERDICT: Record<Verdict, string> = {
-  yes: "Ja, tarwe!",
-  no: "Nee, geen tarwe!",
-  check: "Check het etiket…",
-}
 
 export function ResultCard(): ReactElement {
   const result = useCheckStore(state => state.result)

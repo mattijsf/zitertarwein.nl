@@ -26,6 +26,7 @@ React 19 + zustand, built with Vite, strict TypeScript.
 | `deploy.sh`                  | Build and deploy to Cloudflare                                      |
 | `generate.py`                | Generates `src/data/off-products.json` from one or more sources     |
 | `sources/`                   | Source modules: `off_parquet.py` (Open Food Facts), `csv_export.py` |
+| `scripts/build-seo.ts`       | Generates static product pages (`/p/…`), sitemap and robots.txt     |
 
 Adding a product to `src/data/products.ts`:
 
@@ -94,7 +95,10 @@ zitertarwein.nl is attached to it as a custom domain. Configuration in
 - **Manual**: `./deploy.sh`
 
 The script builds `dist/` with `pnpm build` (Vite, which hashes the asset
-file names for cache busting) and runs `npx wrangler deploy`.
+file names for cache busting, then `node scripts/build-seo.ts dist`: one
+small page per product under `/p/`, an A-Z index, `sitemap.xml` and
+`robots.txt` — so search engines can answer "zit er tarwe in …" queries
+directly) and runs `npx wrangler deploy`.
 
 ### Auto-deploy on a new machine
 

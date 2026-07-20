@@ -6,7 +6,7 @@
   "packageManager": "pnpm@11.5.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/build-seo.ts dist",
     "preview": "vite preview",
     "lint": "eslint --cache --cache-location node_modules/.cache/eslint --max-warnings=0 .",
     "lint:fix": "eslint --cache --cache-location node_modules/.cache/eslint --fix --max-warnings=0 .",
