@@ -85,17 +85,18 @@
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  padding-right: 22px;
+  padding-right: 40px;
 }
 .browse-index {
   position: absolute;
   right: 0;
   top: 6px;
   bottom: 6px;
-  width: 22px;
+  width: 40px; /* wide touch target */
+  padding-right: 4px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end; /* letters hug the edge, hit area stays wide */
   justify-content: space-between;
   font-size: 10.5px;
   font-weight: 700;
@@ -106,11 +107,12 @@
 }
 .browse-index span {
   line-height: 1;
-  padding: 0 4px;
+  padding: 2px 4px;
   pointer-events: none;
   transition:
     transform 0.1s,
     color 0.1s;
+  transform-origin: right center;
 }
 .browse-index span.active {
   color: var(--ink);
