@@ -1,5 +1,5 @@
 import type { ReactElement } from "react"
-import { useMemo, useRef, useState } from "react"
+import { useMemo, useRef } from "react"
 import { useCheckStore } from "../../stores/useCheckStore"
 import { useExamplesStore } from "../../stores/useExamplesStore"
 import { ScanButton } from "../scanner/ScanButton"
@@ -10,15 +10,12 @@ import { useRotatingPlaceholder } from "./useRotatingPlaceholder"
 import { useSearchCombobox } from "./useSearchCombobox"
 import { useSuggestionsClamp } from "./useSuggestionsClamp"
 
-const CLEAR_BLUR_DELAY_MS = 150
-
 export function SearchBox(): ReactElement {
   const { inputRef, query, suggestions, activeIndex, choose, check, inputProps } =
     useSearchCombobox("suggestions")
   const examples = useExamplesStore(state => state.examples)
   const placeholderTerms = useMemo(() => examples.map(p => p.n), [examples])
   const placeholder = useRotatingPlaceholder(placeholderTerms, inputRef)
-  const [focused, setFocused] = useState(false)
   const boxRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
   useSuggestionsClamp(listRef, boxRef, suggestions.length > 0, suggestions)
@@ -38,21 +35,12 @@ export function SearchBox(): ReactElement {
             spellCheck={false}
             aria-label="Zoek een product"
             {...inputProps}
-            onFocus={() => {
-              setFocused(true)
-              onFocusKeepVisible()
-            }}
-            onBlur={() => {
-              inputProps.onBlur()
-              setTimeout(() => {
-                setFocused(document.activeElement === inputRef.current)
-              }, CLEAR_BLUR_DELAY_MS)
-            }}
+            onFocus={onFocusKeepVisible}
           />
           <button
             className="input-clear"
             type="button"
-            hidden={!(focused && query)}
+            hidden={!query}
             aria-label="Wis invoer"
             onMouseDown={e => {
               e.preventDefault() // keep focus in the field
