@@ -11,6 +11,9 @@ interface Props {
 
 /** Keeps the bubble this far (px) inside the ends of the bar. */
 const BUBBLE_INSET = 20
+/** Haptic tick length and the minimum gap between ticks (ms). */
+const TICK_MS = 2
+const TICK_GAP_MS = 30
 
 /**
  * A-Z bar on the right edge (plus an invisible scrub zone on the left): tap or drag to jump to a
@@ -23,6 +26,7 @@ export function BrowseIndex({ buckets, onJump }: Props): ReactElement {
   const bubbleRef = useRef<HTMLDivElement>(null)
   // read by the scrub handler between renders: same letter means no re-jump/re-pop
   const activeRef = useRef<string | null>(null)
+  const lastVibrate = useRef(0)
   const [active, setActive] = useState<string | null>(null)
   // the bubble keeps its last letter and position while it fades out
   const [bubble, setBubble] = useState<{ label: string; top: number } | null>(null)
@@ -51,8 +55,12 @@ export function BrowseIndex({ buckets, onJump }: Props): ReactElement {
       }
       activeRef.current = bucket.label
       setActive(bucket.label)
-      if ("vibrate" in navigator) {
-        navigator.vibrate(1) // very soft haptic tick per letter
+      // Throttle the tick: fast scrubbing otherwise stacks pulses into a buzz.
+      // A short gap lets the motor settle so each letter feels like a discrete tap.
+      const now = performance.now()
+      if ("vibrate" in navigator && now - lastVibrate.current > TICK_GAP_MS) {
+        navigator.vibrate(TICK_MS)
+        lastVibrate.current = now
       }
       const bodyTop = bar.parentElement?.getBoundingClientRect().top ?? 0
       const y = Math.min(Math.max(clientY, r.top + BUBBLE_INSET), r.bottom - BUBBLE_INSET)
