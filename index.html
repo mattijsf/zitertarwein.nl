@@ -16,6 +16,10 @@
       name="description"
       content="Typ een product en ontdek meteen of er tarwe in zit — met betrouwbare bronnen zoals het Voedingscentrum en de Nederlandse Coeliakie Vereniging."
     />
+    <!-- All ?p=<product> deep links serve this same page; the canonical keeps
+         Google from treating them as thousands of duplicates. The static
+         /p/<slug> pages are the indexable per-product versions. -->
+    <link rel="canonical" href="https://zitertarwein.nl/" />
     <!-- Social preview (WhatsApp, Signal, X, …) -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Zit er tarwe in?" />
