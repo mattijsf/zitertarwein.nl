@@ -2,12 +2,7 @@
   // Deploy-doel: de bestaande Worker "zitertarwein" waaraan zitertarwein.nl gekoppeld is.
   "name": "zitertarwein",
   "compatibility_date": "2026-07-11",
-  // worker.js redirects http naar https; run_worker_first is daarvoor nodig,
-  // anders worden assets geserveerd zonder dat de worker draait.
-  "main": "worker.js",
   "assets": {
     "directory": "./dist",
-    "binding": "ASSETS",
-    "run_worker_first": true,
   },
 }
