@@ -1,3 +1,4 @@
+/* Camera and Check share one height so the row reads as a single rule. */
 .scan-button {
   display: inline-flex;
   align-items: center;
@@ -5,8 +6,14 @@
   border: var(--frame) solid var(--ink);
   background: var(--paper);
   color: var(--ink);
-  padding: 7px 9px;
+  height: 36px;
+  width: 40px;
+  padding: 0;
   cursor: pointer;
+}
+.scan-button svg {
+  width: 19px;
+  height: 19px;
 }
 .scan-button:hover {
   background: var(--ink);

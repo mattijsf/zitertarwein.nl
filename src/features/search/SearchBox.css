@@ -65,7 +65,8 @@
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  padding: 10px 13px;
+  height: 36px;
+  padding: 0 13px;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -79,7 +80,7 @@
 
 @media (max-width: 380px) {
   .check-button {
-    padding: 10px 9px;
+    padding: 0 9px;
     letter-spacing: 0.12em;
   }
   .product-input {
