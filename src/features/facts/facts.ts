@@ -23,6 +23,3 @@ export const FACTS: readonly string[] = [
   "Wist je dat tarwe bij de 14 allergenen hoort die verplicht op elk etiket moeten staan — daarom staat het vetgedrukt?",
   "Wist je dat ook restaurants en bakkers je wettelijk moeten kunnen vertellen of er tarwe in zit? Vraag er gerust naar.",
 ]
-
-/** Card colours, cycled per fact. */
-export const FACT_COLORS: readonly string[] = ["var(--paper)"]

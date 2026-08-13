@@ -1,7 +1,7 @@
 import type { ReactElement } from "react"
-import { useMemo, useRef } from "react"
+import { useRef } from "react"
 import { useCheckStore } from "../../stores/useCheckStore"
-import { useExamplesStore } from "../../stores/useExamplesStore"
+import { exampleProducts } from "../examples/exampleProducts"
 import { ScanButton } from "../scanner/ScanButton"
 import "./SearchBox.css"
 import { Suggestions } from "./Suggestions"
@@ -10,12 +10,12 @@ import { useRotatingPlaceholder } from "./useRotatingPlaceholder"
 import { useSearchCombobox } from "./useSearchCombobox"
 import { useSuggestionsClamp } from "./useSuggestionsClamp"
 
+const PLACEHOLDER_TERMS = exampleProducts.map(p => p.n)
+
 export function SearchBox(): ReactElement {
   const { inputRef, query, suggestions, activeIndex, choose, check, inputProps } =
     useSearchCombobox("suggestions")
-  const examples = useExamplesStore(state => state.examples)
-  const placeholderTerms = useMemo(() => examples.map(p => p.n), [examples])
-  const placeholder = useRotatingPlaceholder(placeholderTerms, inputRef)
+  const placeholder = useRotatingPlaceholder(PLACEHOLDER_TERMS, inputRef)
   const boxRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
   useSuggestionsClamp(listRef, boxRef, suggestions.length > 0, suggestions)

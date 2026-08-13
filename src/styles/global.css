@@ -1,22 +1,24 @@
 :root {
-  --cream: #fbf2dd;
-  --paper: #fffdf6;
-  --ink: #503417;
-  --ink-soft: #8a6c49;
-  --gold: #e2a72e;
-  --gold-deep: #b97f14;
-  --gold-soft: #f7e6b5;
-  --green: #5f9e3c;
-  --green-deep: #3e7325;
-  --green-soft: #e5f2d3;
-  --red: #d95f43;
-  --red-deep: #ad3f24;
-  --red-soft: #fbe0d5;
-  --sky: #d3ecf5;
-  --line: rgba(80, 52, 23, 0.25);
-  --line-soft: rgba(80, 52, 23, 0.14);
-  --shadow-soft: 0 8px 22px rgba(80, 52, 23, 0.1);
-  --shadow-small: 0 3px 10px rgba(80, 52, 23, 0.08);
+  /* Flat, high-contrast palette — no gradients anywhere. */
+  --cream: #f3f0e6;
+  --paper: #ffffff;
+  --ink: #16130f;
+  --ink-soft: #6f6759;
+  --gold: #ff6a13; /* accent: signal orange */
+  --gold-deep: #d24d00;
+  --gold-soft: #ffe6d4;
+  --green: #4f9c2d;
+  --green-deep: #2f7d1e;
+  --amber: #ffc233;
+  --green-soft: #ddf3b8;
+  --red: #ff6a13;
+  --red-deep: #b23a05;
+  --red-soft: #ffe1cf;
+  --sky: #e8f2f6;
+  --line: #e2dccb;
+  --line-soft: #ece7da;
+  --shadow-soft: 0 10px 30px rgba(22, 19, 15, 0.07);
+  --shadow-small: 0 2px 8px rgba(22, 19, 15, 0.05);
 }
 
 * {
@@ -40,23 +42,39 @@ summary,
   -webkit-user-select: none;
 }
 
+/* Two flat colour fields sit behind the page — no gradients, just big
+   shapes clipped by the viewport. */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+body::before {
+  width: 62vmax;
+  height: 62vmax;
+  top: -34vmax;
+  right: -22vmax;
+  background: #ffe6d4;
+}
+body::after {
+  width: 46vmax;
+  height: 46vmax;
+  bottom: -26vmax;
+  left: -20vmax;
+  background: #e6f2d6;
+}
+
 body {
   font-family:
-    ui-rounded,
-    "SF Pro Rounded",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
-  background:
-    radial-gradient(1000px 460px at 50% -120px, var(--sky) 0%, rgba(211, 236, 245, 0) 70%),
-    linear-gradient(#fdf7e9, var(--cream));
+    -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background: var(--cream);
   color: var(--ink);
   min-height: 100vh;
-  min-height: 100dvh; /* mobile browsers: leave the dynamic toolbar out */
+  min-height: 100dvh; /* mobile browsers: ignore the dynamic toolbar */
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,25 +1,24 @@
 .browse-open-wrap {
-  margin-top: 22px;
+  margin-top: 18px;
   text-align: center;
 }
 .browse-open {
-  border: 1.5px solid var(--line);
-  background: var(--paper);
-  color: var(--ink);
-  border-radius: 999px;
-  padding: 9px 20px;
-  font-size: 14.5px;
+  border: none;
+  background: none;
+  color: var(--ink-soft);
+  padding: 6px 4px;
+  font-size: 14px;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  box-shadow: var(--shadow-small);
-  transition:
-    transform 0.15s,
-    box-shadow 0.15s;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: var(--line);
 }
 .browse-open:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 7px 16px rgba(80, 52, 23, 0.16);
+  color: var(--ink);
+  text-decoration-color: var(--gold);
 }
 .browse-open:active {
   transform: translateY(1px);

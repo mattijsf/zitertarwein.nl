@@ -8,18 +8,14 @@ footer {
   color: var(--ink-soft);
 }
 .sources-card {
-  background: var(--paper);
-  border: 1.5px solid var(--line);
-  border-radius: 18px;
-  box-shadow: var(--shadow-small);
-  padding: 14px 22px;
+  padding: 0;
   margin-bottom: 22px;
   text-align: center;
-  color: var(--ink);
+  color: var(--ink-soft);
 }
 .sources-card summary {
   cursor: pointer;
-  font-size: 13px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-weight: 800;
@@ -30,11 +26,11 @@ footer {
 }
 .sources-card summary::after {
   content: " ▾";
-  color: var(--gold-deep);
+  color: var(--gold);
 }
 .sources-card[open] summary::after {
   content: " ▴";
-  color: var(--gold-deep);
+  color: var(--gold);
 }
 .sources-card[open] summary {
   margin-bottom: 10px;
@@ -42,7 +38,7 @@ footer {
 .sources-note {
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1.5px dashed var(--line);
+  border-top: 1px solid var(--line);
   font-weight: 400;
   color: var(--ink-soft);
 }

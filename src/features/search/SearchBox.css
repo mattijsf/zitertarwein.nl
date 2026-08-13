@@ -5,14 +5,17 @@
   display: flex;
   gap: 8px;
   background: var(--paper);
-  border: 2px solid var(--line);
-  border-radius: 22px;
-  padding: 8px;
-  box-shadow: var(--shadow-soft);
-  transition: border-color 0.2s;
+  border: 1.5px solid var(--line);
+  border-radius: 20px;
+  padding: 7px;
+  box-shadow: var(--shadow-small);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
 }
 .search-box:focus-within {
   border-color: var(--gold);
+  box-shadow: 0 0 0 4px var(--gold-soft);
 }
 .input-wrap {
   flex: 1;
@@ -32,6 +35,10 @@
   min-width: 0;
   font-family: inherit;
 }
+.product-input::placeholder {
+  color: #a9a294;
+  font-weight: 500;
+}
 .input-clear {
   position: absolute;
   right: 4px;
@@ -41,7 +48,7 @@
   height: 26px;
   border: none;
   border-radius: 50%;
-  background: rgba(80, 52, 23, 0.08);
+  background: #efece2;
   color: var(--ink-soft);
   font-size: 13px;
   font-weight: 800;
@@ -49,45 +56,46 @@
   cursor: pointer;
 }
 .input-clear:hover {
-  background: rgba(80, 52, 23, 0.16);
+  background: #e3dfd1;
   color: var(--ink);
-}
-.product-input::placeholder {
-  color: #c2ab8a;
-  font-weight: 500;
 }
 .check-button {
   border: none;
-  background: linear-gradient(160deg, var(--gold), var(--gold-deep));
+  background: var(--gold);
   color: #fff;
   font-size: 16px;
   font-weight: 700;
   font-family: inherit;
-  padding: 12px 24px;
-  border-radius: 16px;
+  padding: 12px 26px;
+  border-radius: 14px;
   cursor: pointer;
   transition:
-    transform 0.15s,
-    box-shadow 0.15s;
+    background 0.15s,
+    transform 0.1s;
   white-space: nowrap;
-  box-shadow: 0 6px 16px rgba(185, 127, 20, 0.35);
-  text-shadow: 0 1px 0 rgba(80, 52, 23, 0.25);
+  letter-spacing: -0.01em;
 }
 .check-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 9px 20px rgba(185, 127, 20, 0.45);
+  background: var(--gold-deep);
 }
 .check-button:active {
   transform: translateY(1px);
-  box-shadow: 0 3px 8px rgba(185, 127, 20, 0.35);
 }
 
+/* Narrow screens: input on its own row, camera + Check share the next one
+   (the camera keeps its square footprint, Check takes the rest). */
 @media (max-width: 460px) {
   .search-box {
     flex-wrap: wrap;
   }
   .input-wrap {
     flex-basis: 100%;
+  }
+  .product-input {
+    padding: 12px 34px 6px 14px;
+  }
+  .scan-button {
+    padding: 0 15px;
   }
   .check-button {
     flex: 1;

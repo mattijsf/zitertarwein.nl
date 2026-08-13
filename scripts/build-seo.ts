@@ -70,28 +70,29 @@ for (const it of items) {
 
 // ── Shared page chrome ──
 const CSS = `
-  :root { --cream:#fbf2dd; --paper:#fffdf6; --ink:#503417; --ink-soft:#8a6c49;
-    --gold-deep:#b97f14; --green-deep:#3e7325; --red-deep:#ad3f24;
-    --line:rgba(80,52,23,.25); }
+  :root { --cream:#f3f0e6; --paper:#ffffff; --ink:#16130f; --ink-soft:#6f6759;
+    --gold-deep:#d24d00; --green-deep:#33701a; --red-deep:#b23a05;
+    --line:#e2dccb; }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:var(--cream); color:var(--ink);
-    font-family:Georgia,'Times New Roman',serif; line-height:1.55;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+    line-height:1.55;
     display:flex; flex-direction:column; align-items:center;
     min-height:100vh; padding:28px 18px; }
   main { background:var(--paper); border:1.5px solid var(--line);
-    border-radius:22px; padding:30px 26px; max-width:560px; width:100%;
-    box-shadow:0 8px 22px rgba(80,52,23,.10); }
-  h1 { font-size:1.5rem; margin-bottom:14px; }
-  .verdict { font-size:1.3rem; font-weight:bold; margin-bottom:10px; }
+    border-radius:26px; padding:32px 28px; max-width:560px; width:100%;
+    box-shadow:0 10px 30px rgba(22,19,15,.07); }
+  h1 { font-size:1.75rem; font-weight:800; letter-spacing:-.03em; margin-bottom:14px; }
+  .verdict { font-size:1.5rem; font-weight:800; letter-spacing:-.02em; margin-bottom:10px; }
   .yes .verdict { color:var(--red-deep); }
   .no .verdict { color:var(--green-deep); }
   .check .verdict { color:var(--gold-deep); }
   p { margin-bottom:12px; }
   .source { font-size:.9rem; color:var(--ink-soft); }
   a { color:var(--gold-deep); }
-  .app-link { display:inline-block; margin-top:16px; background:var(--gold-deep);
-    color:#fff; text-decoration:none; padding:10px 20px; border-radius:12px;
-    font-weight:bold; }
+  .app-link { display:inline-block; margin-top:16px; background:#ff6a13;
+    color:#fff; text-decoration:none; padding:12px 24px; border-radius:999px;
+    font-weight:700; }
   footer { margin-top:22px; font-size:.85rem; color:var(--ink-soft); text-align:center; }
   footer a { color:var(--ink-soft); }
 `.replace(/\n\s*/g, "")

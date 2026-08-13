@@ -1,58 +1,27 @@
-/* Field scene with sun, hills and swaying wheat */
+/* Flat wheat mark + oversized display headline */
 header {
   text-align: center;
-  padding: 18px 0 26px;
-}
-.scene {
-  position: relative;
-  /* Shadow lives here, outside the frame's clip-path (which would clip
-     its own shadow: filters render before clipping). */
-  filter: drop-shadow(0 10px 18px rgba(80, 52, 23, 0.16));
-}
-.scene-frame {
-  border-radius: 26px;
-  border: 2px solid var(--line-soft);
-  /* Firefox does not reliably clip svg paint to border-radius, not even
-     with overflow:hidden — clip-path enforces the rounding exactly. */
-  overflow: hidden;
-  clip-path: inset(0 round 26px);
-}
-.scene-frame svg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-.scene .stalk {
-  transform-origin: bottom center;
-  transform-box: fill-box;
-  animation: sway 3.6s ease-in-out infinite;
-}
-.scene .sun {
-  transform-origin: center;
-  transform-box: fill-box;
-  animation: sun-spin 40s linear infinite;
-}
-@keyframes sun-spin {
-  to {
-    transform: rotate(360deg);
-  }
+  padding: 34px 0 30px;
 }
 .logo-sticker {
-  position: absolute;
-  left: 50%;
-  bottom: -34px;
-  transform: translateX(-50%);
-  width: 112px;
-  height: 112px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 74px;
+  height: 74px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #fff;
   pointer-events: none;
 }
 .logo-sticker svg {
-  width: 100%;
-  height: 100%;
+  width: 46px;
+  height: 46px;
 }
 .logo {
-  transform-origin: 50% 92%;
-  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform-box: view-box;
   animation: sway 3.5s ease-in-out infinite;
 }
 @keyframes sway {
@@ -65,34 +34,52 @@ header {
   }
 }
 h1 {
-  font-size: clamp(28px, 6vw, 40px);
+  font-size: clamp(38px, 11vw, 60px);
   font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-top: 46px;
+  letter-spacing: -0.035em;
+  line-height: 1;
   color: var(--ink);
+  text-wrap: balance;
 }
 h1 .accent {
-  color: var(--gold-deep);
-  position: relative;
+  color: var(--gold);
   white-space: nowrap;
 }
-h1 .accent::after {
-  content: "";
-  position: absolute;
-  left: 2%;
-  right: 2%;
-  bottom: 4px;
-  height: 10px;
-  background: var(--gold-soft);
-  border-radius: 6px;
-  z-index: -1;
-  transform: rotate(-1.2deg);
-}
 .tagline {
-  margin-top: 8px;
+  margin-top: 14px;
   font-size: 17px;
   font-weight: 500;
   color: var(--ink-soft);
+}
+
+/* Stats strip under the headline. Deliberately not pills: this is a fact,
+   not a third thing to tap. */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 0;
+  margin-top: 14px;
+  list-style: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.stats li + li::before {
+  content: "·";
+  margin: 0 8px;
+  color: var(--line);
+}
+.stats b {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.stats .s-yes b {
+  color: var(--gold-deep);
+}
+.stats .s-no b {
+  color: var(--green-deep);
 }
 
 /* Short landscape windows: compact header, so the examples stay in view.
@@ -103,18 +90,13 @@ h1 .accent::after {
   header {
     padding-top: 10px;
   }
-  .scene-frame svg {
-    max-height: 130px;
-    object-fit: cover;
-  }
   .logo-sticker {
-    width: 76px;
-    height: 76px;
-    bottom: -22px;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 10px;
   }
   h1 {
-    font-size: clamp(24px, 5vw, 32px);
-    margin-top: 32px;
+    font-size: clamp(26px, 6vw, 36px);
   }
   .tagline {
     margin-top: 4px;

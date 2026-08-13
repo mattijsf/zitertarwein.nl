@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   background: var(--paper);
-  border: 2px solid var(--line);
+  border: 1.5px solid var(--line);
   border-radius: 18px;
   box-shadow: var(--shadow-soft);
   list-style: none;
@@ -30,11 +30,11 @@
   font-weight: 500;
 }
 .suggestions li:not(:last-child) {
-  border-bottom: 1.5px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
 }
 .suggestions li.active,
 .suggestions li:hover {
-  background: var(--gold-soft);
+  background: #f7f5ee;
 }
 .suggestions mark {
   background: none;
@@ -42,13 +42,13 @@
   font-weight: 800;
 }
 .suggestion-hint {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   flex-shrink: 0;
-  padding: 3px 10px;
+  padding: 4px 11px;
   border-radius: 999px;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
 }
 .suggestion-hint.yes {
   background: var(--red-soft);

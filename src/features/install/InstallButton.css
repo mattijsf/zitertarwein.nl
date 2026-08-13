@@ -1,21 +1,19 @@
-/* Install button: low-key, at the bottom of the footer */
+/* Install button: plain text link at the bottom of the footer */
 .install-button {
-  background: transparent;
+  background: none;
   color: inherit;
-  border: 1.5px solid var(--line);
-  border-radius: 999px;
-  padding: 7px 16px;
-  margin-bottom: 20px;
+  border: none;
+  padding: 6px 4px;
+  margin-bottom: 18px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  opacity: 0.8;
-  transition:
-    opacity 0.15s,
-    background 0.15s;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line);
 }
 .install-button:hover {
-  opacity: 1;
-  background: var(--paper);
+  color: var(--ink);
+  text-decoration-color: var(--gold);
 }

@@ -1,7 +1,7 @@
 .result {
   margin-top: 26px;
-  border: 2px solid var(--line-soft);
-  border-radius: 24px;
+  border: 1.5px solid var(--line);
+  border-radius: 26px;
   padding: 28px 26px;
   background: var(--paper);
   box-shadow: var(--shadow-soft);
@@ -23,27 +23,29 @@
     transform: translateY(0) scale(1);
   }
 }
+/* Colour-blocked answers: the verdict card *is* the colour. */
 .result.yes {
-  background: #fdf6f2;
-  border-color: rgba(217, 95, 67, 0.35);
-  border-left: 6px solid var(--red);
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #fff;
 }
 .result.no {
-  background: #f6faf0;
-  border-color: rgba(95, 158, 60, 0.35);
-  border-left: 6px solid var(--green);
+  background: var(--green-deep);
+  border-color: var(--green-deep);
+  color: #fff;
 }
 .result.check {
-  background: #fdf8e9;
-  border-color: rgba(226, 167, 46, 0.4);
-  border-left: 6px solid var(--gold);
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--ink);
 }
 
 .result-emoji {
-  width: 58px;
-  height: 58px;
+  width: 46px;
+  height: 46px;
   line-height: 1;
   display: inline-block;
+  color: inherit;
   animation: boing 0.5s cubic-bezier(0.2, 1.6, 0.4, 1);
 }
 .result-emoji svg {
@@ -62,30 +64,57 @@
   }
 }
 .result-verdict {
-  font-size: 23px;
-  font-weight: 700;
-  margin-top: 10px;
-  letter-spacing: -0.01em;
-}
-.yes .result-verdict {
-  color: var(--red-deep);
-}
-.no .result-verdict {
-  color: var(--green-deep);
-}
-.check .result-verdict {
-  color: var(--gold-deep);
+  font-size: clamp(30px, 8vw, 38px);
+  font-weight: 800;
+  margin-top: 14px;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  color: inherit;
 }
 .result-product {
   display: inline-block;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 700;
-  margin-top: 8px;
+  margin-top: 12px;
   letter-spacing: 0.02em;
-  background: var(--paper);
+  background: transparent;
   border: 1.5px solid var(--line);
   border-radius: 999px;
-  padding: 3px 12px;
+  padding: 4px 13px;
+}
+/* On a coloured card every chrome element borrows the card's own ink. */
+.yes .result-product,
+.no .result-product {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+.check .result-product {
+  border-color: rgba(22, 19, 15, 0.28);
+}
+.yes .result-source,
+.yes .result-ref,
+.no .result-source,
+.no .result-ref {
+  color: rgba(255, 255, 255, 0.85);
+  border-top-color: rgba(255, 255, 255, 0.28);
+}
+.check .result-source,
+.check .result-ref {
+  color: rgba(22, 19, 15, 0.72);
+  border-top-color: rgba(22, 19, 15, 0.2);
+}
+.yes .close-button,
+.yes .share-button,
+.no .close-button,
+.no .share-button {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+  opacity: 0.9;
+}
+.check .close-button,
+.check .share-button {
+  background: transparent;
+  border-color: rgba(22, 19, 15, 0.3);
 }
 .result-info {
   margin-top: 14px;
@@ -98,8 +127,8 @@
 .share-button {
   position: absolute;
   top: 12px;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border: 1.5px solid var(--line);
   border-radius: 50%;
   background: var(--paper);
@@ -108,7 +137,7 @@
   font-weight: 800;
   line-height: 1;
   cursor: pointer;
-  opacity: 0.65;
+  opacity: 0.7;
   transition:
     opacity 0.15s,
     transform 0.15s;
@@ -134,7 +163,7 @@
 .result-ref {
   margin-top: 18px;
   padding-top: 14px;
-  border-top: 1.5px dashed var(--line);
+  border-top: 1px solid var(--line);
   font-size: 14px;
   font-weight: 600;
   color: var(--ink-soft);
@@ -147,19 +176,28 @@
 .google-button {
   display: inline-block;
   margin-top: 4px;
-  background: linear-gradient(160deg, var(--gold), var(--gold-deep));
+  background: var(--gold);
   color: #fff;
   text-decoration: none;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 15px;
-  padding: 10px 20px;
+  padding: 11px 22px;
   border-radius: 999px;
-  box-shadow: 0 5px 14px rgba(185, 127, 20, 0.35);
-  transition:
-    transform 0.15s,
-    box-shadow 0.15s;
+  transition: background 0.15s;
 }
 .google-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(185, 127, 20, 0.45);
+  background: var(--gold-deep);
+}
+.yes .google-button,
+.no .google-button {
+  background: #fff;
+  color: var(--ink);
+}
+.yes .google-button:hover,
+.no .google-button:hover {
+  background: rgba(255, 255, 255, 0.88);
+}
+.check .google-button {
+  background: var(--ink);
+  color: #fff;
 }

@@ -1,9 +1,9 @@
 import type { ReactElement } from "react"
 import { useState } from "react"
 import "./Fact.css"
-import { FACT_COLORS, FACTS } from "./facts"
+import { FACTS } from "./facts"
 
-/** A "wist je dat" sticker; a click shows the next fact in another colour. */
+/** A "wist je dat" line; a click shows the next fact. */
 export function Fact(): ReactElement {
   const [index, setIndex] = useState(() => Math.floor(Math.random() * FACTS.length))
   const next = (): void => {
@@ -14,7 +14,6 @@ export function Fact(): ReactElement {
       id="fact"
       className="fact"
       title="Klik voor nog een weetje"
-      style={{ background: FACT_COLORS[index % FACT_COLORS.length] }}
       role="button"
       tabIndex={0}
       onClick={next}

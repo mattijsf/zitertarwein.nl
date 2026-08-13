@@ -20,26 +20,19 @@ export function ScanButton(): ReactElement | null {
         void start()
       }}
     >
-      <svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true">
-        <path
-          d="M8.2 6.5 L9.8 3.8 H14.2 L15.8 6.5"
-          fill="#fffdf6"
-          stroke="#503417"
-          strokeWidth="2.2"
-          strokeLinejoin="round"
-        />
-        <rect
-          x="2"
-          y="6.5"
-          width="20"
-          height="13.5"
-          rx="3.5"
-          fill="#fffdf6"
-          stroke="#503417"
-          strokeWidth="2.2"
-        />
-        <circle cx="12" cy="13" r="4.2" fill="#eaba3b" stroke="#503417" strokeWidth="2.2" />
-        <circle cx="13.4" cy="11.7" r="1.1" fill="#fffdf6" />
+      <svg
+        viewBox="0 0 24 24"
+        width="22"
+        height="22"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M3 8.5h3.2l1.5-2.5h8.6l1.5 2.5H21a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1Z" />
+        <circle cx="12" cy="13.5" r="3.6" />
       </svg>
     </button>
   )

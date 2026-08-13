@@ -2,7 +2,7 @@ import type { ReactElement } from "react"
 import { useEffect, useState } from "react"
 import "./Confetti.css"
 
-const COLORS = ["#eaba3b", "#d6981f", "#f2d27c", "#8fc267", "#e2a72e", "#c9922a"]
+const COLORS = ["#ff6a13", "#ffa04d", "#ffd0ab", "#8fc267", "#4f9c2d", "#d24d00"]
 const PIECES = 28
 const LIFETIME_MS = 2200
 
