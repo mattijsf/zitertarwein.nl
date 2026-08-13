@@ -1,7 +1,7 @@
 import type { ReactElement } from "react"
 import { useState } from "react"
 import type { InstallPlatform } from "../../lib/installPlatform"
-import { installPlatform } from "../../lib/installPlatform"
+import { bookmarkKey, installPlatform } from "../../lib/installPlatform"
 import "./InstallButton.css"
 import { InstallSteps } from "./InstallSteps"
 import { useInstallPrompt } from "./useInstallPrompt"
@@ -38,12 +38,10 @@ export function InstallButton(): ReactElement {
       </button>
       <div className="install-help" id="install-help" hidden={helpFor === null}>
         {helpFor && (
-          <>
-            <p>
-              <InstallSteps platform={helpFor} />
-            </p>
-            <p>Daarna staat de tarwe als app op je scherm — werkt ook offline.</p>
-          </>
+          <InstallSteps
+            platform={helpFor}
+            bookmarkKey={bookmarkKey(navigator.userAgent, navigator.platform)}
+          />
         )}
       </div>
     </>
