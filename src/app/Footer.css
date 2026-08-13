@@ -51,10 +51,11 @@ footer a {
   line-height: 1.55;
   color: var(--ink-soft);
 }
-/* Barcode: the signature every packet ends with. */
+/* Barcode: the signature every packet ends with.
+   Wide enough that a phone can actually read it off the screen. */
 .barcode {
   margin-top: 16px;
   width: 100%;
-  height: 34px;
+  height: 46px;
   display: block;
 }
