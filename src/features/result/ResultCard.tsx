@@ -1,4 +1,4 @@
-import type { ReactElement } from "react"
+import type { ReactElement, ReactNode } from "react"
 import { useEffect, useRef } from "react"
 import { nvwaAllergensUrl } from "../../data/nvwaAllergensUrl"
 import { SOURCES } from "../../data/sources"
@@ -43,30 +43,32 @@ export function ResultCard(): ReactElement {
   }, [result])
   return (
     <div ref={ref} className={resultClass(result)} role="status" aria-live="polite">
-      {result && <ResultBody key={resultId} result={result} />}
       {result && (
-        <button
-          type="button"
-          className="close-button"
-          aria-label="Wis resultaat en zoekopdracht"
-          onClick={clear}
-        >
-          ✕
-        </button>
-      )}
-      {share && (
-        <ShareButton
-          key={`share-${resultId}`}
-          name={share.name}
-          verdict={share.verdict}
-          query={share.query}
+        <ResultBody
+          key={resultId}
+          result={result}
+          keys={
+            <>
+              {share && (
+                <ShareButton name={share.name} verdict={share.verdict} query={share.query} />
+              )}
+              <button
+                type="button"
+                className="close-button"
+                aria-label="Wis resultaat en zoekopdracht"
+                onClick={clear}
+              >
+                ✕
+              </button>
+            </>
+          }
         />
       )}
     </div>
   )
 }
 
-/** What the corner share button shares: real answers only (cards with a source line). */
+/** What the share key shares: real answers only (cards with a source line). */
 function shareTarget(result: CheckResult | null): ShareTarget | null {
   if (result?.kind === "product") {
     return { name: result.product.n, verdict: VERDICT[result.product.s], query: result.product.n }
@@ -101,17 +103,27 @@ function resultClass(result: CheckResult | null): string {
   }
 }
 
-function ResultBody({ result }: { result: CheckResult }): ReactElement {
+/** The verdict as a stamp bar; the share and close keys sit at its end and take its colour. */
+function VerdictBar({ children, keys }: { children: ReactNode; keys: ReactNode }): ReactElement {
+  return (
+    <div className="result-verdict">
+      {children}
+      {keys}
+    </div>
+  )
+}
+
+function ResultBody({ result, keys }: { result: CheckResult; keys: ReactNode }): ReactElement {
   switch (result.kind) {
     case "product":
-      return <ProductBody product={result.product} />
+      return <ProductBody product={result.product} keys={keys} />
     case "searching":
       return (
         <>
           <div className="result-emoji">
             <ResultIcon name="search" />
           </div>
-          <div className="result-verdict">Etiket opzoeken…</div>
+          <VerdictBar keys={keys}>Etiket opzoeken…</VerdictBar>
           <div className="result-product">{result.term}</div>
           <p className="result-info">
             Niet in onze eigen lijst — we bladeren door de etiketten van Open Food Facts.
@@ -125,7 +137,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
           <div className="result-emoji">
             <ResultIcon name={match.hasWheat ? "yes" : "check"} />
           </div>
-          <div className="result-verdict">{onlineVerdict(match.hasWheat)}</div>
+          <VerdictBar keys={keys}>{onlineVerdict(match.hasWheat)}</VerdictBar>
           <div className="result-product">{match.name}</div>
           <p className="result-info">
             {match.hasWheat
@@ -154,7 +166,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
           <div className="result-emoji">
             <ResultIcon name="unknown" />
           </div>
-          <div className="result-verdict">Niet gevonden</div>
+          <VerdictBar keys={keys}>Niet gevonden</VerdictBar>
           <div className="result-product">{result.term}</div>
           <p className="result-info">
             Ook niet gevonden op Open Food Facts. Tip: check de ingrediëntenlijst op het etiket —
@@ -170,7 +182,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
           <div className="result-emoji">
             <ResultIcon name="unknown" />
           </div>
-          <div className="result-verdict">Barcode onbekend…</div>
+          <VerdictBar keys={keys}>Barcode onbekend…</VerdictBar>
           <div className="result-product">{result.code}</div>
           <p className="result-info">
             Deze streepjescode staat (nog) niet in Open Food Facts. Check de ingrediëntenlijst op
@@ -186,7 +198,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
           <div className="result-emoji">
             <ResultIcon name="outage" />
           </div>
-          <div className="result-verdict">Bron niet bereikbaar</div>
+          <VerdictBar keys={keys}>Bron niet bereikbaar</VerdictBar>
           <div className="result-product">{result.term}</div>
           <p className="result-info">
             Dit product staat niet in onze eigen lijst en Open Food Facts reageert op dit moment
@@ -196,7 +208,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
         </>
       )
     case "installHelp":
-      return <InstallHelpBody platform={result.platform} />
+      return <InstallHelpBody platform={result.platform} keys={keys} />
   }
 }
 
@@ -222,13 +234,19 @@ function LabelRuleRef(): ReactElement {
   )
 }
 
-function InstallHelpBody({ platform }: { platform: InstallPlatform }): ReactElement {
+function InstallHelpBody({
+  platform,
+  keys,
+}: {
+  platform: InstallPlatform
+  keys: ReactNode
+}): ReactElement {
   return (
     <>
       <div className="result-emoji">
         <ResultIcon name="install" />
       </div>
-      <div className="result-verdict">Zo installeer je de app</div>
+      <VerdictBar keys={keys}>Zo installeer je de app</VerdictBar>
       <p className="result-info">
         <InstallSteps platform={platform} />
       </p>
@@ -262,7 +280,7 @@ function InstallSteps({ platform }: { platform: InstallPlatform }): ReactElement
   }
 }
 
-function ProductBody({ product }: { product: Product }): ReactElement {
+function ProductBody({ product, keys }: { product: Product; keys: ReactNode }): ReactElement {
   const verdict = VERDICT[product.s]
   const source = SOURCES[product.b]
   const sourceUrl = product.url ?? source.url
@@ -272,7 +290,7 @@ function ProductBody({ product }: { product: Product }): ReactElement {
       <div className="result-emoji">
         <ResultIcon name={product.s} />
       </div>
-      <div className="result-verdict">{verdict}</div>
+      <VerdictBar keys={keys}>{verdict}</VerdictBar>
       <div className="result-product">{product.n}</div>
       <p className="result-info">{product.i}</p>
       <p className="result-source">
