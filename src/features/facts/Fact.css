@@ -1,14 +1,13 @@
+/* Small print */
 .fact {
-  margin: 40px auto 0;
-  max-width: 420px;
-  padding: 0 8px;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.6;
+  margin-top: 26px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 11.5px;
+  line-height: 1.55;
   color: var(--ink-soft);
   cursor: pointer;
-  transition: color 0.15s;
+  max-width: 52ch;
 }
 .fact:hover {
   color: var(--ink);

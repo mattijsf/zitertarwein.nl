@@ -1,18 +1,21 @@
 import type { ReactElement } from "react"
 import "./Header.css"
 import { HeaderStats } from "./HeaderStats"
-import { LogoWheatEar } from "./LogoWheatEar"
 
 export function Header(): ReactElement {
   return (
     <header>
-      <span className="logo-sticker" aria-hidden="true">
-        <LogoWheatEar />
-      </span>
+      <div className="runhead">
+        <span>Zitertarwein.nl</span>
+        <span className="reg">NL · EU 1169/2011</span>
+      </div>
+      <div className="rule" />
       <h1>
         Zit er <span className="accent">tarwe</span> in?
       </h1>
-      <p className="tagline">Typ een product en je weet het meteen.</p>
+      <p className="tagline">
+        Allergenen moeten op ieder etiket benadrukt worden. Deze site leest ze voor je terug.
+      </p>
       <HeaderStats />
     </header>
   )

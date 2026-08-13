@@ -1,21 +1,14 @@
 .scan-button {
-  color: var(--ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid var(--line);
+  border: var(--frame) solid var(--ink);
   background: var(--paper);
-  padding: 0 13px;
-  border-radius: 14px;
+  color: var(--ink);
+  padding: 7px 9px;
   cursor: pointer;
-  transition:
-    background 0.15s,
-    border-color 0.15s;
 }
 .scan-button:hover {
-  background: #faf8f2;
-  border-color: var(--gold);
-}
-.scan-button:active {
-  transform: translateY(1px);
+  background: var(--ink);
+  color: var(--paper);
 }

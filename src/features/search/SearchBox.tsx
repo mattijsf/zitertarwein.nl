@@ -23,6 +23,7 @@ export function SearchBox(): ReactElement {
 
   return (
     <div className="search-wrap">
+      <p className="caps field-label">Product</p>
       <div ref={boxRef} className="search-box">
         <div className="input-wrap">
           <input

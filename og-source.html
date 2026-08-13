@@ -6,59 +6,40 @@
   * { margin:0; padding:0; box-sizing:border-box; }
   html, body { width:1200px; height:630px; }
   body {
-    background:#f3f0e6;
-    font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-    color:#16130f;
-    position:relative;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    padding:0 84px;
+    background:#fff; color:#000;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    padding:26px;
   }
-  .blob-a, .blob-b { position:absolute; border-radius:50%; }
-  .blob-a { width:760px; height:760px; top:-330px; right:-210px; background:#ffe6d4; }
-  .blob-b { width:520px; height:520px; bottom:-300px; left:-160px; background:#e6f2d6; }
-  .inner { position:relative; }
-  .mark {
-    width:96px; height:96px; border-radius:50%;
-    background:#ff6a13; color:#fff;
-    display:flex; align-items:center; justify-content:center;
-    margin-bottom:34px;
-  }
-  h1 { font-size:104px; font-weight:800; letter-spacing:-0.045em; line-height:0.98; }
-  h1 .accent { color:#ff6a13; }
-  p { margin-top:22px; font-size:32px; font-weight:500; color:#6f6759; }
-  .pills { margin-top:40px; display:flex; gap:14px; }
-  .pills span {
-    border-radius:999px; padding:14px 26px; font-size:26px; font-weight:700;
-  }
-  .p-all { background:#16130f; color:#f3f0e6; }
-  .p-yes { background:#ff6a13; color:#fff; }
-  .p-no  { background:#ddf3b8; color:#2f7d1e; }
+  .sheet { border:4px solid #000; height:100%; padding:38px 46px 30px; display:flex; flex-direction:column; }
+  .runhead { display:flex; justify-content:space-between; font-size:17px; font-weight:700; letter-spacing:.2em; }
+  .runhead .reg { color:#7c7c7c; }
+  .rule { border-top:4px solid #000; margin:16px 0 26px; }
+  h1 { font-size:78px; font-weight:700; letter-spacing:-.03em; line-height:1; }
+  h1 span { border-bottom:7px solid #e2001a; }
+  .lede { margin-top:16px; font-size:23px; line-height:1.4; max-width:44ch; }
+  .stamp { margin-top:30px; background:#e2001a; color:#fff; font-size:46px; font-weight:700; letter-spacing:-.02em; padding:16px 26px; align-self:flex-start; }
+  .foot { margin-top:auto; display:flex; justify-content:space-between; align-items:flex-end; }
+  .fine { font-size:15px; font-weight:700; letter-spacing:.18em; color:#7c7c7c; line-height:1.7; }
+  .bars { display:flex; align-items:flex-end; gap:2px; height:52px; }
+  .bars i { background:#000; display:block; }
 </style>
 </head>
 <body>
-  <div class="blob-a"></div>
-  <div class="blob-b"></div>
-  <div class="inner">
-    <div class="mark">
-      <svg viewBox="0 0 48 48" width="60" height="60" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M24 44V15"/>
-        <path d="M24 36c-6.5 0-10-3.5-10-10 6.5 0 10 3.5 10 10Z"/>
-        <path d="M24 36c6.5 0 10-3.5 10-10-6.5 0-10 3.5-10 10Z"/>
-        <path d="M24 27c-6.5 0-10-3.5-10-10 6.5 0 10 3.5 10 10Z"/>
-        <path d="M24 27c6.5 0 10-3.5 10-10-6.5 0-10 3.5-10 10Z"/>
-        <path d="M24 18c-3.2-4-3.2-8.5 0-13 3.2 4.5 3.2 9 0 13Z"/>
-      </svg>
-    </div>
-    <h1>Zit er <span class="accent">tarwe</span> in?</h1>
-    <p>Typ een product en je weet het meteen — gratis, met bronnen.</p>
-    <div class="pills">
-      <span class="p-all">4.300+ producten</span>
-      <span class="p-yes">met tarwe</span>
-      <span class="p-no">tarwevrij</span>
+  <div class="sheet">
+    <div class="runhead"><span>ZITERTARWEIN.NL</span><span class="reg">NL · EU 1169/2011</span></div>
+    <div class="rule"></div>
+    <h1>Zit er <span>tarwe</span> in?</h1>
+    <p class="lede">Typ een product en lees terug wat er op het etiket staat. 4.309 producten, met bron.</p>
+    <div class="stamp">BEVAT TARWE</div>
+    <div class="foot">
+      <p class="fine">VOEDINGSCENTRUM · COELIAKIE VERENIGING<br>OPEN FOOD FACTS</p>
+      <div class="bars" id="bars"></div>
     </div>
   </div>
+<script>
+  const w=[3,1,1,2,1,3,1,1,2,3,1,2,1,1,3,2,1,1,2,1,3,1,2,2,1,3,1,1,2,1,1,3,2,1,1,2,3,1,1,2,1,2,3,1,1,2,1,3,1,1];
+  document.getElementById('bars').innerHTML = w.map((n,i)=>
+    `<i style="width:${n*2}px;height:${i%7===0?52:44}px;${i%2?'background:transparent':''}"></i>`).join('');
+</script>
 </body>
 </html>

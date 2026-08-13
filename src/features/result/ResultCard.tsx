@@ -111,7 +111,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
           <div className="result-emoji">
             <ResultIcon name="search" />
           </div>
-          <div className="result-verdict">Even opzoeken…</div>
+          <div className="result-verdict">Etiket opzoeken…</div>
           <div className="result-product">{result.term}</div>
           <p className="result-info">
             Niet in onze eigen lijst — we bladeren door de etiketten van Open Food Facts.
@@ -154,7 +154,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
           <div className="result-emoji">
             <ResultIcon name="unknown" />
           </div>
-          <div className="result-verdict">Die kennen we niet…</div>
+          <div className="result-verdict">Niet gevonden</div>
           <div className="result-product">{result.term}</div>
           <p className="result-info">
             Ook niet gevonden op Open Food Facts. Tip: check de ingrediëntenlijst op het etiket —
@@ -186,7 +186,7 @@ function ResultBody({ result }: { result: CheckResult }): ReactElement {
           <div className="result-emoji">
             <ResultIcon name="outage" />
           </div>
-          <div className="result-verdict">Bron even niet bereikbaar…</div>
+          <div className="result-verdict">Bron niet bereikbaar</div>
           <div className="result-product">{result.term}</div>
           <p className="result-info">
             Dit product staat niet in onze eigen lijst en Open Food Facts reageert op dit moment

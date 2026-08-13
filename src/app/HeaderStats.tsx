@@ -14,10 +14,10 @@ export function HeaderStats(): ReactElement {
   return (
     <ul className="stats">
       <li className="s-all">
-        <b>{format(total)}</b> producten
+        <b>{format(total)}</b> beoordeeld
       </li>
       <li className="s-yes">
-        <b>{format(yes)}</b> met tarwe
+        <b>{format(yes)}</b> tarwe
       </li>
       <li className="s-no">
         <b>{format(no)}</b> vrij

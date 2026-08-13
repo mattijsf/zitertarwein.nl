@@ -1,14 +1,11 @@
 .suggestions {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 6px);
   left: 0;
   right: 0;
   background: var(--paper);
-  border: 1.5px solid var(--line);
-  border-radius: 18px;
-  box-shadow: var(--shadow-soft);
+  border: var(--frame) solid var(--ink);
   list-style: none;
-  overflow: hidden;
   z-index: 10;
   display: none;
 }
@@ -17,48 +14,33 @@
 }
 .suggestions[data-placement="above"] {
   top: auto;
-  bottom: calc(100% + 10px);
+  bottom: calc(100% + 6px);
 }
 .suggestions li {
-  padding: 12px 18px;
+  padding: 10px 12px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   gap: 12px;
-  font-size: 17px;
-  font-weight: 500;
+  font-size: 14px;
 }
 .suggestions li:not(:last-child) {
-  border-bottom: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--rule-soft);
 }
 .suggestions li.active,
 .suggestions li:hover {
-  background: #f7f5ee;
+  background: var(--wash);
 }
 .suggestions mark {
   background: none;
-  color: var(--gold-deep);
-  font-weight: 800;
+  color: var(--ink);
+  font-weight: 700;
 }
 .suggestion-hint {
-  font-size: 11.5px;
-  font-weight: 700;
   flex-shrink: 0;
-  padding: 4px 11px;
-  border-radius: 999px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  color: var(--ink-soft);
 }
 .suggestion-hint.yes {
-  background: var(--red-soft);
-  color: var(--red-deep);
-}
-.suggestion-hint.no {
-  background: var(--green-soft);
-  color: var(--green-deep);
-}
-.suggestion-hint.check {
-  background: var(--gold-soft);
-  color: var(--gold-deep);
+  color: var(--alert);
 }

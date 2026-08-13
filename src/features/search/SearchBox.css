@@ -1,21 +1,18 @@
+/* Entry line */
 .search-wrap {
   position: relative;
+  margin-top: 22px;
+}
+.field-label {
+  color: var(--ink-soft);
+  margin-bottom: 6px;
 }
 .search-box {
   display: flex;
-  gap: 8px;
-  background: var(--paper);
-  border: 1.5px solid var(--line);
-  border-radius: 20px;
-  padding: 7px;
-  box-shadow: var(--shadow-small);
-  transition:
-    border-color 0.15s,
-    box-shadow 0.15s;
-}
-.search-box:focus-within {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 4px var(--gold-soft);
+  align-items: center;
+  gap: 10px;
+  border-bottom: var(--frame) solid var(--ink);
+  padding-bottom: 7px;
 }
 .input-wrap {
   flex: 1;
@@ -27,77 +24,65 @@
   flex: 1;
   border: none;
   outline: none;
-  font-size: 19px;
-  font-weight: 600;
-  padding: 10px 34px 10px 14px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  padding: 8px 30px 6px 0;
   background: transparent;
   color: var(--ink);
   min-width: 0;
-  font-family: inherit;
 }
 .product-input::placeholder {
-  color: #a9a294;
-  font-weight: 500;
+  color: #a8a8a8;
 }
 .input-clear {
   position: absolute;
-  right: 4px;
+  right: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 26px;
-  height: 26px;
-  border: none;
-  border-radius: 50%;
-  background: #efece2;
-  color: var(--ink-soft);
-  font-size: 13px;
-  font-weight: 800;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
   line-height: 1;
   cursor: pointer;
 }
 .input-clear:hover {
-  background: #e3dfd1;
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
 }
 .check-button {
-  border: none;
-  background: var(--gold);
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
+  border: var(--frame) solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
   font-family: inherit;
-  padding: 12px 26px;
-  border-radius: 14px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 10px 13px;
   cursor: pointer;
-  transition:
-    background 0.15s,
-    transform 0.1s;
   white-space: nowrap;
-  letter-spacing: -0.01em;
 }
 .check-button:hover {
-  background: var(--gold-deep);
+  background: var(--ink);
+  color: var(--paper);
 }
 .check-button:active {
   transform: translateY(1px);
 }
 
-/* Narrow screens: input on its own row, camera + Check share the next one
-   (the camera keeps its square footprint, Check takes the rest). */
-@media (max-width: 460px) {
-  .search-box {
-    flex-wrap: wrap;
-  }
-  .input-wrap {
-    flex-basis: 100%;
+@media (max-width: 380px) {
+  .check-button {
+    padding: 10px 9px;
+    letter-spacing: 0.12em;
   }
   .product-input {
-    padding: 12px 34px 6px 14px;
-  }
-  .scan-button {
-    padding: 0 15px;
-  }
-  .check-button {
-    flex: 1;
+    font-size: 16px;
   }
 }

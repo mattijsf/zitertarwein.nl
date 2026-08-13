@@ -1,5 +1,6 @@
 import type { ReactElement } from "react"
 import { InstallButton } from "../features/install/InstallButton"
+import { Barcode } from "./Barcode"
 import "./Footer.css"
 import { footerSources } from "./footerSources"
 
@@ -31,6 +32,7 @@ export function Footer(): ReactElement {
         fabrikanten veranderen. Let op: <em>tarwevrij</em> is niet hetzelfde als <em>glutenvrij</em>{" "}
         (rogge en gerst bevatten óók gluten).
       </p>
+      <Barcode />
     </footer>
   )
 }

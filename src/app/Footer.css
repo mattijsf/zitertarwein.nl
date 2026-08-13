@@ -1,61 +1,60 @@
 footer {
   width: 100%;
-  max-width: 600px;
-  padding: 48px 20px 64px;
-  padding-bottom: calc(64px + env(safe-area-inset-bottom));
-  text-align: center;
-  font-size: 13.5px;
-  color: var(--ink-soft);
+  max-width: 620px;
+  padding: 34px 18px 22px;
+  padding-bottom: calc(22px + env(safe-area-inset-bottom));
 }
 .sources-card {
-  padding: 0;
-  margin-bottom: 22px;
-  text-align: center;
-  color: var(--ink-soft);
+  color: var(--ink);
 }
 .sources-card summary {
   cursor: pointer;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 800;
   list-style: none;
+  border-top: var(--frame) solid var(--ink);
+  padding-top: 10px;
 }
 .sources-card summary::-webkit-details-marker {
   display: none;
 }
 .sources-card summary::after {
-  content: " ▾";
-  color: var(--gold);
+  content: " +";
 }
 .sources-card[open] summary::after {
-  content: " ▴";
-  color: var(--gold);
+  content: " –";
 }
 .sources-card[open] summary {
   margin-bottom: 10px;
 }
 .sources-note {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--line);
-  font-weight: 400;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 11.5px;
+  line-height: 1.55;
   color: var(--ink-soft);
 }
 footer ul {
   list-style: none;
 }
 footer li {
-  margin: 5px 0;
-  font-weight: 500;
+  margin: 4px 0;
+  font-size: 11.5px;
 }
 footer a {
-  color: var(--gold-deep);
-  font-weight: 800;
+  color: var(--ink);
 }
 .disclaimer {
-  max-width: 480px;
-  margin: 0 auto;
-  font-weight: 400;
-  line-height: 1.6;
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+/* Barcode: the signature every packet ends with. */
+.barcode {
+  margin-top: 16px;
+  width: 100%;
+  height: 34px;
+  display: block;
 }
