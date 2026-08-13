@@ -1,7 +1,6 @@
 import { create } from "zustand"
 import { decodeEntities } from "../lib/decodeEntities"
 import { findProduct } from "../lib/findProduct"
-import type { InstallPlatform } from "../lib/installPlatform"
 import { lookUpBarcode } from "../lib/lookUpBarcode"
 import type { OnlineMatch } from "../lib/lookUpOnline"
 import { lookUpOnline, toMatch } from "../lib/lookUpOnline"
@@ -22,8 +21,6 @@ export type CheckResult =
   | { kind: "barcodeUnknown"; code: string }
   /** Open Food Facts did not answer: an outage, not "not found". */
   | { kind: "unavailable"; term: string }
-  /** How to install the app, for browsers without an install prompt. */
-  | { kind: "installHelp"; platform: InstallPlatform }
 
 /** Bumped per lookup, so a slow answer for an older term is dropped. */
 let searchCounter = 0
@@ -51,7 +48,6 @@ interface CheckState {
   showProduct: (product: Product, name: string) => void
   /** Look up a scanned barcode on Open Food Facts. */
   checkBarcode: (code: string) => void
-  showInstallHelp: (platform: InstallPlatform) => void
   /** Wipes the result and the query, and drops a pending online lookup. */
   clear: () => void
 }
@@ -161,11 +157,6 @@ export const useCheckStore = create<CheckState>()((set, get) => {
             break
         }
       })
-    },
-
-    showInstallHelp: platform => {
-      searchCounter++
-      show({ kind: "installHelp", platform })
     },
 
     clear: () => {

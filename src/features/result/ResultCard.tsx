@@ -1,9 +1,8 @@
 import type { ReactElement, ReactNode } from "react"
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { nvwaAllergensUrl } from "../../data/nvwaAllergensUrl"
 import { SOURCES } from "../../data/sources"
 import { googleUrl } from "../../lib/googleUrl"
-import type { InstallPlatform } from "../../lib/installPlatform"
 import { VERDICT } from "../../lib/verdict"
 import type { CheckResult } from "../../stores/useCheckStore"
 import { useCheckStore } from "../../stores/useCheckStore"
@@ -20,13 +19,6 @@ export function ResultCard(): ReactElement {
   const resultId = useCheckStore(state => state.resultId)
   const clear = useCheckStore(state => state.clear)
   const share = shareTarget(result)
-  const ref = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    // install help is opened from the top or bottom of the page: bring the card into view
-    if (result?.kind === "installHelp") {
-      ref.current?.scrollIntoView({ behavior: "smooth", block: "nearest" })
-    }
-  }, [result])
   useEffect(() => {
     if (!result) {
       return
@@ -42,7 +34,7 @@ export function ResultCard(): ReactElement {
     }
   }, [result])
   return (
-    <div ref={ref} className={resultClass(result)} role="status" aria-live="polite">
+    <div className={resultClass(result)} role="status" aria-live="polite">
       {result && (
         <ResultBody
           key={resultId}
@@ -98,7 +90,6 @@ function resultClass(result: CheckResult | null): string {
     case "searching":
     case "notFound":
     case "barcodeUnknown":
-    case "installHelp":
       return "result visible"
   }
 }
@@ -207,8 +198,6 @@ function ResultBody({ result, keys }: { result: CheckResult; keys: ReactNode }):
           <GoogleButton term={result.term} />
         </>
       )
-    case "installHelp":
-      return <InstallHelpBody platform={result.platform} keys={keys} />
   }
 }
 
@@ -232,52 +221,6 @@ function LabelRuleRef(): ReactElement {
       </a>
     </p>
   )
-}
-
-function InstallHelpBody({
-  platform,
-  keys,
-}: {
-  platform: InstallPlatform
-  keys: ReactNode
-}): ReactElement {
-  return (
-    <>
-      <div className="result-emoji">
-        <ResultIcon name="install" />
-      </div>
-      <VerdictBar keys={keys}>Zo installeer je de app</VerdictBar>
-      <p className="result-info">
-        <InstallSteps platform={platform} />
-      </p>
-      <p className="result-info">Daarna staat de tarwe als app op je scherm — werkt ook offline.</p>
-    </>
-  )
-}
-
-function InstallSteps({ platform }: { platform: InstallPlatform }): ReactElement {
-  switch (platform) {
-    case "ios":
-      return (
-        <>
-          Open deze site in Safari, tik op de deelknop (vierkantje met pijl omhoog) en kies{" "}
-          <strong>‘Zet op beginscherm’</strong>.
-        </>
-      )
-    case "firefox":
-      return (
-        <>
-          Tik op het menu (⋮) van Firefox en kies <strong>‘Toevoegen aan startscherm’</strong>.
-        </>
-      )
-    case "other":
-      return (
-        <>
-          Open het browsermenu en kies <strong>‘App installeren’</strong> of{" "}
-          <strong>‘Toevoegen aan startscherm’</strong>.
-        </>
-      )
-  }
 }
 
 function ProductBody({ product, keys }: { product: Product; keys: ReactNode }): ReactElement {
