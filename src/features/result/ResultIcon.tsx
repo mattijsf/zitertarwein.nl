@@ -76,5 +76,13 @@ export function ResultIcon({ name }: { name: ResultIconName }): ReactElement {
           <path d="M13 39 35 11" />
         </Glyph>
       )
+    case "install":
+      return (
+        <Glyph>
+          <rect x="14" y="5" width="20" height="38" rx="6" />
+          <path d="M24 16v12" />
+          <path d="M19 23l5 5 5-5" />
+        </Glyph>
+      )
   }
 }

@@ -1,4 +1,20 @@
-/* a label has no confetti */
 .confetti {
-  display: none;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.confetti span {
+  position: absolute;
+  top: -16px;
+  width: 7px;
+  height: 13px;
+  border-radius: 50% / 60%;
+  animation: flutter linear forwards;
+}
+@keyframes flutter {
+  to {
+    transform: translateY(340px) rotate(380deg);
+    opacity: 0;
+  }
 }

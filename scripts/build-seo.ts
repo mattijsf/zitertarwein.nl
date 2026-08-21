@@ -70,34 +70,30 @@ for (const it of items) {
 
 // ── Shared page chrome ──
 const CSS = `
-  :root { --paper:#ffffff; --ink:#000000; --ink-soft:#7c7c7c;
-    --rule-soft:#d5d5d5; --wash:#f2f2f0; --alert:#e2001a; }
+  :root { --cream:#f3f0e6; --paper:#ffffff; --ink:#16130f; --ink-soft:#6f6759;
+    --gold-deep:#d24d00; --green-deep:#33701a; --red-deep:#b23a05;
+    --line:#e2dccb; }
   * { margin:0; padding:0; box-sizing:border-box; }
-  html { background:var(--wash); }
-  body { background:var(--paper); color:var(--ink);
-    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size:13px; line-height:1.5;
-    border:2px solid var(--ink); margin:10px auto; max-width:700px;
-    min-height:calc(100vh - 20px); padding:16px 18px 22px; }
-  .runhead { display:flex; justify-content:space-between; font-size:9.5px;
-    font-weight:700; letter-spacing:.2em; text-transform:uppercase; }
-  .runhead .reg { color:var(--ink-soft); }
-  .rule { border-top:2px solid var(--ink); margin:10px 0 16px; }
-  h1 { font-size:1.7rem; font-weight:700; letter-spacing:-.025em; line-height:1.05; }
-  .verdict { margin-top:12px; padding:11px 14px; background:var(--ink); color:var(--paper);
-    font-size:1.35rem; font-weight:700; letter-spacing:-.02em; }
-  .yes .verdict { background:var(--alert); }
-  .no .verdict { background:var(--paper); color:var(--ink); border:2px solid var(--ink); padding:9px 12px; }
-  p { margin-top:12px; font-size:13.5px; }
-  .source { margin-top:14px; padding-top:10px; border-top:1px solid var(--rule-soft);
-    font-size:11.5px; color:var(--ink-soft); }
-  a { color:var(--ink); }
-  .app-link { display:inline-block; margin-top:16px; border:2px solid var(--ink);
-    color:var(--ink); text-decoration:none; padding:10px 14px;
-    font-size:9.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
-  .app-link:hover { background:var(--ink); color:var(--paper); }
-  footer { margin-top:22px; padding-top:12px; border-top:1px solid var(--rule-soft);
-    font-size:10.5px; color:var(--ink-soft); }
+  body { background:var(--cream); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+    line-height:1.55;
+    display:flex; flex-direction:column; align-items:center;
+    min-height:100vh; padding:28px 18px; }
+  main { background:var(--paper); border:1.5px solid var(--line);
+    border-radius:26px; padding:32px 28px; max-width:560px; width:100%;
+    box-shadow:0 10px 30px rgba(22,19,15,.07); }
+  h1 { font-size:1.75rem; font-weight:800; letter-spacing:-.03em; margin-bottom:14px; }
+  .verdict { font-size:1.5rem; font-weight:800; letter-spacing:-.02em; margin-bottom:10px; }
+  .yes .verdict { color:var(--red-deep); }
+  .no .verdict { color:var(--green-deep); }
+  .check .verdict { color:var(--gold-deep); }
+  p { margin-bottom:12px; }
+  .source { font-size:.9rem; color:var(--ink-soft); }
+  a { color:var(--gold-deep); }
+  .app-link { display:inline-block; margin-top:16px; background:#ff6a13;
+    color:#fff; text-decoration:none; padding:12px 24px; border-radius:999px;
+    font-weight:700; }
+  footer { margin-top:22px; font-size:.85rem; color:var(--ink-soft); text-align:center; }
   footer a { color:var(--ink-soft); }
 `.replace(/\n\s*/g, "")
 
@@ -134,8 +130,6 @@ for (const [slug, it] of bySlug) {
   const title = `Zit er tarwe in ${it.name}? — ${VERDICT[it.s]}`
   const description = `Zit er tarwe in ${it.name}? ${VERDICT[it.s]} ${it.info}`.slice(0, 300)
   const body = `<main class="${it.s}">
-<div class="runhead"><span>Zitertarwein.nl</span><span class="reg">NL · EU 1169/2011</span></div>
-<div class="rule"></div>
 <h1>Zit er tarwe in ${escapeHtml(it.name)}?</h1>
 <div class="verdict">${VERDICT[it.s]}</div>
 <p>${escapeHtml(it.info)}</p>
@@ -151,8 +145,6 @@ const links = sorted
   .map(([slug, it]) => `<li><a href="/p/${slug}">${escapeHtml(it.name)}</a></li>`)
   .join("\n")
 const indexBody = `<main>
-<div class="runhead"><span>Zitertarwein.nl</span><span class="reg">NL · EU 1169/2011</span></div>
-<div class="rule"></div>
 <h1>Alle producten — zit er tarwe in?</h1>
 <p>${bySlug.size} producten. Kies een product of <a href="/">zoek direct</a>.</p>
 <ul style="columns:2;list-style:none;font-size:.95rem">${links}</ul>

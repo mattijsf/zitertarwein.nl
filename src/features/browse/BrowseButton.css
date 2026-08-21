@@ -1,20 +1,25 @@
 .browse-open-wrap {
   margin-top: 18px;
+  text-align: center;
 }
 .browse-open {
   border: none;
   background: none;
-  color: var(--ink);
+  color: var(--ink-soft);
+  padding: 6px 4px;
+  font-size: 14px;
+  font-weight: 600;
   font-family: inherit;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  padding: 4px 0;
   cursor: pointer;
-  border-bottom: 1px solid var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: var(--line);
 }
 .browse-open:hover {
-  background: var(--ink);
-  color: var(--paper);
+  color: var(--ink);
+  text-decoration-color: var(--gold);
+}
+.browse-open:active {
+  transform: translateY(1px);
 }

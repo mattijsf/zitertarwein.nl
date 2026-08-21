@@ -8,4 +8,3 @@ public/
 src/data/off-products.json
 # standalone sources for the PNG icons and social card, kept as written
 og-source.html
-icon-source.html

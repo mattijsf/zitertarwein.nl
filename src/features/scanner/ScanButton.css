@@ -1,21 +1,21 @@
-/* Camera and Check share one height so the row reads as a single rule. */
 .scan-button {
+  color: var(--ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: var(--frame) solid var(--ink);
+  border: 1.5px solid var(--line);
   background: var(--paper);
-  color: var(--ink);
-  height: 36px;
-  width: 40px;
-  padding: 0;
+  padding: 0 13px;
+  border-radius: 14px;
   cursor: pointer;
-}
-.scan-button svg {
-  width: 19px;
-  height: 19px;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 }
 .scan-button:hover {
-  background: var(--ink);
-  color: var(--paper);
+  background: #faf8f2;
+  border-color: var(--gold);
+}
+.scan-button:active {
+  transform: translateY(1px);
 }

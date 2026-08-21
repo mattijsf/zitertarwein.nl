@@ -1,56 +1,105 @@
-/* Runhead + statement */
+/* Flat wheat mark + oversized display headline */
 header {
-  padding: 16px 0 0;
+  text-align: center;
+  padding: 34px 0 30px;
 }
-.runhead {
+.logo-sticker {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  align-items: center;
+  justify-content: center;
+  width: 74px;
+  height: 74px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #fff;
+  pointer-events: none;
 }
-.runhead .reg {
-  color: var(--ink-soft);
-  text-align: right;
+.logo-sticker svg {
+  width: 46px;
+  height: 46px;
 }
-header .rule {
-  margin: 10px 0 14px;
+.logo {
+  transform-origin: 50% 100%;
+  transform-box: view-box;
+  animation: sway 3.5s ease-in-out infinite;
 }
-
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+}
 h1 {
-  font-size: clamp(26px, 7.4vw, 34px);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.05;
+  font-size: clamp(38px, 11vw, 60px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  color: var(--ink);
+  text-wrap: balance;
 }
 h1 .accent {
-  border-bottom: 3px solid var(--alert);
+  color: var(--gold);
+  white-space: nowrap;
 }
 .tagline {
-  margin-top: 8px;
-  font-size: 11.5px;
-  line-height: 1.5;
-  max-width: 44ch;
+  margin-top: 14px;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink-soft);
 }
 
-/* Counts as a register table, not as pills. */
+/* Stats strip under the headline. Deliberately not pills: this is a fact,
+   not a third thing to tap. */
 .stats {
-  margin-top: 14px;
-  list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 0 6px;
+  justify-content: center;
+  gap: 4px 0;
+  margin-top: 14px;
+  list-style: none;
+  font-size: 13px;
+  font-weight: 500;
   color: var(--ink-soft);
 }
 .stats li + li::before {
   content: "·";
-  margin-right: 6px;
+  margin: 0 8px;
+  color: var(--line);
 }
 .stats b {
-  color: var(--ink);
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
-  font-weight: 700;
+  color: var(--ink);
+}
+.stats .s-yes b {
+  color: var(--gold-deep);
+}
+.stats .s-no b {
+  color: var(--green-deep);
+}
+
+/* Short landscape windows: compact header, so the examples stay in view.
+   Portrait is left out on purpose: there the keyboard shrinks the viewport
+   below the threshold and the sudden compact layout looks like the page
+   zooms on focus. */
+@media (max-height: 700px) and (orientation: landscape) {
+  header {
+    padding-top: 10px;
+  }
+  .logo-sticker {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: clamp(26px, 6vw, 36px);
+  }
+  .tagline {
+    margin-top: 4px;
+    font-size: 15px;
+  }
 }

@@ -1,31 +1,19 @@
+/* Install button: plain text link at the bottom of the footer */
 .install-button {
-  display: block;
-  margin: 16px 0 0;
-  border: 1px solid var(--ink);
-  background: var(--paper);
-  color: var(--ink);
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 6px 4px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  font-weight: 600;
   font-family: inherit;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  padding: 8px 12px;
   cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line);
 }
 .install-button:hover {
-  background: var(--ink);
-  color: var(--paper);
-}
-/* The steps belong next to the button that asks for them. */
-.install-help {
-  margin-top: 10px;
-  border-left: var(--frame) solid var(--ink);
-  padding: 2px 0 2px 10px;
-  font-size: 11.5px;
-  line-height: 1.55;
-  max-width: 52ch;
-}
-.install-help p + p {
-  margin-top: 6px;
-  color: var(--ink-soft);
+  color: var(--ink);
+  text-decoration-color: var(--gold);
 }
