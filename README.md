@@ -12,21 +12,23 @@ with a prefilled query as a last resort.
 
 React 19 + zustand, built with Vite, strict TypeScript.
 
-| Path                         | Purpose                                                             |
-| ---------------------------- | ------------------------------------------------------------------- |
-| `index.html`                 | Vite entry: meta tags and `#root`                                   |
-| `src/app/`                   | Page layout: header, footer (pop look)                              |
-| `src/features/`              | Search with autocomplete, result card, examples, scanner, sharing   |
-| `src/stores/`                | Shared state (zustand)                                              |
-| `src/lib/`                   | Pure logic with tests: search, suggestions, Open Food Facts         |
-| `src/lib/rules.json`         | Shared wheat-detection rules (site and import scripts)              |
-| `src/data/products.ts`       | Hand-curated product database (~310 products) with status, source   |
-| `src/data/off-products.json` | Supermarket products with label data (generated, do not edit)       |
-| `src/data/sources.ts`        | The sources the answers point to                                    |
-| `deploy.sh`                  | Build and deploy to Cloudflare                                      |
-| `generate.py`                | Generates `src/data/off-products.json` from one or more sources     |
-| `sources/`                   | Source modules: `off_parquet.py` (Open Food Facts), `csv_export.py` |
-| `scripts/build-seo.ts`       | Generates static product pages (`/p/…`), sitemap and robots.txt     |
+| Path                                 | Purpose                                                                                   |
+| ------------------------------------ | ----------------------------------------------------------------------------------------- |
+| `index.html`                         | Vite entry: meta tags and `#root`                                                         |
+| `public/`                            | Static files shipped as-is: icons, `sw.js`, `_headers`, wheat plate                       |
+| `src/app/`                           | Page layout: header with product counts, footer                                           |
+| `src/features/`                      | One folder per feature: search, result, examples, facts, browse, barcode scanner, install |
+| `src/stores/`                        | Shared state (zustand)                                                                    |
+| `src/lib/`                           | Pure logic with tests: search, suggestions, Open Food Facts                               |
+| `src/lib/rules.json`                 | Shared wheat-detection rules (site and import scripts)                                    |
+| `src/data/products.ts`               | Hand-curated product database (~310 products) with status, source                         |
+| `src/data/off-products.json`         | Supermarket products with label data (generated, do not edit)                             |
+| `src/data/sources.ts`                | The sources the answers point to                                                          |
+| `deploy.sh`                          | Build and deploy to Cloudflare                                                            |
+| `generate.py`                        | Generates `src/data/off-products.json` from one or more sources                           |
+| `sources/`                           | Source modules: `off_parquet.py` (Open Food Facts), `csv_export.py`                       |
+| `scripts/build-seo.ts`               | Generates static product pages (`/p/…`), sitemap and robots.txt                           |
+| `og-source.html`, `icon-source.html` | Sources for `og-image.png` and the app icons (render, then screenshot)                    |
 
 Adding a product to `src/data/products.ts`:
 
@@ -41,6 +43,14 @@ pnpm install
 pnpm dev     # http://localhost:4173
 pnpm check   # lint, formatting, typecheck, tests, escape hatches and unused code (knip)
 ```
+
+`pnpm install` also installs the git hooks (lefthook):
+
+- **pre-commit**: ESLint with `--fix` and Prettier (organized imports) on the staged files,
+  `tsc -b`, and a block on "do not commit" markers
+- **pre-push**: lint, format check, typecheck, tests, knip (unused files, exports and
+  dependencies) and the escape-hatch ratchet
+  (`scripts/check-escape-hatches.ts`: no new `any`, `as` casts or `eslint-disable`)
 
 ## Generating product data
 

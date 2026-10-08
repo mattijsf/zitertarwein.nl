@@ -4,8 +4,9 @@
 set -e
 cd "$(dirname "$0")"
 
-# Vite builds the site into dist/, then scripts/build-seo.ts adds the SEO
-# pages: static product pages under /p/, sitemap.xml and robots.txt
+# Vite builds the site into dist/ and copies public/ along with it (icons,
+# manifest, sw.js, _headers, the wheat plate), then scripts/build-seo.ts adds
+# the SEO pages: static product pages under /p/, sitemap.xml and robots.txt
 pnpm install --frozen-lockfile
 pnpm build
 
