@@ -24,4 +24,6 @@ export interface Product {
   url?: string
   /** Brand (supermarket products); also a search alias. */
   m?: string
+  /** Barcode (supermarket products), used to fetch the pack photo. */
+  c?: string
 }

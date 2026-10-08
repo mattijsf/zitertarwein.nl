@@ -12,6 +12,7 @@ const off = (fields: Partial<OffProduct>): OffProduct => ({
   ingredientsTextNl: "",
   allergensTags: [],
   ingredientsTags: [],
+  imageFrontUrl: "",
   ...fields,
 })
 
@@ -67,7 +68,13 @@ describe("toMatch", () => {
       name: "Pindakaas (Calvé)",
       url: "https://nl.openfoodfacts.org/product/8%207",
       hasWheat: false,
+      photo: null,
     })
+  })
+
+  it("keeps the pack photo when Open Food Facts has one", () => {
+    const photo = "https://images.openfoodfacts.org/images/products/87/front_nl.jpg"
+    expect(toMatch(off({ imageFrontUrl: photo }), "pinda").photo).toBe(photo)
   })
 
   it("decodes HTML entities in the name", () => {
@@ -103,7 +110,12 @@ describe("lookUpOnline", () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(ok(found)))
     expect(await lookUpOnline("koek")).toEqual({
       kind: "found",
-      match: { name: "Koek", url: "https://nl.openfoodfacts.org/product/1", hasWheat: true },
+      match: {
+        name: "Koek",
+        url: "https://nl.openfoodfacts.org/product/1",
+        hasWheat: true,
+        photo: null,
+      },
     })
   })
 

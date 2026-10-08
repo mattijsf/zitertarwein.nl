@@ -1,29 +1,31 @@
 import type { ReactElement } from "react"
+import { Fragment } from "react"
 import { useCheckStore } from "../../stores/useCheckStore"
 import "./Examples.css"
 import { exampleProducts } from "./exampleProducts"
 
-const CHIP_STAGGER_MS = 45
-
+/** "Of probeer a, b of c." — a sentence with links, not chips. */
 export function Examples(): ReactElement {
   const check = useCheckStore(state => state.check)
   return (
     <p className="examples">
-      Probeer eens
-      <span className="example-chips">
+      Of probeer{" "}
+      <span className="example-links">
         {exampleProducts.map((example, index) => (
-          <button
-            key={example.n}
-            type="button"
-            style={{ animationDelay: `${index * CHIP_STAGGER_MS}ms` }}
-            onClick={() => {
-              check(example.n)
-            }}
-          >
-            {example.n}
-          </button>
+          <Fragment key={example.n}>
+            {index > 0 && (index === exampleProducts.length - 1 ? " of " : ", ")}
+            <button
+              type="button"
+              onClick={() => {
+                check(example.n)
+              }}
+            >
+              {example.n}
+            </button>
+          </Fragment>
         ))}
       </span>
+      .
     </p>
   )
 }

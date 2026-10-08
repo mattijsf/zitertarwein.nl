@@ -9,6 +9,7 @@ describe("offToProduct", () => {
       m: "Calvé",
       s: "no",
       b: "off",
+      c: "87",
       url: "https://nl.openfoodfacts.org/product/87",
     })
   })

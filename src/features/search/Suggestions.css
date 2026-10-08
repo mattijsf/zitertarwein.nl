@@ -4,8 +4,8 @@
   left: 0;
   right: 0;
   background: var(--paper);
-  border: 1.5px solid var(--line);
-  border-radius: 18px;
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
   box-shadow: var(--shadow-soft);
   list-style: none;
   overflow: hidden;

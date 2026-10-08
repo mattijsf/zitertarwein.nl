@@ -13,6 +13,8 @@ export interface OffProduct {
   ingredientsTextNl: string
   allergensTags: string[]
   ingredientsTags: string[]
+  /** Photo of the pack front, "" when the label has not been photographed. */
+  imageFrontUrl: string
 }
 
 export interface OnlineMatch {
@@ -21,11 +23,13 @@ export interface OnlineMatch {
   /** The product page on Open Food Facts. */
   url: string
   hasWheat: boolean
+  /** Photo of the pack front, when there is one. */
+  photo: string | null
 }
 
 const SEARCH_URL = "https://nl.openfoodfacts.org/cgi/search.pl"
 export const FIELDS =
-  "code,product_name,product_name_nl,brands,ingredients_text,ingredients_text_nl,allergens_tags,ingredients_tags"
+  "code,product_name,product_name_nl,brands,ingredients_text,ingredients_text_nl,allergens_tags,ingredients_tags,image_front_url"
 const TIMEOUT_MS = 8000
 const RETRY_DELAY_MS = 4000
 
@@ -87,6 +91,7 @@ export function parseProduct(p: object): OffProduct {
     ingredientsTextNl: stringField(p, "ingredients_text_nl"),
     allergensTags: tagsField(p, "allergens_tags"),
     ingredientsTags: tagsField(p, "ingredients_tags"),
+    imageFrontUrl: stringField(p, "image_front_url"),
   }
 }
 
@@ -111,6 +116,7 @@ export function toMatch(p: OffProduct, term: string): OnlineMatch {
     name: name + brand,
     url: offProductUrl(p.code),
     hasWheat: hasWheat(p),
+    photo: p.imageFrontUrl || null,
   }
 }
 

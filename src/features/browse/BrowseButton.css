@@ -1,6 +1,6 @@
 .browse-open-wrap {
-  margin-top: 18px;
-  text-align: center;
+  margin-top: 22px;
+  text-align: left;
 }
 .browse-open {
   border: none;
@@ -18,7 +18,7 @@
 }
 .browse-open:hover {
   color: var(--ink);
-  text-decoration-color: var(--gold);
+  text-decoration-color: var(--stamp-red);
 }
 .browse-open:active {
   transform: translateY(1px);

@@ -15,5 +15,5 @@
 }
 .install-button:hover {
   color: var(--ink);
-  text-decoration-color: var(--gold);
+  text-decoration-color: var(--stamp-red);
 }

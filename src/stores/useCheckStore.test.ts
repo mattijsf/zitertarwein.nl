@@ -15,7 +15,7 @@ vi.mock("../lib/lookUpOnline", async importOriginal => ({
 
 const stroopwafel: Product = { n: "Stroopwafel", a: [], s: "yes", i: "", b: "vc-tarwe" }
 const sojasaus: Product = { n: "Sojasaus", a: ["shoyu"], s: "check", i: "", b: "vc-tarwe" }
-const match: OnlineMatch = { name: "Pindakaas (Calvé)", url: "", hasWheat: false }
+const match: OnlineMatch = { name: "Pindakaas (Calvé)", url: "", hasWheat: false, photo: null }
 
 /** A lookup the test answers by hand. */
 function pendingLookup(): (answer: OnlineLookup | undefined) => Promise<void> {

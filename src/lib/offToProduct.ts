@@ -52,6 +52,7 @@ export function offToProduct(o: OffEntry): Product | undefined {
     s: o.s,
     i: offInfo(o, o.s),
     b: "off",
+    c: o.c,
     url: offProductUrl(o.c),
   }
 }

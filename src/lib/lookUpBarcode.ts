@@ -1,7 +1,6 @@
 import type { OffProduct } from "./lookUpOnline"
 import { field, FIELDS, parseProduct } from "./lookUpOnline"
-
-const PRODUCT_URL = "https://nl.openfoodfacts.org/api/v2/product/"
+import { offApiUrl } from "./offApiUrl"
 
 export type BarcodeLookup =
   | { kind: "found"; product: OffProduct }
@@ -11,7 +10,7 @@ export type BarcodeLookup =
   | { kind: "unavailable" }
 
 export function barcodeUrl(code: string): string {
-  return `${PRODUCT_URL}${encodeURIComponent(code)}?fields=${FIELDS}`
+  return offApiUrl(code, FIELDS)
 }
 
 /** Reads the product out of a product endpoint response; null when it is missing. */
