@@ -70,30 +70,35 @@ for (const it of items) {
 
 // ── Shared page chrome ──
 const CSS = `
-  :root { --cream:#f3f0e6; --paper:#ffffff; --ink:#16130f; --ink-soft:#6f6759;
-    --gold-deep:#d24d00; --green-deep:#33701a; --red-deep:#b23a05;
-    --line:#e2dccb; }
+  :root { --cream:#f3f0e6; --paper:#ffffff; --ink:#16130f; --ink-soft:#6f6759; --line:#e2dccb;
+    --serif:"Fraunces","Iowan Old Style",Georgia,serif;
+    --stamp-red:#c8102e; --stamp-green:#1d7a3a; --stamp-amber:#b8860b; }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:var(--cream); color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
-    line-height:1.55;
-    display:flex; flex-direction:column; align-items:center;
-    min-height:100vh; padding:28px 18px; }
-  main { background:var(--paper); border:1.5px solid var(--line);
-    border-radius:26px; padding:32px 28px; max-width:560px; width:100%;
-    box-shadow:0 10px 30px rgba(22,19,15,.07); }
-  h1 { font-size:1.75rem; font-weight:800; letter-spacing:-.03em; margin-bottom:14px; }
-  .verdict { font-size:1.5rem; font-weight:800; letter-spacing:-.02em; margin-bottom:10px; }
-  .yes .verdict { color:var(--red-deep); }
-  .no .verdict { color:var(--green-deep); }
-  .check .verdict { color:var(--gold-deep); }
-  p { margin-bottom:12px; }
-  .source { font-size:.9rem; color:var(--ink-soft); }
-  a { color:var(--gold-deep); }
-  .app-link { display:inline-block; margin-top:16px; background:#ff6a13;
-    color:#fff; text-decoration:none; padding:12px 24px; border-radius:999px;
-    font-weight:700; }
-  footer { margin-top:22px; font-size:.85rem; color:var(--ink-soft); text-align:center; }
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.5; display:flex; flex-direction:column; align-items:center;
+    min-height:100vh; padding:28px 20px; }
+  main { max-width:560px; width:100%; }
+  .plaat { display:block; width:150px; height:auto; margin:0 0 6px auto; }
+  h1 { font-family:var(--serif); font-variation-settings:"opsz" 144,"SOFT" 40; font-weight:600;
+    font-size:2.2rem; line-height:1.02; letter-spacing:-.02em; margin-bottom:18px; }
+  h1 em { font-style:italic; font-weight:400; }
+  .card { background:var(--paper); border:1.5px solid var(--ink); border-radius:6px; padding:20px; }
+  .verdict { display:inline-block; font-family:var(--serif); font-variation-settings:"opsz" 48,"SOFT" 20;
+    font-size:1.6rem; font-weight:700; line-height:1; color:#fff; background:var(--ink);
+    padding:7px 14px 8px; transform:rotate(-3deg); transform-origin:left center; margin:2px 0 16px 2px;
+    box-shadow:0 2px 0 rgba(0,0,0,.25); }
+  .yes .verdict { background:var(--stamp-red); }
+  .no .verdict { background:var(--stamp-green); }
+  .check .verdict { background:var(--stamp-amber); }
+  .name { font-family:var(--serif); font-variation-settings:"opsz" 48,"SOFT" 20; font-size:1.4rem; font-weight:600; line-height:1.15; }
+  p { margin-top:10px; font-size:15.5px; }
+  .source { margin-top:14px; padding-top:10px; border-top:1px solid var(--line); font-size:13.5px; color:var(--ink-soft); }
+  a { color:var(--ink); }
+  .app-link { display:inline-block; margin-top:16px; background:var(--ink); color:var(--cream);
+    text-decoration:none; padding:11px 18px; border-radius:3px; font-weight:700; font-size:15px; }
+  .index ul { columns:2; list-style:none; font-size:.95rem; margin-top:12px; }
+  footer { margin-top:22px; font-size:.85rem; color:var(--ink-soft); text-align:center; max-width:560px; }
   footer a { color:var(--ink-soft); }
 `.replace(/\n\s*/g, "")
 
@@ -111,6 +116,9 @@ function page(title: string, description: string, canonicalPath: string, body: s
 <meta property="og:image" content="${SITE}/og-image.png">
 <meta property="og:locale" content="nl_NL">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..700,0..100;1,9..144,400..700,0..100&display=swap">
 <style>${CSS}</style>
 </head>
 <body>
@@ -130,10 +138,14 @@ for (const [slug, it] of bySlug) {
   const title = `Zit er tarwe in ${it.name}? — ${VERDICT[it.s]}`
   const description = `Zit er tarwe in ${it.name}? ${VERDICT[it.s]} ${it.info}`.slice(0, 300)
   const body = `<main class="${it.s}">
-<h1>Zit er tarwe in ${escapeHtml(it.name)}?</h1>
+<img class="plaat" src="/plaat-tarwe.webp" alt="" width="560" height="789">
+<h1>Zit er <em>tarwe</em> in ${escapeHtml(it.name)}?</h1>
+<div class="card">
 <div class="verdict">${VERDICT[it.s]}</div>
+<div class="name">${escapeHtml(it.name)}</div>
 <p>${escapeHtml(it.info)}</p>
 <p class="source">Bron: <a href="${escapeHtml(it.sourceUrl)}" rel="noopener">${escapeHtml(it.sourceName)}</a></p>
+</div>
 <a class="app-link" href="/?p=${encodeURIComponent(it.appQuery)}">Zoek zelf een product →</a>
 </main>`
   writeFileSync(path.join(pDir, slug + ".html"), page(title, description, "/p/" + slug, body))
@@ -144,10 +156,11 @@ const sorted = [...bySlug.entries()].sort((a, b) => a[1].name.localeCompare(b[1]
 const links = sorted
   .map(([slug, it]) => `<li><a href="/p/${slug}">${escapeHtml(it.name)}</a></li>`)
   .join("\n")
-const indexBody = `<main>
-<h1>Alle producten — zit er tarwe in?</h1>
+const indexBody = `<main class="index">
+<img class="plaat" src="/plaat-tarwe.webp" alt="" width="560" height="789">
+<h1>Alle producten — zit er <em>tarwe</em> in?</h1>
 <p>${bySlug.size} producten. Kies een product of <a href="/">zoek direct</a>.</p>
-<ul style="columns:2;list-style:none;font-size:.95rem">${links}</ul>
+<ul>${links}</ul>
 </main>`
 writeFileSync(
   path.join(pDir, "index.html"),

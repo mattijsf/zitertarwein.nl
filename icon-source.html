@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>App-icoon — zitertarwein.nl</title>
+<style>
+  /* Source for the app icons: one ear from Thomé's wheat plate on the page's
+     own paper. Render with headless Chrome at 512×512:
+       …/Google\ Chrome --headless --window-size=512,512 --screenshot=icon.png http://localhost:4173/icon-source.html
+       …?maskable → the mark shrinks into the 40% safe zone. */
+  * { margin: 0; padding: 0; }
+  html, body { width: 512px; height: 512px; background: #f3f0e6; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  img { height: 440px; width: auto; display: block; }
+  body.maskable img { height: 320px; }
+</style>
+</head>
+<body>
+  <img src="aar.png" alt="">
+  <script>if (location.search.includes("maskable")) document.body.classList.add("maskable");</script>
+</body>
+</html>
