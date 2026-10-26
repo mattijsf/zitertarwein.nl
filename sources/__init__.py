@@ -20,6 +20,7 @@ def load_rules():
     r = json.load(open(os.path.join(_PROJECT, "src", "lib", "rules.json"), encoding="utf-8"))
     return {
         "wheat_text": re.compile(r["wheatText"], re.I),
+        "not_wheat": re.compile(r["notWheat"], re.I),
         "wheat_tags": re.compile(r["wheatTags"], re.I),
         "gluten": re.compile(r["gluten"], re.I),
         "gluten_free": re.compile(r["glutenFree"], re.I),
@@ -39,10 +40,13 @@ def norm(s):
 
 def analyze(text, ingredient_tags=None, allergen_tags=None, trace_tags=None, label_tags=None):
     """Determines (status, traces_flag, evidence_word, gluten_free_claim) from label data."""
-    text = text or ""
-    ingredients = " ".join(ingredient_tags or [])
-    allergens = " ".join(allergen_tags or [])
-    traces = " ".join(trace_tags or [])
+    def strip(s):
+        return RULES["not_wheat"].sub(" ", s)
+
+    text = strip(text or "")
+    ingredients = strip(" ".join(ingredient_tags or []))
+    allergens = strip(" ".join(allergen_tags or []))
+    traces = strip(" ".join(trace_tags or []))
     labels = " ".join(label_tags or [])
 
     text_match = RULES["wheat_text"].search(text)

@@ -57,6 +57,23 @@ describe("hasWheat", () => {
     expect(hasWheat(off({ ingredientsText: "sirop d'érable" }))).toBe(false)
   })
 
+  it("does not count buckwheat or wheat-free as wheat", () => {
+    expect(hasWheat(off({ ingredientsText: "buckwheat flour, salt" }))).toBe(false)
+    expect(hasWheat(off({ ingredientsText: "Buchweizenmehl" }))).toBe(false)
+    expect(hasWheat(off({ ingredientsText: "galette de blé noir" }))).toBe(false)
+    expect(hasWheat(off({ ingredientsText: "biscuits sans blé" }))).toBe(false)
+    expect(hasWheat(off({ ingredientsText: "wheat-free oat bar" }))).toBe(false)
+    expect(hasWheat(off({ ingredientsText: "weizenfrei" }))).toBe(false)
+    expect(hasWheat(off({ ingredientsTextNl: "tarwevrij brood van rijstmeel" }))).toBe(false)
+    expect(hasWheat(off({ ingredientsTags: ["en:buckwheat", "en:buckwheat-flour"] }))).toBe(false)
+  })
+
+  it("still finds wheat next to buckwheat, and the tarvwe misspelling", () => {
+    expect(hasWheat(off({ ingredientsText: "buckwheat flour, wheat flour" }))).toBe(true)
+    expect(hasWheat(off({ ingredientsTags: ["en:buckwheat", "en:wheat"] }))).toBe(true)
+    expect(hasWheat(off({ ingredientsTextNl: "35% TARVWEMEEL, suiker" }))).toBe(true)
+  })
+
   it("prefers the Dutch ingredient text", () => {
     expect(hasWheat(off({ ingredientsTextNl: "rijst", ingredientsText: "wheat" }))).toBe(false)
   })

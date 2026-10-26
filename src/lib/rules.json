@@ -1,5 +1,6 @@
 {
-  "wheatText": "[\\w-]*(?:tarwe|wheat|weizen|\\bbl[eé](?![\\wÀ-ÿ])|froment|durum|semol|spelt|khorasan|kamut|seitan|bulgur|couscous)[\\w-]*",
+  "wheatText": "[\\w-]*(?:tarv?we|wheat|weizen|\\bbl[eé](?![\\wÀ-ÿ])|froment|durum|semol|spelt|khorasan|kamut|seitan|bulgur|couscous)[\\w-]*",
+  "notWheat": "buc[kh]w(?:heat|eizen)[\\w-]*|bl[eé]\\s+noir|sans\\s+bl[eé]|(?:wheat|weizen|tarwe)[ -]?(?:free|frei|vrij)\\b",
   "wheatTags": "wheat|spelt|khorasan|triticum|seitan",
   "gluten": "gluten",
   "glutenFree": "glutenvrij|gluten[ -]?free|sans gluten|glutenfrei",

@@ -36,6 +36,8 @@ const RETRY_DELAY_MS = 4000
 // same rules as the Python generator (sources read rules.json too)
 const WHEAT_IN_TEXT = new RegExp(rules.wheatText, "i")
 const WHEAT_IN_TAGS = new RegExp(rules.wheatTags, "i")
+// words that contain a wheat word but are not wheat (buckwheat, "wheat-free"): removed first
+const NOT_WHEAT = new RegExp(rules.notWheat, "gi")
 
 function offSearchUrl(term: string): string {
   return (
@@ -105,8 +107,9 @@ export function pickCandidate(products: readonly OffProduct[]): OffProduct | und
 }
 
 export function hasWheat(p: OffProduct): boolean {
-  const tags = [...p.allergensTags, ...p.ingredientsTags].join(" ")
-  return WHEAT_IN_TEXT.test(ingredients(p).toLowerCase()) || WHEAT_IN_TAGS.test(tags)
+  const text = ingredients(p).toLowerCase().replace(NOT_WHEAT, " ")
+  const tags = [...p.allergensTags, ...p.ingredientsTags].join(" ").replace(NOT_WHEAT, " ")
+  return WHEAT_IN_TEXT.test(text) || WHEAT_IN_TAGS.test(tags)
 }
 
 export function toMatch(p: OffProduct, term: string): OnlineMatch {
