@@ -48,6 +48,15 @@ describe("hasWheat", () => {
     expect(hasWheat(off({ ingredientsText: "rijst, water, zout" }))).toBe(false)
   })
 
+  it("reads blé only as a whole word", () => {
+    expect(hasWheat(off({ ingredientsText: "farine de blé, sucre" }))).toBe(true)
+    expect(hasWheat(off({ ingredientsText: "Blé complet" }))).toBe(true)
+    expect(hasWheat(off({ ingredientsText: "farine de ble" }))).toBe(true)
+    expect(hasWheat(off({ ingredientsText: "vegetable oil, soluble fibre" }))).toBe(false)
+    expect(hasWheat(off({ ingredientsText: "sustainable palm oil" }))).toBe(false)
+    expect(hasWheat(off({ ingredientsText: "sirop d'érable" }))).toBe(false)
+  })
+
   it("prefers the Dutch ingredient text", () => {
     expect(hasWheat(off({ ingredientsTextNl: "rijst", ingredientsText: "wheat" }))).toBe(false)
   })
