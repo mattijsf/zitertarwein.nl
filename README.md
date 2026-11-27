@@ -47,7 +47,7 @@ pnpm check   # lint, formatting, typecheck, tests, escape hatches and unused cod
 `pnpm install` also installs the git hooks (lefthook):
 
 - **pre-commit**: ESLint with `--fix` and Prettier (organized imports) on the staged files,
-  `tsc -b`, and a block on "do not commit" markers
+  `tsc -b`, and a block on staged do-not-commit markers
 - **pre-push**: lint, format check, typecheck, tests, knip (unused files, exports and
   dependencies) and the escape-hatch ratchet
   (`scripts/check-escape-hatches.ts`: no new `any`, `as` casts or `eslint-disable`)
@@ -145,3 +145,10 @@ Answers reference a verified source per product:
 The site provides general information and is not medical advice.
 Wheat-free is not the same as gluten-free: rye and barley also contain
 gluten.
+
+## License
+
+The code is licensed under the [MIT License](LICENSE). Product data from
+[Open Food Facts](https://world.openfoodfacts.org/) (`src/data/off-products.json`
+and the live search) stays under the
+[Open Database License (ODbL)](https://opendatacommons.org/licenses/odbl/1-0/).
